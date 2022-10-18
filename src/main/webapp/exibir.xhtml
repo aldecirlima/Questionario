@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<p:fieldset legend="Exibição de elemento JSF">
+		<h:form id="testeExibicao">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Entrada" for="entrada" />
+				<p:inputText id="entrada" value="#{exibirBean.entrada}"
+					required="true" validatorMessage="Valor deve ser maior que 0">
+					<f:attribute name="type" value="number" />
+					<f:ajax event="blur" render="messageExibe" />
+				</p:inputText>
+
+				<p:commandButton action="#{exibirBean.exibir()}" value="Confirmar"
+					update="@form" process="@form" />
+
+			</p:panelGrid>
+			<br />
+			<p:message for="entrada" id="messageExibe" />
+			<br />
+			<p:outputLabel id="exibicao" value="Valor: #{exibirBean.entrada}"
+				rendered="#{exibirBean.exibe}" />
+
+		</h:form>
+	</p:fieldset>
+</h:body>
+</html>
