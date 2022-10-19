@@ -1,15 +1,22 @@
 package br.com.bb.seguranca.questionario.modelo.perguntas;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.Resposta;
 
-public abstract class Pergunta {
+public class Pergunta {
 
-//	Longs
+//	Id
 
 	private Long idPergunta;
+
+//	Objects
+
+	private Resposta resposta;
+
+	private List<Opcao> opcoesParaSelecao;
 
 //	Strings
 
@@ -31,19 +38,19 @@ public abstract class Pergunta {
 
 	private Integer tipoPergunta;
 
-//	Objects
-
-	private Secao secao;
-
 //	Fim dos atributos
 
 	public Pergunta() {
 
 	}
 
-	public abstract <T> T getResposta();
+	public Resposta getResposta() {
+		return this.resposta;
+	}
 
-	public abstract <T> void setResposta(T resposta);
+	public void setResposta(Resposta resposta) {
+		this.resposta = resposta;
+	}
 
 	public Long getIdPergunta() {
 		return idPergunta;
@@ -109,12 +116,12 @@ public abstract class Pergunta {
 		this.tipoPergunta = tipoPergunta;
 	}
 
-	public Secao getSecao() {
-		return secao;
+	public List<Opcao> getOpcoesParaSelecao() {
+		return opcoesParaSelecao;
 	}
 
-	public void setSecao(Secao secao) {
-		this.secao = secao;
+	public void setOpcoesParaSelecao(List<Opcao> opcoesParaSelecao) {
+		this.opcoesParaSelecao = opcoesParaSelecao;
 	}
 
 	@Override

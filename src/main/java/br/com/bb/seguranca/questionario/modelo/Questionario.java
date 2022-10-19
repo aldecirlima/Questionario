@@ -7,9 +7,13 @@ import java.util.Objects;
 
 public class Questionario {
 
-//	Longs
+//	Id
 
 	private Long idQuest;
+
+//	Objetos
+
+	private List<Secao> secoes;
 
 //	Strings
 
@@ -32,10 +36,6 @@ public class Questionario {
 //	Integers
 
 	private Integer questionatioAtivo; // Inativo=0, ativo=1
-
-//	Objetos
-
-	private List<Secao> secoes;
 
 //	Fim dos atributos
 

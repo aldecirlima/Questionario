@@ -8,9 +8,13 @@ import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
 
 public class Secao {
 
-//	Longs
+//	Id
 
 	private Long idSecao;
+
+//	Objetos
+
+	private List<Pergunta> perguntas;
 
 //	Strings
 
@@ -31,12 +35,6 @@ public class Secao {
 //	Integers
 
 	private Integer secaoAtiva; // Inativo=0, ativo=1
-
-//	Objetos
-
-	private Questionario questionario;
-
-	private List<Pergunta> perguntas;
 
 //	Fim dos atributos
 
@@ -99,14 +97,6 @@ public class Secao {
 		this.dataExclusao = dataExclusao;
 	}
 
-	public Questionario getQuestionario() {
-		return questionario;
-	}
-
-	public void setQuestionario(Questionario questionario) {
-		this.questionario = questionario;
-	}
-
 	public Integer getSecaoAtiva() {
 		return secaoAtiva;
 	}
@@ -125,8 +115,8 @@ public class Secao {
 
 	@Override
 	public String toString() {
-		return "Secao [idSecao=" + idSecao + ", nomeSecao=" + nomeSecao + ", questionarioId="
-				+ questionario.getIdQuest() + "]";
+		return "Secao [idSecao=" + idSecao + ", nomeSecao=" + nomeSecao + ", matriculaGravacao=" + matriculaGravacao
+				+ ", secaoAtiva=" + secaoAtiva + "]";
 	}
 
 	@Override
