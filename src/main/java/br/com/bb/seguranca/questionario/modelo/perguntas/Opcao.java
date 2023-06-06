@@ -2,15 +2,24 @@ package br.com.bb.seguranca.questionario.modelo.perguntas;
 
 import java.util.Objects;
 
-public class Opcao implements Comparable<Opcao> {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "OPCAO")
+public class Opcao {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long idOpcao;
 
+	@Column(name = "NM_OPC")
 	private String nomeOpcao;
-
-	private Integer indiceOpcao;
-
-	private Pergunta pergunta;
 
 	public Opcao() {
 
@@ -24,44 +33,12 @@ public class Opcao implements Comparable<Opcao> {
 		return nomeOpcao;
 	}
 
-	public Integer getIndiceOpcao() {
-		return indiceOpcao;
-	}
-
 	public void setIdOpcao(Long idOpcao) {
 		this.idOpcao = idOpcao;
 	}
 
 	public void setNomeOpcao(String nomeOpcao) {
 		this.nomeOpcao = nomeOpcao;
-	}
-
-	public void setIndiceOpcao(Integer indiceOpcao) {
-		this.indiceOpcao = indiceOpcao;
-	}
-
-	public Pergunta getPergunta() {
-		return pergunta;
-	}
-
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
-	}
-
-	@Override
-	public String toString() {
-		return "Opcao [idOpcao=" + idOpcao + ", nomeOpcao=" + nomeOpcao + ", indiceOpcao=" + indiceOpcao + "]";
-	}
-
-	@Override
-	public int compareTo(Opcao opcao) {
-		if (this.getIndiceOpcao() > opcao.getIndiceOpcao()) {
-			return 1;
-		} else if (this.getIndiceOpcao() < opcao.getIndiceOpcao()) {
-			return -1;
-		} else {
-			return 0;
-		}
 	}
 
 	@Override

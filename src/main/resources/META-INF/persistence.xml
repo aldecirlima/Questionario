@@ -4,17 +4,20 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="auron" transaction-type="JTA">
+	<persistence-unit name="mysql"
+		transaction-type="RESOURCE_LOCAL">
 
-		<jta-data-source>java:jboss/datasources/livrariaDS</jta-data-source>
-
-		<class>br.com.caelum.auron.modelo.Participante</class>
+		<jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
 
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL8Dialect" />
+			<property name="hibernate.default_catalog"
+				value="questionario" />
+			<property name="hibernate.format_sql" value="true" />
 		</properties>
 	</persistence-unit>
+
 </persistence>

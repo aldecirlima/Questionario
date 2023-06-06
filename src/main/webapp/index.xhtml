@@ -1,43 +1,26 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Cadastro de participantes</title>
-</h:head>
-<h:body>
-	<p:fieldset legend="Cadastro de participantes">
-		<p:messages />
-		<h:form>
-			<p:panelGrid columns="2">
-				<p:outputLabel value="Nome: " />
-				<p:inputText value="#{participanteBean.participante.nome}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="WEB-INF/templates/Layout.xhtml">
 
-				<p:outputLabel value="E-mail: " />
-				<p:inputText value="#{participanteBean.participante.email}" />
 
-				<p:outputLabel value="Senha: " />
-				<p:password value="#{participanteBean.participante.senha}" />
+	<ui:define name="titulo">AVS Página inicial</ui:define>
+	<ui:define name="conteudo">
 
-			</p:panelGrid>
+		<p:fieldset legend="AVS Página inicial">
+			<p:messages />
+			<h:form id="formInicial">
+
+				<p:commandButton
+					action="/pages/cadastroQuestionario?faces-redirect=true"
+					ajax="false" value="Novo questionário" update="@this" />
+			</h:form>
 			<br />
-			<p:commandButton action="#{participanteBean.cadastrar}" ajax="false"
-				value="Cadastrar" update="@this tableParticipantes"/>
-		</h:form>
-		<br />
-		<p:dataTable id="tableParticipantes"
-			value="#{participanteBean.participantes}" var="participante">
-			<p:column headerText="Nome">
-				<p:outputLabel value="#{participante.nome}" />
-			</p:column>
-			<p:column headerText="E-mail">
-				<p:outputLabel value="#{participante.email}" />
-			</p:column>
 
-		</p:dataTable>
-	</p:fieldset>
-</h:body>
-</html>
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

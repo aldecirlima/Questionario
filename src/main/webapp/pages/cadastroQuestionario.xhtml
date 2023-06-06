@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="../WEB-INF/templates/Layout.xhtml">
+
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{questionarioBean.initialize}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastrar novo questionário</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastrar um questionário">
+			<p:messages />
+			<h:form id="formCadastro">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Titulo:" />
+					<p:inputText required="true" requiredMessage="Informe o título"
+						value="#{questionarioBean.objQuestionario.nomeQuestionario}" />
+
+					<p:outputLabel value="Matrícula:" />
+					<p:inputText required="true" requiredMessage="Informe a Matricula"
+						value="#{questionarioBean.objQuestionario.matriculaGravacao}" />
+
+					<p:outputLabel value="Ativação:" />
+					<p:inputText required="true" requiredMessage="Informe a matricula de ativação"
+						value="#{questionarioBean.objQuestionario.matriculaAtivacao}" />
+
+				</p:panelGrid>
+				<br />
+				<p:commandButton actionListener="#{questionarioBean.testes}"
+					process="@form" value="Cadastrar" ajax="false" action="/index?faces-redirect=true"
+					 />
+			</h:form>
+			<br />
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
