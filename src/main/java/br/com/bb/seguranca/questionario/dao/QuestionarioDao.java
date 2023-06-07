@@ -1,27 +1,27 @@
 package br.com.bb.seguranca.questionario.dao;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.bb.seguranca.questionario.modelo.Questionario;
-import br.com.bb.seguranca.questionario.util.JPAUtil;
 
-public class QuestionarioDao {
-	
-	
+public class QuestionarioDao implements Serializable {
 
-	public void inserir(Questionario questionario) {
-		EntityManager em = JPAUtil.getEntityManagerMysql();
-		em.getTransaction().begin();;
-		em.persist(questionario);
-		em.getTransaction().commit();
-		em.close();
-	}
-	public void merge(Questionario questionario) {
-		EntityManager em = JPAUtil.getEntityManagerMysql();
-		em.getTransaction().begin();;
-		em.merge(questionario);
-		em.getTransaction().commit();
-		em.close();
-	}
+	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private EntityManager manager;
+
+	public Questionario persistir(Questionario questionario) {
+		return manager.merge(questionario);
+
+	}
+
+	public void salvar(Questionario questionario) {
+		manager.merge(questionario);
+
+	}
+
 }

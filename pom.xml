@@ -32,6 +32,13 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- CDI é uma especificação. O Weld é uma implementação do CDI.  -->
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>3.0.0.Alpha1</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>

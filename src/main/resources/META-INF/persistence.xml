@@ -5,9 +5,16 @@
 	version="2.0">
 
 	<persistence-unit name="mysql"
-		transaction-type="RESOURCE_LOCAL">
+		transaction-type="JTA">
 
 		<jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
+
+
+		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Opcao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Resposta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.Questionario</class>
+		<class>br.com.bb.seguranca.questionario.modelo.Secao</class>
 
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
