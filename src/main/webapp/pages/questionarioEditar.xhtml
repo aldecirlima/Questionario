@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	template="../WEB-INF/templates/LayoutNovo.xhtml">
+
+	<ui:define name="titulo">Questionários cadastrados</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastro de questionários">
+
+			<h:form id="formCadastroQuestionario">
+
+				<p:dataTable id="listQuestionario" var="qst" size="small"
+					value="#{questionarioEditarBean.listaQuestionarios}"
+					paginator="true" rows="5" paginatorPosition="bottom"
+					selection="#{questionarioEditarBean.secaoQuestionario}"
+					rowKey="#{qst.idQuestionario}">
+					<f:facet name="header">Questionários disponíveis para edição</f:facet>
+					<p:column headerText="Id">
+						<h:outputText value="#{qst.idQuestionario}" />
+					</p:column>
+					<p:column headerText="Titulo">
+						<h:outputText value="#{qst.nomeQuestionario}" />
+					</p:column>
+					<p:column headerText="Cadastro">
+						<h:outputText value="#{qst.matriculaGravacao}" />
+					</p:column>
+					<p:column headerText="Data e hora">
+						<h:outputText value="#{qst.dataGravacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+					<p:column exportable="false" headerText="Ações">
+						<div class="flex-row-start">
+							<div class="ml-10 mr-10">
+								<p:commandButton icon="fa fa-pencil" title="Editar"
+									update=":dialogs:manage-questionario"
+									oncomplete="PF('manageQuestionarioDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this">
+									<f:setPropertyActionListener value="#{qst}"
+										target="#{questionarioEditarBean.objQuestionario}" />
+									<p:resetInput target=":dialogs:manage-questionario" />
+								</p:commandButton>
+							</div>
+							<div class="mr-10 ml-10">
+								<p:commandButton class="ui-button-warning rounded-button"
+									icon="fa fa-trash" process="@this" title="Excluir"
+									oncomplete="PF('deleteQuestDialog').show()">
+									<f:setPropertyActionListener value="#{qst}"
+										target="#{questionarioEditarBean.objQuestionario}" />
+								</p:commandButton>
+							</div>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
+				<br />
+				<p:confirmDialog widgetVar="deleteQuestDialog" showEffect="fade"
+					width="400" message="Confirma exclusão do questionário?"
+					header="Confirmação" severity="warn">
+					<p:commandButton value="Confirma" icon="fa fa-check"
+						actionListener="#{questionarioEditarBean.deleteQuestionario}"
+						process="@this" update="@form" ajax="false"
+						oncomplete="PF('deleteQuestDialog').hide()" />
+					<p:commandButton value="Cancela" type="button"
+						styleClass="ui-button-secondary" icon="fa fa-times"
+						onclick="PF('deleteQuestDialog').hide()" />
+				</p:confirmDialog>
+
+			</h:form>
+			<h:form id="dialogs">
+
+				<p:dialog header="Editar questionário" showEffect="fade"
+					modal="true" closable="true" resizable="true"
+					widgetVar="manageQuestionarioDialog" responsive="true">
+					<p:outputPanel id="manage-questionario" class="ui-fluid">
+						<p:panelGrid columns="2"
+							columnClasses="cssColumn150, cssColumn500">
+
+							<p:outputLabel for="tituloQuestionario" value="Título" />
+							<p:inputText id="tituloQuestionario"
+								title="Limite 150 caracteres"
+								value="#{questionarioEditarBean.objQuestionario.nomeQuestionario}"
+								maxlength="150" />
+							<p:outputLabel for="descricaoQuestionario" value="Descrição" />
+							<p:inputTextarea id="descricaoQuestionario"
+								title="Limite 250 caracteres"
+								value="#{questionarioEditarBean.objQuestionario.descricaoQuestionario}"
+								cols="50" rows="3" maxlength="250" />
+
+
+						</p:panelGrid>
+
+
+					</p:outputPanel>
+
+					<div class="footer-dialog">
+						<p:commandButton value="Salvar" icon="fa fa-check"
+							actionListener="#{questionarioEditarBean.salvaQuestionario}"
+							update=":formCadastroQuestionario"
+							oncomplete="PF('manageQuestionarioDialog').hide()" ajax="false"
+							process="manage-secao @this" />
+						<p:commandButton value="Cancelar" icon="fa fa-times"
+							onclick="PF('manageQuestionarioDialog').hide()"
+							class="ui-button-secondary" type="button" />
+
+					</div>
+				</p:dialog>
+
+			</h:form>
+
+			<br />
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

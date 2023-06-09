@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="../WEB-INF/templates/LayoutNovo.xhtml">
+
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{perguntaBean.buscaQuestionariosNaoAtivos}" />
+	</f:metadata>
+
+
+	<ui:define name="titulo">Cadastro de perguntas</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastrar perguntas">
+
+			<h:form id="formCadastroQuestionario">
+				<p:outputLabel value="Questionário " for="menuQst"
+					styleClass="mr-10" />
+				<p:selectOneMenu id="menuQst" value="#{perguntaBean.idLong}"
+					styleClass="mr-10" required="true"
+					disabled="#{perguntaBean.perguntaQuestionario.idQuestionario ne null}"
+					requiredMessage="Selecione uma opção">
+					<f:selectItem itemLabel="Selecione..." itemValue="" />
+					<f:selectItems value="#{perguntaBean.listaQuestionarios}"
+						itemValue="#{qst.idQuestionario}" var="qst"
+						itemLabel="Id: #{qst.idQuestionario} - título: #{qst.nomeQuestionario}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Seção" for="menuSc" styleClass="mr-10"
+					rendered="#{perguntaBean.perguntaQuestionario.secoes ne null}" />
+				<p:selectOneMenu id="menuSc" value="#{perguntaBean.idLong}"
+					rendered="#{perguntaBean.perguntaQuestionario.secoes ne null}"
+					styleClass="mr-10" required="true"
+					disabled="#{perguntaBean.objSecao.id ne null}"
+					requiredMessage="Selecione uma opção">
+					<f:selectItem itemLabel="Selecione..." itemValue="" />
+					<f:selectItems value="#{perguntaBean.perguntaQuestionario.secoes}"
+						itemValue="#{sc.idSecao}" var="sc"
+						itemLabel="Id: #{sc.idSecao} - rótulo: #{sc.nomeSecao}" />
+				</p:selectOneMenu>
+
+				<p:commandButton process="@this" update="@form"
+					rendered="#{perguntaBean.perguntaQuestionario.idQuestionario eq null}"
+					value="Ver seções" style="margin: 15px 20px 0px 15px"
+					title="Ver seções do questionário" ajax="false"
+					icon="pi pi-search-plus"
+					actionListener="#{perguntaBean.atualizaQuestionario}" />
+
+				<br />
+
+			</h:form>
+
+			<br />
+			<h:form id="dialogs">
+
+				<p:dialog header="Editar seção" showEffect="fade" modal="true"
+					closable="true" resizable="true" widgetVar="managePerguntaDialog"
+					responsive="true">
+					<p:outputPanel id="manage-secao" class="ui-fluid">
+						<p:panelGrid columns="2"
+							columnClasses="cssColumn150, cssColumn500">
+
+							<p:outputLabel for="nomeSecao" value="Rotulo" />
+							<p:inputText id="nomeSecao" title="Limite 150 caracteres"
+								styleClass="cssColunm-w-100-p"
+								value="#{perguntaBean.objSecao.nomeSecao}" maxlength="150" />
+
+							<p:outputLabel for="descricaoSecao" value="Descrição" />
+							<p:inputTextarea id="descricaoSecao"
+								styleClass="cssColunm-w-100-p" title="Limite 250 caracteres"
+								value="#{perguntaBean.objSecao.descricaoSecao}" maxlength="250" />
+
+							<p:outputLabel for="ordemSecao" value="Ordem" />
+							<p:inputNumber id="ordemSecao"
+								title="Ordem que a seção aparecerá"
+								value="#{perguntaBean.objSecao.ordemSecao}" minValue="0" />
+
+							<p:outputLabel for="secaoAtiva" value="Ativa" />
+							<p:selectOneRadio id="secaoAtiva"
+								value="#{perguntaBean.objSecao.secaoAtiva}">
+								<f:selectItem itemLabel="Sim" itemValue="1" />
+								<f:selectItem itemLabel="Não" itemValue="0" />
+							</p:selectOneRadio>
+
+						</p:panelGrid>
+
+
+					</p:outputPanel>
+
+					<div class="footer-dialog">
+						<p:commandButton value="Salvar" icon="fa fa-check"
+							actionListener="#{perguntaBean.salvarSecao}" update=":formSecoes"
+							oncomplete="PF('managePerguntaDialog').hide()" ajax="false"
+							process="manage-secao @this" />
+						<p:commandButton value="Cancelar" icon="fa fa-times"
+							onclick="PF('managePerguntaDialog').hide()"
+							class="ui-button-secondary" type="button" />
+
+					</div>
+				</p:dialog>
+
+			</h:form>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

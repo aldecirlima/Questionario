@@ -37,6 +37,9 @@ public class Questionario {
 
 	@Column(name = "MTR_GRV")
 	private String matriculaGravacao;
+	
+	@Column(name = "DSC_QST")
+	private String descricaoQuestionario;
 
 	@Column(name = "MTR_ATV")
 	private String matriculaAtivacao;
@@ -58,7 +61,7 @@ public class Questionario {
 //	Integers
 
 	@Column(name = "QST_ATV")
-	private Integer questionatioAtivo; // Inativo=0, ativo=1
+	private Integer questionarioAtivo; // Inativo=0, ativo=1, baixado=3
 
 //	Fim dos atributos
 
@@ -122,12 +125,21 @@ public class Questionario {
 		this.secoes = secoes;
 	}
 
-	public Integer getQuestionatioAtivo() {
-		return questionatioAtivo;
+	/**
+	 * Status: Inativo=0; Ativo=1; Baixado=3
+	 *  
+	 * @return {@code Integer}
+	 */
+	public Integer getQuestionarioAtivo() {
+		return questionarioAtivo;
 	}
 
-	public void setQuestionatioAtivo(Integer questionatioAtivo) {
-		this.questionatioAtivo = questionatioAtivo;
+	/**
+	 * Status: Inativo=0; Ativo=1; Baixado=3
+	 *  
+	 */
+	public void setQuestionarioAtivo(Integer questionatioAtivo) {
+		this.questionarioAtivo = questionatioAtivo;
 	}
 
 	public Long getIdQuestionario() {
@@ -144,6 +156,21 @@ public class Questionario {
 
 	public void setNomeQuestionario(String nomeQuestionario) {
 		this.nomeQuestionario = nomeQuestionario;
+	}
+	
+	
+
+	public String getDescricaoQuestionario() {
+		return descricaoQuestionario;
+	}
+
+	public void setDescricaoQuestionario(String descricaoQuestionario) {
+		this.descricaoQuestionario = descricaoQuestionario;
+	}
+
+	@Override
+	public String toString() {
+		return "Id: " + idQuestionario + " - Titulo: " + nomeQuestionario ;
 	}
 
 	@Override

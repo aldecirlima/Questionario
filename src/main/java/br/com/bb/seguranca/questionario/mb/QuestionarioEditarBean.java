@@ -1,23 +1,20 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.bb.seguranca.questionario.modelo.Questionario;
-import br.com.bb.seguranca.questionario.modelo.Secao;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
 @Named
-@SessionScoped
-public class QuestionarioBean implements Serializable {
+@ViewScoped
+public class QuestionarioEditarBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +29,7 @@ public class QuestionarioBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		this.atualizaListaQuestionarios();
 		this.novoQuestionario();
 	}
 
@@ -39,37 +37,16 @@ public class QuestionarioBean implements Serializable {
 		objQuestionario = new Questionario();
 	}
 
-	public void preparaQuestionario() {
-
-		populaQuestionario();
-		
-		try {
-			this.objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
-			System.out.println("ID: " + objQuestionario.getIdQuestionario());
-			System.out.println("Titulo: " + objQuestionario.getNomeQuestionario());
-			FacesMessages.info("Questionário salvo com sucesso! ID: " + objQuestionario.getIdQuestionario());
-		} catch (Exception e) {
-			FacesMessages.error("Erro ao salvar questionário!");
-		}
-
-	}
-
 	public void salvaQuestionario() {
-
-		if (this.objQuestionario.getIdQuestionario() == null) {
-			this.preparaQuestionario();
-			this.objQuestionario = new Questionario();
-			return;
-		}
 
 		try {
 			questionarioService.salvarQuestionario(objQuestionario);
+			atualizaListaQuestionarios();
 			FacesMessages.info("Questionário salvo com sucesso!");
 
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
 		}
-
 	}
 
 	public void atualizaListaQuestionarios() {
@@ -79,12 +56,12 @@ public class QuestionarioBean implements Serializable {
 			FacesMessages.error("Erro na busca por questionários - " + e.getMessage());
 		}
 	}
-	
-	private void populaQuestionario() {
-		this.objQuestionario.setSecoes(new ArrayList<Secao>());
-		this.objQuestionario.setMatriculaGravacao("F0394519");
-		this.objQuestionario.setQuestionarioAtivo(0);
-		this.objQuestionario.setDataGravacao(new Date());
+
+	public void deleteQuestionario() {
+		this.objQuestionario.setQuestionarioAtivo(3);
+		questionarioService.salvarQuestionario(objQuestionario);
+		this.atualizaListaQuestionarios();
+		FacesMessages.info("Questionário excluído com sucesso!");
 	}
 
 	public String redirect(String pagina) {
@@ -93,7 +70,7 @@ public class QuestionarioBean implements Serializable {
 
 	public String redirectInternal(String pagina) {
 		return pagina;
-	};
+	}
 
 	public Questionario getObjQuestionario() {
 		return objQuestionario;

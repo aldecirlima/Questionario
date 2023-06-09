@@ -1,7 +1,7 @@
 .container-layout {
 	margin: 20px 15px 20px 15px;
 	width: 100%;
-	max-width: 1400px;
+	max-width: 1600px;
 	display: flex;
 	flex-direction: row;
 	align-content: center;
@@ -9,8 +9,7 @@
 }
 
 .nav-esquerda {
-	margin-top: 30px;
-	width: 20%;
+	width: 15%;
 	min-width: 130px;
 }
 

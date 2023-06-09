@@ -42,8 +42,9 @@ public class Secao {
 	@Column(name = "NM_SC")
 	private String nomeSecao;
 
-	@Column(name = "INSTR_SC")
-	private String instrucoesSecao;
+	// Alterar para descrição secao
+	@Column(name = "DSC_SC")
+	private String descricaoSecao;
 
 	@Column(name = "MTR_GRV")
 	private String matriculaGravacao;
@@ -88,12 +89,12 @@ public class Secao {
 		this.nomeSecao = nomeSecao;
 	}
 
-	public String getInstrucoesSecao() {
-		return instrucoesSecao;
+	public String getDescricaoSecao() {
+		return descricaoSecao;
 	}
 
-	public void setInstrucoesSecao(String instrucoesSecao) {
-		this.instrucoesSecao = instrucoesSecao;
+	public void setDescricaoSecao(String descricaoSecao) {
+		this.descricaoSecao = descricaoSecao;
 	}
 
 	public String getMatriculaGravacao() {

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="../WEB-INF/templates/LayoutNovo.xhtml">
+
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{secaoBean.buscaQuestionariosNaoAtivos}" />
+	</f:metadata>
+
+
+	<ui:define name="titulo">Cadastro de seção</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastrar seção">
+
+			<h:form id="formCadastroQuestionario">
+
+				<p:dataTable id="listQuestionario" var="qst" size="small"
+					value="#{secaoBean.listaQuestionarios}" selectionMode="single"
+					paginator="true" rows="5" paginatorPosition="bottom"
+					selection="#{secaoBean.secaoQuestionario}"
+					rowKey="#{qst.idQuestionario}">
+					<f:facet name="header">Selecione um questionário</f:facet>
+					<p:column headerText="Id" width="15%">
+						<h:outputText value="#{qst.idQuestionario}" />
+					</p:column>
+					<p:column headerText="Titulo" width="35%">
+						<h:outputText value="#{qst.nomeQuestionario}" />
+					</p:column>
+					<p:column headerText="Cadastro">
+						<h:outputText value="#{qst.matriculaGravacao}" />
+					</p:column>
+					<p:column headerText="Data cadastro">
+						<h:outputText value="#{qst.dataGravacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+				<p:commandButton process="@this" update="@form :formSecoes"
+					value="Ver seções" style="margin: 15px 20px 0px 15px"
+					title="Ver seções do questionário" ajax="false"
+					icon="pi pi-search-plus" actionListener="#{secaoBean.verSecoes}" />
+
+				<br />
+
+			</h:form>
+			<br />
+			<h:form id="formSecoes">
+				<p:dataTable id="listSecoes" size="small"
+					rendered="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
+					value="#{secaoBean.secaoQuestionario.secoes}" var="sc"
+					paginator="true" rows="5"
+					emptyMessage="Questionário selecionado não possui seções ativas"
+					paginatorPosition="bottom" selection="#{secaoBean.objSecao}"
+					rowKey="#{sc.idSecao}">
+					<f:facet name="header">Seções do questionário Id: #{secaoBean.secaoQuestionario.idQuestionario}</f:facet>
+
+					<p:column headerText="Id" width="5%">
+						<h:outputText value="#{sc.idSecao}" />
+					</p:column>
+					<p:column headerText="Rótulo" width="35%">
+						<h:outputText value="#{sc.nomeSecao}" />
+					</p:column>
+					<p:column headerText="Data cadastro">
+						<h:outputText value="#{sc.dataGravacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Cadastro" width="10%">
+						<h:outputText value="#{sc.matriculaGravacao}" />
+					</p:column>
+					<p:column headerText="Ordem" width="7%">
+						<h:outputText value="#{sc.ordemSecao}" />
+					</p:column>
+					<p:column headerText="Ativa" width="7%">
+						<h:outputText value="Não" rendered="#{sc.secaoAtiva ne 1}" />
+						<h:outputText value="Sim" rendered="#{sc.secaoAtiva eq 1}" />
+					</p:column>
+					<p:column exportable="false" headerText="Ações" width="7%">
+						<p:commandButton icon="fa fa-pencil"
+							update=":dialogs:manage-secao"
+							oncomplete="PF('manageSecaoDialog').show()"
+							styleClass="edit-button rounded-button ui-button-success"
+							process="@this">
+							<f:setPropertyActionListener value="#{sc}"
+								target="#{secaoBean.objSecao}" />
+							<p:resetInput target=":dialogs:manage-secao" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+				<p:commandButton process="@this"
+					rendered="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
+					update="@form :formCadastroQuestionario" value="Seção"
+					style="margin: 15px 20px 0px 15px" title="Criar nova seção"
+					ajax="false" icon="fa fa-plus"
+					actionListener="#{secaoBean.preparaSecao}" />
+
+			</h:form>
+			<br />
+			<h:form id="dialogs">
+
+				<p:dialog header="Editar seção" showEffect="fade" modal="true"
+					closable="true" resizable="true" widgetVar="manageSecaoDialog"
+					responsive="true">
+					<p:outputPanel id="manage-secao" class="ui-fluid">
+						<p:panelGrid columns="2"
+							columnClasses="cssColumn150, cssColumn500">
+
+							<p:outputLabel for="nomeSecao" value="Rotulo" />
+							<p:inputText id="nomeSecao" title="Limite 150 caracteres"
+								styleClass="cssColunm-w-100-p"
+								value="#{secaoBean.objSecao.nomeSecao}" maxlength="150" />
+
+							<p:outputLabel for="descricaoSecao" value="Descrição" />
+							<p:inputTextarea id="descricaoSecao"
+								styleClass="cssColunm-w-100-p" title="Limite 250 caracteres"
+								value="#{secaoBean.objSecao.descricaoSecao}" 
+								maxlength="250" />
+
+							<p:outputLabel for="ordemSecao" value="Ordem" />
+							<p:inputNumber id="ordemSecao"
+								title="Ordem que a seção aparecerá"
+								value="#{secaoBean.objSecao.ordemSecao}" minValue="0" />
+
+							<p:outputLabel for="secaoAtiva" value="Ativa" />
+							<p:selectOneRadio id="secaoAtiva"
+								value="#{secaoBean.objSecao.secaoAtiva}">
+								<f:selectItem itemLabel="Sim" itemValue="1" />
+								<f:selectItem itemLabel="Não" itemValue="0" />
+							</p:selectOneRadio>
+
+						</p:panelGrid>
+
+
+					</p:outputPanel>
+
+					<div class="footer-dialog">
+						<p:commandButton value="Salvar" icon="fa fa-check"
+							actionListener="#{secaoBean.salvarSecao}" update=":formSecoes"
+							oncomplete="PF('manageSecaoDialog').hide()" ajax="false"
+							process="manage-secao @this" />
+						<p:commandButton value="Cancelar" icon="fa fa-times"
+							onclick="PF('manageSecaoDialog').hide()"
+							class="ui-button-secondary" type="button" />
+
+					</div>
+				</p:dialog>
+
+			</h:form>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
