@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -9,6 +10,7 @@ import javax.inject.Named;
 
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.service.SecaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
@@ -26,6 +28,8 @@ public class PerguntaBean implements Serializable {
 	private Questionario perguntaQuestionario;
 
 	private Secao objSecao;
+	
+	private Pergunta objPergunta;
 
 	@Inject
 	private QuestionarioService questionarioService;
@@ -41,7 +45,6 @@ public class PerguntaBean implements Serializable {
 		if (this.listaQuestionarios == null) {
 			this.atualizaListaQuestionarios();
 		}
-
 	}
 
 	public void atualizaListaQuestionarios() {
@@ -55,7 +58,6 @@ public class PerguntaBean implements Serializable {
 	public void atualizaQuestionario() {
 		try {
 			perguntaQuestionario = questionarioService.findById(idLong);
-//			System.out.println(perguntaQuestionario);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}
@@ -66,6 +68,34 @@ public class PerguntaBean implements Serializable {
 			this.objSecao = secaoService.findById(idLong);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar seções " + e.getMessage());
+		}
+	}
+	
+	public void preparaPergunta() {
+		Pergunta pergunta = new Pergunta();
+		pergunta.setDataCadastro(new Date());
+		pergunta.setMatriculaCadastro("F0394519");
+		pergunta.setPerguntaAtiva(0);
+		pergunta.setOrdem(objSecao.getPerguntas().size() + 1);
+		pergunta.setSecao(objSecao);
+		objSecao.getPerguntas().add(0, pergunta);
+		try {
+			objSecao = secaoService.persisteSecao(objSecao);
+			FacesMessages.info("Nova pergunta incluída. Utilize a opção editar.");
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao criar uma pergunta " + e.getMessage());
+		}
+		
+	}
+	
+	public void salvaPergunta() {
+		Integer index = objSecao.getPerguntas().indexOf(objPergunta);
+		objSecao.getPerguntas().set(index, objPergunta);
+		try {
+			secaoService.salvarSecao(objSecao);
+			FacesMessages.info("Pergunta salva com sucesso.");
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
 	}
 
@@ -97,6 +127,14 @@ public class PerguntaBean implements Serializable {
 
 	public void setObjSecao(Secao objSecao) {
 		this.objSecao = objSecao;
+	}
+
+	public Pergunta getObjPergunta() {
+		return objPergunta;
+	}
+
+	public void setObjPergunta(Pergunta objPergunta) {
+		this.objPergunta = objPergunta;
 	}
 
 	public Long getIdLong() {

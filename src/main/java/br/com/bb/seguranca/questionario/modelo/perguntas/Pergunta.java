@@ -49,6 +49,9 @@ public class Pergunta {
 
 	@Column(name = "MTR_EXCL")
 	private String matriculaExclusao;
+	
+	@Column(name = "TTL")
+	private String title;
 
 //	Dates
 
@@ -65,7 +68,22 @@ public class Pergunta {
 
 	@Column(name = "TP_PRGT")
 	private Integer tipoPergunta;
+	
+	@Column(name = "ORD")
+	private Integer ordem;
+	
+	// Define se a pegunta possui ou não subperguntas
+	@Column(name = "SB_PRGT")
+	private Integer subPergunta; // 0 Não, 1 Sim
 
+	// Define se a pergunta é uma subpegunta
+	@Column(name= "IS_SB_PRGT")
+	private Integer isSubPergunta; // 0 Não, 1 Sim
+	
+	// Informar o id da pergunta mãe
+	@Column(name = "PRGT_M_ID")
+	private Long perguntaMaeId;
+	
 //	Fim dos atributos
 
 	public Pergunta() {
@@ -150,6 +168,46 @@ public class Pergunta {
 
 	public void setSecao(Secao secao) {
 		this.secao = secao;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
+
+	public Integer getSubPergunta() {
+		return subPergunta;
+	}
+
+	public void setSubPergunta(Integer subPergunta) {
+		this.subPergunta = subPergunta;
+	}
+
+	public Integer getIsSubPergunta() {
+		return isSubPergunta;
+	}
+
+	public void setIsSubPergunta(Integer isSubPergunta) {
+		this.isSubPergunta = isSubPergunta;
+	}
+
+	public Long getPerguntaMaeId() {
+		return perguntaMaeId;
+	}
+
+	public void setPerguntaMaeId(Long perguntaMaeId) {
+		this.perguntaMaeId = perguntaMaeId;
 	}
 
 	@Override

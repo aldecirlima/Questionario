@@ -33,3 +33,11 @@
 .cssColunm-w-100-p {
 	width: 100%;
 }
+
+.column-w-30 {
+	width: 30px !important;
+}
+
+.column-w-50 {
+	width: 50px !important;
+}
