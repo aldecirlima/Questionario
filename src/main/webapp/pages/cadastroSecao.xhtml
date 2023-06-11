@@ -21,32 +21,26 @@
 
 			<h:form id="formCadastroQuestionario">
 
-				<p:dataTable id="listQuestionario" var="qst" size="small"
-					value="#{secaoBean.listaQuestionarios}" selectionMode="single"
-					paginator="true" rows="5" paginatorPosition="bottom"
-					selection="#{secaoBean.secaoQuestionario}"
-					rowKey="#{qst.idQuestionario}">
-					<f:facet name="header">Selecione um questionário</f:facet>
-					<p:column headerText="Id" width="15%">
-						<h:outputText value="#{qst.idQuestionario}" />
-					</p:column>
-					<p:column headerText="Titulo" width="35%">
-						<h:outputText value="#{qst.nomeQuestionario}" />
-					</p:column>
-					<p:column headerText="Cadastro">
-						<h:outputText value="#{qst.matriculaGravacao}" />
-					</p:column>
-					<p:column headerText="Data cadastro">
-						<h:outputText value="#{qst.dataGravacao}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-						</h:outputText>
-					</p:column>
-
-				</p:dataTable>
-				<p:commandButton process="@this" update="@form :formSecoes"
-					value="Ver seções" style="margin: 15px 20px 0px 15px"
+				<p:outputLabel value="Questionário " for="menuQst"
+					styleClass="mr-10" />
+				<p:selectOneMenu id="menuQst" value="#{secaoBean.idLong}"
+					styleClass="mr-10" required="true"
+					disabled="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
+					requiredMessage="Selecione uma opção">
+					<f:selectItem itemLabel="Selecione..." itemValue="" />
+					<f:selectItems value="#{secaoBean.listaQuestionarios}"
+						itemValue="#{qst.idQuestionario}" var="qst"
+						itemLabel="Id: #{qst.idQuestionario} - título: #{qst.nomeQuestionario}" />
+				</p:selectOneMenu>
+				
+				<p:commandButton process="@this" update="@form :formSecoes" rendered="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
+					style="margin: 0px 15px 0px 15px"
+					title="Desbloquear" ajax="false"
+					icon="fa fa-lock" actionListener="#{secaoBean.cleanQuestionario}" />
+				<p:commandButton process="@this" update="@form :formSecoes" rendered="#{secaoBean.secaoQuestionario.idQuestionario eq null}"
+					style="margin: 0px 15px 0px 15px"
 					title="Ver seções do questionário" ajax="false"
-					icon="pi pi-search-plus" actionListener="#{secaoBean.verSecoes}" />
+					icon="fa fa-search" actionListener="#{secaoBean.atualizaQuestionario}" />
 
 				<br />
 

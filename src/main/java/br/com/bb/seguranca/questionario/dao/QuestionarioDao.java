@@ -27,7 +27,7 @@ public class QuestionarioDao implements Serializable {
 	}
 	
 	public Questionario findById(Long id) {
-		String jpql = "SELECT q from Questionario q WHERE q.idQuestionario = :id";
+		String jpql = "SELECT q FROM Questionario q WHERE q.idQuestionario = :id";
 		
 		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
 		query.setParameter("id", id);
@@ -36,7 +36,7 @@ public class QuestionarioDao implements Serializable {
 	}
 	
 	public List<Questionario> buscaQuestionariosNaoAtivos(){
-		String jpql = "SELECT q from Questionario q WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
+		String jpql = "SELECT q FROM Questionario q WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
 		
 		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
 		

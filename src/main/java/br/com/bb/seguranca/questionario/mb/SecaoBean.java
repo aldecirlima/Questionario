@@ -22,6 +22,8 @@ public class SecaoBean implements Serializable {
 	List<Questionario> listaQuestionarios;
 
 	private Questionario secaoQuestionario;
+	
+	private Long idLong;
 
 	private Secao objSecao;
 
@@ -89,6 +91,19 @@ public class SecaoBean implements Serializable {
 			FacesMessages.error("Nenhum questionário selecionado!");
 		}
 	}
+	
+	public void atualizaQuestionario() {
+		try {
+			secaoQuestionario = questionarioService.findById(idLong);
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
+		}
+	}
+	
+	public void cleanQuestionario() {
+		this.secaoQuestionario = null;
+	}
+
 
 	public List<Questionario> getListaQuestionarios() {
 		return listaQuestionarios;
@@ -112,6 +127,14 @@ public class SecaoBean implements Serializable {
 
 	public void setObjSecao(Secao objSecao) {
 		this.objSecao = objSecao;
+	}
+
+	public Long getIdLong() {
+		return idLong;
+	}
+
+	public void setIdLong(Long idLong) {
+		this.idLong = idLong;
 	}
 
 }

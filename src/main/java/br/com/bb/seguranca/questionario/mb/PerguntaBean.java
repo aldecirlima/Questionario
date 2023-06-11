@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
+import br.com.bb.seguranca.questionario.service.SecaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
 @Named
@@ -19,7 +20,7 @@ public class PerguntaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	List<Questionario> listaQuestionarios;
-	
+
 	private Long idLong;
 
 	private Questionario perguntaQuestionario;
@@ -28,6 +29,10 @@ public class PerguntaBean implements Serializable {
 
 	@Inject
 	private QuestionarioService questionarioService;
+
+	@Inject
+	private SecaoService secaoService;
+
 
 	public void buscaQuestionariosNaoAtivos() {
 		if (this.perguntaQuestionario == null) {
@@ -50,12 +55,24 @@ public class PerguntaBean implements Serializable {
 	public void atualizaQuestionario() {
 		try {
 			perguntaQuestionario = questionarioService.findById(idLong);
-			System.out.println(perguntaQuestionario);
+//			System.out.println(perguntaQuestionario);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}
-		
+	}
 
+	public void atualizaSecao() {
+		try {
+			this.objSecao = secaoService.findById(idLong);
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao atualizar seções " + e.getMessage());
+		}
+	}
+
+	public void cleanQuestionario() {
+		this.idLong = null;
+		this.perguntaQuestionario = null;
+		this.objSecao = null;
 	}
 
 	public List<Questionario> getListaQuestionarios() {
