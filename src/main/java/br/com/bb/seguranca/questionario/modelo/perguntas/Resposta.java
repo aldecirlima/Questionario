@@ -35,6 +35,12 @@ public class Resposta {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "OPC_SEL_ID")
 	private Opcao opcaoUnicaSelecionada;
+	
+	@Column(name = "RSP_TXT_CRT", length = 250)
+	private String respostaTextoCurto;
+	
+	@Column(name = "RSP_TXT_LNG", length = 1000)
+	private String respostaTextoLongo;
 
 	public Resposta() {
 

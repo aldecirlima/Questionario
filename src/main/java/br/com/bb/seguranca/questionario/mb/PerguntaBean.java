@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,6 +12,7 @@ import javax.inject.Named;
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
 import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.perguntas.TipoPergunta;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.service.SecaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
@@ -28,7 +30,7 @@ public class PerguntaBean implements Serializable {
 	private Questionario perguntaQuestionario;
 
 	private Secao objSecao;
-	
+
 	private Pergunta objPergunta;
 
 	@Inject
@@ -37,6 +39,10 @@ public class PerguntaBean implements Serializable {
 	@Inject
 	private SecaoService secaoService;
 
+	@PostConstruct
+	public void init() {
+		objPergunta = new Pergunta();
+	}
 
 	public void buscaQuestionariosNaoAtivos() {
 		if (this.perguntaQuestionario == null) {
@@ -70,7 +76,7 @@ public class PerguntaBean implements Serializable {
 			FacesMessages.error("Erro ao atualizar seções " + e.getMessage());
 		}
 	}
-	
+
 	public void preparaPergunta() {
 		Pergunta pergunta = new Pergunta();
 		pergunta.setDataCadastro(new Date());
@@ -85,9 +91,9 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao criar uma pergunta " + e.getMessage());
 		}
-		
+
 	}
-	
+
 	public void salvaPergunta() {
 		Integer index = objSecao.getPerguntas().indexOf(objPergunta);
 		objSecao.getPerguntas().set(index, objPergunta);
@@ -103,6 +109,10 @@ public class PerguntaBean implements Serializable {
 		this.idLong = null;
 		this.perguntaQuestionario = null;
 		this.objSecao = null;
+	}
+
+	public TipoPergunta[] getTipoPergunta() {
+		return TipoPergunta.values();
 	}
 
 	public List<Questionario> getListaQuestionarios() {

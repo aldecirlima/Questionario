@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,7 +51,7 @@ public class Pergunta {
 
 	@Column(name = "MTR_EXCL")
 	private String matriculaExclusao;
-	
+
 	@Column(name = "TTL")
 	private String title;
 
@@ -66,24 +68,25 @@ public class Pergunta {
 	@Column(name = "PRGT_ATV")
 	private Integer perguntaAtiva;
 
-	@Column(name = "TP_PRGT")
-	private Integer tipoPergunta;
-	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = true, length = 30, name = "TP_PRGT")
+	private TipoPergunta tipoPergunta;
+
 	@Column(name = "ORD")
 	private Integer ordem;
-	
+
 	// Define se a pegunta possui ou não subperguntas
 	@Column(name = "SB_PRGT")
 	private Integer subPergunta; // 0 Não, 1 Sim
 
 	// Define se a pergunta é uma subpegunta
-	@Column(name= "IS_SB_PRGT")
+	@Column(name = "IS_SB_PRGT")
 	private Integer isSubPergunta; // 0 Não, 1 Sim
-	
+
 	// Informar o id da pergunta mãe
 	@Column(name = "PRGT_M_ID")
 	private Long perguntaMaeId;
-	
+
 //	Fim dos atributos
 
 	public Pergunta() {
@@ -146,14 +149,6 @@ public class Pergunta {
 		this.perguntaAtiva = perguntaAtiva;
 	}
 
-	public Integer getTipoPergunta() {
-		return tipoPergunta;
-	}
-
-	public void setTipoPergunta(Integer tipoPergunta) {
-		this.tipoPergunta = tipoPergunta;
-	}
-
 	public List<Opcao> getOpcoesParaSelecao() {
 		return opcoesParaSelecao;
 	}
@@ -208,6 +203,14 @@ public class Pergunta {
 
 	public void setPerguntaMaeId(Long perguntaMaeId) {
 		this.perguntaMaeId = perguntaMaeId;
+	}
+
+	public TipoPergunta getTipoPergunta() {
+		return tipoPergunta;
+	}
+
+	public void setTipoPergunta(TipoPergunta tipoPergunta) {
+		this.tipoPergunta = tipoPergunta;
 	}
 
 	@Override
