@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
 import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
@@ -103,6 +105,8 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
+		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
+		PrimeFaces.current().ajax().update("formPerguntas");
 	}
 
 	public void cleanQuestionario() {

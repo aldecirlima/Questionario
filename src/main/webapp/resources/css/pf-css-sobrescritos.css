@@ -1,0 +1,58 @@
+body .ui-growl {
+	top: 0px;
+}
+
+.ui-growl {
+	position: fixed;
+	right: 30%;
+	width: 40vw;
+}
+
+.ui-growl-message {
+	padding: 0 0 5px 10px;
+	width: auto;
+	float: left;
+}
+
+.ui-growl-image {
+	width: 24px;
+	height: 24px;
+	float: left;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-info {
+	background: #b3e5fc;
+	color: #01579b;
+	border-width: 0 0 0 6px;
+	opacity: .95 !important;
+}
+
+body .ui-growl .ui-growl-item-container .ui-growl-item {
+	padding: 0.6rem;
+	min-height: 50px;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-info .ui-growl-image {
+	font-family: "primeicons" !important;
+	font-style: normal;
+	font-weight: normal;
+	display: inline-block;
+	background: none;
+	font-size: 1.5rem;
+	color: #01579b;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-error .ui-growl-image,
+	body .ui-growl .ui-growl-item-container.ui-growl-fatal .ui-growl-image
+	{
+	font-family: "primeicons" !important;
+	font-style: normal;
+	font-weight: normal;
+	display: inline-block;
+	background: none;
+	font-size: 1.5rem;
+	color: #b71c1c;
+}

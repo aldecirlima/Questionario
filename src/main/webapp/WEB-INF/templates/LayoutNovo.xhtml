@@ -19,10 +19,13 @@
 	<h:outputStylesheet library="css" name="column-classes.css" />
 	<h:outputStylesheet library="css" name="layout.css" />
 	<h:outputStylesheet library="css" name="margins.css" />
+	<h:outputStylesheet library="css" name="pf-css-sobrescritos.css" />
 
 </h:head>
 
 <h:body>
+
+	<p:growl id="growl" sticky="true" />
 
 	<div class="barra-layout">
 		<h3>
@@ -69,14 +72,12 @@
 			</div>
 			<div class="display-central">
 				<div id="conteudo">
-					<p:messages closable="true" style="font-size: 0.95rem;" />
 					<ui:insert name="conteudo" />
 				</div>
 			</div>
 		</div>
 
 	</div>
-
 	<footer>
 		<div class="barra-layout h-50">Rodapé</div>
 	</footer>

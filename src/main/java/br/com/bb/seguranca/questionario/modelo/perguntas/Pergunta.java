@@ -75,10 +75,6 @@ public class Pergunta {
 	@Column(name = "ORD")
 	private Integer ordem;
 
-	// Define se a pegunta possui ou não subperguntas
-	@Column(name = "SB_PRGT")
-	private Integer subPergunta; // 0 Não, 1 Sim
-
 	// Define se a pergunta é uma subpegunta
 	@Column(name = "IS_SB_PRGT")
 	private Integer isSubPergunta; // 0 Não, 1 Sim
@@ -179,14 +175,6 @@ public class Pergunta {
 
 	public void setOrdem(Integer ordem) {
 		this.ordem = ordem;
-	}
-
-	public Integer getSubPergunta() {
-		return subPergunta;
-	}
-
-	public void setSubPergunta(Integer subPergunta) {
-		this.subPergunta = subPergunta;
 	}
 
 	public Integer getIsSubPergunta() {
