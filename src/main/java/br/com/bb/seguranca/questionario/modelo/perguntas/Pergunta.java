@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.bb.seguranca.questionario.modelo.Secao;
@@ -36,11 +37,18 @@ public class Pergunta {
 	@ManyToOne
 	@JoinColumn(name = "SC_ID")
 	private Secao secao;
+	
+	@ManyToOne
+	@JoinColumn(name = "PRGT_M_ID")
+	private Pergunta perguntaMae;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "PERGUNTA_OPCAO", joinColumns = @JoinColumn(name = "PRGT_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
 	private List<Opcao> opcoesParaSelecao;
 
+	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Pergunta> subPerguntas;
+	
 //	Strings
 
 	@Column(name = "TXT_PRGT")
@@ -74,14 +82,6 @@ public class Pergunta {
 
 	@Column(name = "ORD")
 	private Integer ordem;
-
-	// Define se a pergunta é uma subpegunta
-	@Column(name = "IS_SB_PRGT")
-	private Integer isSubPergunta; // 0 Não, 1 Sim
-
-	// Informar o id da pergunta mãe
-	@Column(name = "PRGT_M_ID")
-	private Long perguntaMaeId;
 
 //	Fim dos atributos
 
@@ -177,28 +177,28 @@ public class Pergunta {
 		this.ordem = ordem;
 	}
 
-	public Integer getIsSubPergunta() {
-		return isSubPergunta;
-	}
-
-	public void setIsSubPergunta(Integer isSubPergunta) {
-		this.isSubPergunta = isSubPergunta;
-	}
-
-	public Long getPerguntaMaeId() {
-		return perguntaMaeId;
-	}
-
-	public void setPerguntaMaeId(Long perguntaMaeId) {
-		this.perguntaMaeId = perguntaMaeId;
-	}
-
 	public TipoPergunta getTipoPergunta() {
 		return tipoPergunta;
 	}
 
 	public void setTipoPergunta(TipoPergunta tipoPergunta) {
 		this.tipoPergunta = tipoPergunta;
+	}
+
+	public Pergunta getPerguntaMae() {
+		return perguntaMae;
+	}
+
+	public List<Pergunta> getSubPerguntas() {
+		return subPerguntas;
+	}
+
+	public void setPerguntaMae(Pergunta perguntaMae) {
+		this.perguntaMae = perguntaMae;
+	}
+
+	public void setSubPerguntas(List<Pergunta> subPerguntas) {
+		this.subPerguntas = subPerguntas;
 	}
 
 	@Override

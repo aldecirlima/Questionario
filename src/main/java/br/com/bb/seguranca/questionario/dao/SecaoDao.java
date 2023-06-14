@@ -21,15 +21,12 @@ public class SecaoDao implements Serializable {
 
 	public void salvar(Secao secao) {
 		manager.merge(secao);
-
 	}
 
 	public Secao findById(Long id) {
 		String jpql = "SELECT s FROM Secao s WHERE s.idSecao = :id";
-
 		TypedQuery<Secao> query = manager.createQuery(jpql, Secao.class);
 		query.setParameter("id", id);
-
 		return query.getSingleResult();
 	}
 

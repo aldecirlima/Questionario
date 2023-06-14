@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,7 +16,7 @@ import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class QuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,8 +45,6 @@ public class QuestionarioBean implements Serializable {
 		
 		try {
 			this.objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
-			System.out.println("ID: " + objQuestionario.getIdQuestionario());
-			System.out.println("Titulo: " + objQuestionario.getNomeQuestionario());
 			FacesMessages.info("Questionário salvo com sucesso! ID: " + objQuestionario.getIdQuestionario());
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
