@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class PerguntaBean implements Serializable {
 
 	private Pergunta objPerguntaNivelDois;
 
+	private Pergunta objPerguntaNivelTres;
+
 	@Inject
 	private QuestionarioService questionarioService;
 
@@ -51,6 +54,7 @@ public class PerguntaBean implements Serializable {
 	public void init() {
 		objPerguntaNivelUm = new Pergunta();
 		objPerguntaNivelDois = new Pergunta();
+		objPerguntaNivelTres = new Pergunta();
 	}
 
 	public void buscaQuestionariosNaoAtivos() {
@@ -86,9 +90,19 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
-	public void atualizaPergunta() {
+	public void atualizaPerguntaNivelUm() {
 		try {
 			this.objPerguntaNivelUm = perguntaService.findById(idLong);
+			this.objPerguntaNivelUm.getSubPerguntas().sort(Collections.reverseOrder());
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
+		}
+	}
+
+	public void atualizaPerguntaNivelDois() {
+		try {
+			this.objPerguntaNivelDois = perguntaService.findById(idLong);
+			this.objPerguntaNivelDois.getSubPerguntas().sort(Collections.reverseOrder());
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
 		}
@@ -126,17 +140,32 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
+	public void preparaPerguntaNivelTres() {
+		Pergunta pergunta = new Pergunta();
+		pergunta.setDataCadastro(new Date());
+		pergunta.setMatriculaCadastro("F0394519");
+		pergunta.setPerguntaAtiva(0);
+		pergunta.setOrdem(objPerguntaNivelDois.getSubPerguntas().size() + 1);
+		pergunta.setPerguntaMae(objPerguntaNivelDois);
+		objPerguntaNivelDois.getSubPerguntas().add(0, pergunta);
+		try {
+			objPerguntaNivelDois = perguntaService.persistePergunta(objPerguntaNivelDois);
+			FacesMessages.info("Pergunta nível três incluída. Utilize a opção editar.");
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao criar pergunta " + e.getMessage());
+		}
+	}
+
 	public void salvaPerguntaNivelUm() {
 		Integer index = objSecao.getPerguntas().indexOf(objPerguntaNivelUm);
 		objSecao.getPerguntas().set(index, objPerguntaNivelUm);
 		try {
 			secaoService.salvarSecao(objSecao);
 			FacesMessages.info("Pergunta nível um salva com sucesso.");
+			this.fechaDialogPergunta();
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
-		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
-		PrimeFaces.current().ajax().update("formPerguntas");
 	}
 
 	public void salvaPerguntaNivelDois() {
@@ -145,9 +174,25 @@ public class PerguntaBean implements Serializable {
 		try {
 			perguntaService.salvarPergunta(objPerguntaNivelUm);
 			FacesMessages.info("Pergunta nível dois salva com sucesso.");
+			this.fechaDialogPergunta();
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
+	}
+
+	public void salvaPerguntaNivelTres() {
+		Integer index = objPerguntaNivelDois.getSubPerguntas().indexOf(objPerguntaNivelTres);
+		objPerguntaNivelDois.getSubPerguntas().set(index, objPerguntaNivelTres);
+		try {
+			perguntaService.salvarPergunta(objPerguntaNivelDois);
+			FacesMessages.info("Pergunta nível três salva com sucesso.");
+			this.fechaDialogPergunta();
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
+		}
+	}
+
+	public void fechaDialogPergunta() {
 		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
 		PrimeFaces.current().ajax().update("formPerguntas");
 	}
@@ -158,6 +203,7 @@ public class PerguntaBean implements Serializable {
 		this.objSecao = null;
 		this.objPerguntaNivelUm = new Pergunta();
 		this.objPerguntaNivelDois = new Pergunta();
+		this.objPerguntaNivelTres = new Pergunta();
 	}
 
 	public TipoPergunta[] getTipoPergunta() {
@@ -202,6 +248,14 @@ public class PerguntaBean implements Serializable {
 
 	public void setObjPerguntaNivelDois(Pergunta objPerguntaNivelDois) {
 		this.objPerguntaNivelDois = objPerguntaNivelDois;
+	}
+
+	public Pergunta getObjPerguntaNivelTres() {
+		return objPerguntaNivelTres;
+	}
+
+	public void setObjPerguntaNivelTres(Pergunta objPerguntaNivelTres) {
+		this.objPerguntaNivelTres = objPerguntaNivelTres;
 	}
 
 	public Long getIdLong() {

@@ -13,7 +13,7 @@
 			listener="#{perguntaBean.buscaQuestionariosNaoAtivos}" />
 	</f:metadata>
 
-	<ui:define name="titulo">Cadastro de peguntas nível dois</ui:define>
+	<ui:define name="titulo">Cadastro de peguntas nível três</ui:define>
 
 	<ui:define name="conteudo">
 
@@ -69,9 +69,11 @@
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaSecao}" />
 
-					<p:outputLabel value="Pergunta" for="menuPgt" styleClass="mr-10"
+
+
+					<p:outputLabel value="Pergunta N1" for="menuPgt1" styleClass="mr-10"
 						rendered="#{perguntaBean.objSecao.perguntas ne null}" />
-					<p:selectOneMenu id="menuPgt" value="#{perguntaBean.idLong}"
+					<p:selectOneMenu id="menuPgt1" value="#{perguntaBean.idLong}"
 						styleClass="cssColunm-w-100-p"
 						rendered="#{perguntaBean.objSecao.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPergunta eq null}"
 						required="true" filter="true" filterMatchMode="contains"
@@ -88,14 +90,51 @@
 						value="Id: #{perguntaBean.objPerguntaNivelUm.idPergunta} - título: #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
 
 					<p:commandButton process="@this" update="@this"
-						rendered="#{perguntaBean.objSecao.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPergunta eq null}"
-						style="margin-left: 25px" title="Ver perguntas nível 2" ajax="false"
-						icon="fa fa-search"
+						disabled="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+						rendered="#{perguntaBean.objSecao.perguntas ne null}"
+						style="margin-left: 25px" title="Ver perguntas nível 2"
+						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaPerguntaNivelUm}" />
+
+
+
+
+
+					<p:outputLabel value="Pergunta N2" for="menuPgt2" styleClass="mr-10"
+						rendered="#{perguntaBean.objPerguntaNivelUm.subPerguntas ne null}" />
+					<p:selectOneMenu id="menuPgt2" value="#{perguntaBean.idLong}"
+						styleClass="cssColunm-w-100-p"
+						rendered="#{perguntaBean.objPerguntaNivelUm.subPerguntas ne null and perguntaBean.objPerguntaNivelDois.idPergunta eq null}"
+						required="true" filter="true" filterMatchMode="contains"
+						disabled="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
+						requiredMessage="Selecione uma opção">
+						<f:selectItem itemLabel="Selecione..." itemValue="" />
+						<f:selectItems value="#{perguntaBean.objPerguntaNivelUm.subPerguntas}"
+							itemValue="#{pgt.idPergunta}" var="pgt"
+							itemLabel="Id: #{pgt.idPergunta} - rótulo: #{pgt.textoPergunta}" />
+					</p:selectOneMenu>
+					<p:inputText
+						rendered="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
+						disabled="true" styleClass="cssColunm-w-100-p"
+						value="Id: #{perguntaBean.objPerguntaNivelDois.idPergunta} - título: #{perguntaBean.objPerguntaNivelDois.textoPergunta}" />
+
+					<p:commandButton process="@this" update="@this"
+						rendered="#{perguntaBean.objPerguntaNivelUm.subPerguntas ne null and perguntaBean.objPerguntaNivelDois.idPergunta eq null}"
+						style="margin-left: 25px" title="Ver perguntas nível 2"
+						ajax="false" icon="fa fa-search"
+						actionListener="#{perguntaBean.atualizaPerguntaNivelDois}" />
+
+
+
+
+
+
+
+
 
 					<p:commandButton process="@this"
 						update="@form :formCadastroPeguntas :formPerguntas"
-						rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+						rendered="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
 						style="margin-left: 25px" title="Desbloquear" ajax="false"
 						icon="fa fa-lock"
 						actionListener="#{perguntaBean.cleanQuestionario}" />
@@ -108,12 +147,12 @@
 			<h:form id="formPerguntas">
 				<p:dataTable id="listPerguntas" size="small" allowUnsorting="true"
 					sortMode="single"
-					rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
-					value="#{perguntaBean.objPerguntaNivelUm.subPerguntas}" var="pgt"
+					rendered="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
+					value="#{perguntaBean.objPerguntaNivelDois.subPerguntas}" var="pgt"
 					paginator="true" rows="10"
 					emptyMessage="Pergunta selecionada não possui subperguntas"
 					paginatorPosition="bottom" rowKey="#{pgt.idPergunta}">
-					<f:facet name="header">Perguntas filhas da pergunta mãe Id: #{perguntaBean.objPerguntaNivelUm.idPergunta}</f:facet>
+					<f:facet name="header">Perguntas filhas da pergunta mãe Id: #{perguntaBean.objPerguntaNivelDois.idPergunta}</f:facet>
 
 					<p:column headerText="Id" width="5%" sortBy="#{pgt.idPergunta}">
 						<h:outputText value="#{pgt.idPergunta}" />
@@ -145,7 +184,7 @@
 							styleClass="edit-button rounded-button ui-button-success"
 							process="@this">
 							<f:setPropertyActionListener value="#{pgt}"
-								target="#{perguntaBean.objPerguntaNivelDois}" />
+								target="#{perguntaBean.objPerguntaNivelTres}" />
 							<p:resetInput target=":dialogs:manage-pergunta" />
 						</p:commandButton>
 
@@ -154,16 +193,16 @@
 				</p:dataTable>
 
 				<p:commandButton process="@this"
-					rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
-					update="@form :formPerguntas" value="Pergunta N2"
-					style="margin: 15px 20px 0px 12px" title="Criar pergunta nível 2"
+					rendered="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
+					update="@form :formPerguntas" value="Pergunta N3"
+					style="margin: 15px 20px 0px 12px" title="Criar pergunta nível 3"
 					ajax="false" icon="fa fa-plus"
-					actionListener="#{perguntaBean.preparaPerguntaNivelDois}" />
+					actionListener="#{perguntaBean.preparaPerguntaNivelTres}" />
 
 			</h:form>
 
-			<p:dialog header="Editar pergunta nível 2" showEffect="fade" modal="true"
-				fitViewport="true" closable="true" resizable="true"
+			<p:dialog header="Editar pergunta nível 3" showEffect="fade"
+				modal="true" fitViewport="true" closable="true" resizable="true"
 				widgetVar="managePerguntaDialog" responsive="true">
 				<h:form id="dialogs">
 					<p:outputPanel id="manage-pergunta" class="ui-fluid">
@@ -171,36 +210,39 @@
 							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 
 							<p:outputLabel value="Pergunta mãe" />
-							<c:if test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() lt 51}">
+							<c:if
+								test="#{perguntaBean.objPerguntaNivelDois.textoPergunta.length() lt 51}">
 								<p:inputText id="idPerguntaMae" disabled="true"
-									value="ID: #{perguntaBean.objPerguntaNivelUm.idPergunta} - #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
+									value="ID: #{perguntaBean.objPerguntaNivelDois.idPergunta} - #{perguntaBean.objPerguntaNivelDois.textoPergunta}" />
 							</c:if>
-							<c:if test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() gt 50}">
+							<c:if
+								test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() gt 50}">
 								<p:inputText id="idPerguntaMae2" disabled="true"
-									value="ID: #{perguntaBean.objPerguntaNivelUm.idPergunta} - #{perguntaBean.objPerguntaNivelUm.textoPergunta.substring(0,50)}" />
+									value="ID: #{perguntaBean.objPerguntaNivelDois.idPergunta} - #{perguntaBean.objPerguntaNivelDois.textoPergunta.substring(0,50)}" />
 							</c:if>
 							<p:outputLabel for="idPergunta" value="ID" />
 							<p:inputNumber id="idPergunta" disabled="true"
-								value="#{perguntaBean.objPerguntaNivelDois.idPergunta}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelTres.idPergunta}" size="9" />
 
 							<p:outputLabel for="textoPergunta" value="Rótulo" />
 
 							<p:inputText id="textoPergunta" title="Limite 150 caracteres"
 								styleClass="cssColunm-w-100-p" required="true"
 								requiredMessage="Informe um rótulo"
-								value="#{perguntaBean.objPerguntaNivelDois.textoPergunta}"
+								value="#{perguntaBean.objPerguntaNivelTres.textoPergunta}"
 								maxlength="150" />
 
 							<p:outputLabel for="titlePergunta" value="Ajuda" />
 							<p:inputText id="titlePergunta" styleClass="cssColunm-w-100-p"
 								title="Texto de ajuda da pergunta (não obrigatório). Limite 150 caracteres"
-								value="#{perguntaBean.objPerguntaNivelDois.title}" maxlength="150" />
+								value="#{perguntaBean.objPerguntaNivelTres.title}"
+								maxlength="150" />
 
 							<p:outputLabel value="Tipo" for="tipoPergunta" />
 							<p:selectOneMenu id="tipoPergunta" required="true" filter="true"
 								filterMatchMode="contains"
 								requiredMessage="Informe o tipo da pergunta"
-								value="#{perguntaBean.objPerguntaNivelDois.tipoPergunta}">
+								value="#{perguntaBean.objPerguntaNivelTres.tipoPergunta}">
 								<f:selectItem itemLabel="Selecione..." />
 								<f:selectItems value="#{perguntaBean.tipoPergunta}"
 									var="tipoPergunta" itemLabel="#{tipoPergunta.descricao}"
@@ -210,12 +252,12 @@
 							<p:outputLabel for="ordemPergunta" value="Ordem" />
 							<p:inputNumber id="ordemPergunta" size="9" required="true"
 								title="Ordem da pergunta" requiredMessage="Informe a ordem"
-								value="#{perguntaBean.objPerguntaNivelDois.ordem}" minValue="0" />
+								value="#{perguntaBean.objPerguntaNivelTres.ordem}" minValue="0" />
 
 							<p:outputLabel for="perguntaAtiva" value="Ativa" />
 							<p:selectOneRadio id="perguntaAtiva" required="true"
 								requiredMessage="Informe se a pergunta está ativa"
-								value="#{perguntaBean.objPerguntaNivelDois.perguntaAtiva}">
+								value="#{perguntaBean.objPerguntaNivelTres.perguntaAtiva}">
 								<f:selectItem itemLabel="Sim" itemValue="1" />
 								<f:selectItem itemLabel="Não" itemValue="0" />
 							</p:selectOneRadio>
@@ -226,7 +268,7 @@
 
 					<div class="footer-dialog">
 						<p:commandButton value="Salvar" icon="fa fa-check"
-							actionListener="#{perguntaBean.salvaPerguntaNivelDois}"
+							actionListener="#{perguntaBean.salvaPerguntaNivelTres}"
 							update="@form :growl" ajax="true" process="@form" />
 						<p:commandButton value="Cancelar" icon="fa fa-times"
 							onclick="PF('managePerguntaDialog').hide()"

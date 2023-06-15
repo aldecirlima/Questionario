@@ -24,7 +24,7 @@ import br.com.bb.seguranca.questionario.modelo.Secao;
 
 @Entity
 @Table(name = "PERGUNTA")
-public class Pergunta {
+public class Pergunta implements Comparable<Pergunta> {
 
 //	Id
 	@Id
@@ -37,7 +37,7 @@ public class Pergunta {
 	@ManyToOne
 	@JoinColumn(name = "SC_ID")
 	private Secao secao;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "PRGT_M_ID")
 	private Pergunta perguntaMae;
@@ -48,7 +48,7 @@ public class Pergunta {
 
 	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Pergunta> subPerguntas;
-	
+
 //	Strings
 
 	@Column(name = "TXT_PRGT")
@@ -216,6 +216,17 @@ public class Pergunta {
 			return false;
 		Pergunta other = (Pergunta) obj;
 		return Objects.equals(idPergunta, other.idPergunta);
+	}
+
+	@Override
+	public int compareTo(Pergunta pergunta) {
+		if (this.idPergunta < pergunta.idPergunta) {
+			return -1;
+		}
+		if (this.idPergunta > pergunta.idPergunta) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
