@@ -34,9 +34,9 @@ public class PerguntaBean implements Serializable {
 
 	private Secao objSecao;
 
-	private Pergunta objPergunta;
+	private Pergunta objPerguntaNivelUm;
 
-	private Pergunta objSubpergunta;
+	private Pergunta objPerguntaNivelDois;
 
 	@Inject
 	private QuestionarioService questionarioService;
@@ -49,8 +49,8 @@ public class PerguntaBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		objPergunta = new Pergunta();
-		objSubpergunta = new Pergunta();
+		objPerguntaNivelUm = new Pergunta();
+		objPerguntaNivelDois = new Pergunta();
 	}
 
 	public void buscaQuestionariosNaoAtivos() {
@@ -88,60 +88,50 @@ public class PerguntaBean implements Serializable {
 
 	public void atualizaPergunta() {
 		try {
-			this.objPergunta = perguntaService.findById(idLong);
+			this.objPerguntaNivelUm = perguntaService.findById(idLong);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
 		}
 	}
 
-	public void preparaPergunta() {
+	public void preparaPerguntaNivelUm() {
 		Pergunta pergunta = new Pergunta();
 		pergunta.setDataCadastro(new Date());
 		pergunta.setMatriculaCadastro("F0394519");
 		pergunta.setPerguntaAtiva(0);
-		if (objSecao.getPerguntas() != null) {
-			pergunta.setOrdem(objSecao.getPerguntas().size() + 1);
-		} else {
-			pergunta.setOrdem(0);
-		}
+		pergunta.setOrdem(objSecao.getPerguntas().size() + 1);
 		pergunta.setSecao(objSecao);
 		objSecao.getPerguntas().add(0, pergunta);
 		try {
 			objSecao = secaoService.persisteSecao(objSecao);
-			FacesMessages.info("Nova pergunta incluída. Utilize a opção editar.");
+			FacesMessages.info("Pergunta nível um incluída. Utilize a opção editar.");
 		} catch (Exception e) {
-			FacesMessages.error("Erro ao criar uma pergunta " + e.getMessage());
+			FacesMessages.error("Erro ao criar pergunta " + e.getMessage());
 		}
-
 	}
 
-	public void preparaSubPergunta() {
+	public void preparaPerguntaNivelDois() {
 		Pergunta pergunta = new Pergunta();
 		pergunta.setDataCadastro(new Date());
 		pergunta.setMatriculaCadastro("F0394519");
 		pergunta.setPerguntaAtiva(0);
-		if (objSubpergunta.getSubPerguntas() != null) {
-			pergunta.setOrdem(objSubpergunta.getSubPerguntas().size() + 1);
-		} else {
-			pergunta.setOrdem(1);
-		}
-		pergunta.setPerguntaMae(objPergunta);
-		objPergunta.getSubPerguntas().add(0, pergunta);
+		pergunta.setOrdem(objPerguntaNivelUm.getSubPerguntas().size() + 1);
+		pergunta.setPerguntaMae(objPerguntaNivelUm);
+		objPerguntaNivelUm.getSubPerguntas().add(0, pergunta);
 		try {
-			objPergunta = perguntaService.persistePergunta(objPergunta);
-			FacesMessages.info("Nova subpergunta incluída. Utilize a opção editar.");
+			objPerguntaNivelUm = perguntaService.persistePergunta(objPerguntaNivelUm);
+			FacesMessages.info("Pergunta nível dois incluída. Utilize a opção editar.");
 		} catch (Exception e) {
-			FacesMessages.error("Erro ao criar uma subpergunta " + e.getMessage());
+			FacesMessages.error("Erro ao criar pergunta " + e.getMessage());
 		}
-
 	}
 
-	public void salvaPergunta() {
-		Integer index = objSecao.getPerguntas().indexOf(objPergunta);
-		objSecao.getPerguntas().set(index, objPergunta);
+	public void salvaPerguntaNivelUm() {
+		Integer index = objSecao.getPerguntas().indexOf(objPerguntaNivelUm);
+		objSecao.getPerguntas().set(index, objPerguntaNivelUm);
 		try {
 			secaoService.salvarSecao(objSecao);
-			FacesMessages.info("Pergunta salva com sucesso.");
+			FacesMessages.info("Pergunta nível um salva com sucesso.");
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
@@ -149,14 +139,14 @@ public class PerguntaBean implements Serializable {
 		PrimeFaces.current().ajax().update("formPerguntas");
 	}
 
-	public void salvaSubpergunta() {
-		Integer index = objPergunta.getSubPerguntas().indexOf(objSubpergunta);
-		objPergunta.getSubPerguntas().set(index, objSubpergunta);
+	public void salvaPerguntaNivelDois() {
+		Integer index = objPerguntaNivelUm.getSubPerguntas().indexOf(objPerguntaNivelDois);
+		objPerguntaNivelUm.getSubPerguntas().set(index, objPerguntaNivelDois);
 		try {
-			perguntaService.salvarPergunta(objPergunta);
-			FacesMessages.info("Subpergunta salva com sucesso.");
+			perguntaService.salvarPergunta(objPerguntaNivelUm);
+			FacesMessages.info("Pergunta nível dois salva com sucesso.");
 		} catch (Exception e) {
-			FacesMessages.error("Erro ao salvar Subpergunta " + e.getMessage());
+			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
 		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
 		PrimeFaces.current().ajax().update("formPerguntas");
@@ -166,8 +156,8 @@ public class PerguntaBean implements Serializable {
 		this.idLong = null;
 		this.perguntaQuestionario = null;
 		this.objSecao = null;
-		this.objPergunta = new Pergunta();
-		this.objSubpergunta = new Pergunta();
+		this.objPerguntaNivelUm = new Pergunta();
+		this.objPerguntaNivelDois = new Pergunta();
 	}
 
 	public TipoPergunta[] getTipoPergunta() {
@@ -198,20 +188,20 @@ public class PerguntaBean implements Serializable {
 		this.objSecao = objSecao;
 	}
 
-	public Pergunta getObjPergunta() {
-		return objPergunta;
+	public Pergunta getObjPerguntaNivelUm() {
+		return objPerguntaNivelUm;
 	}
 
-	public void setObjPergunta(Pergunta objPergunta) {
-		this.objPergunta = objPergunta;
+	public void setObjPerguntaNivelUm(Pergunta objPerguntaNivelUm) {
+		this.objPerguntaNivelUm = objPerguntaNivelUm;
 	}
 
-	public Pergunta getObjSubpergunta() {
-		return objSubpergunta;
+	public Pergunta getObjPerguntaNivelDois() {
+		return objPerguntaNivelDois;
 	}
 
-	public void setObjSubpergunta(Pergunta objSubpergunta) {
-		this.objSubpergunta = objSubpergunta;
+	public void setObjPerguntaNivelDois(Pergunta objPerguntaNivelDois) {
+		this.objPerguntaNivelDois = objPerguntaNivelDois;
 	}
 
 	public Long getIdLong() {

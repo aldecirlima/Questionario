@@ -38,12 +38,10 @@ public class QuestionarioEditarBean implements Serializable {
 	}
 
 	public void salvaQuestionario() {
-
 		try {
 			questionarioService.salvarQuestionario(objQuestionario);
 			atualizaListaQuestionarios();
 			FacesMessages.info("Questionário salvo com sucesso!");
-
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
 		}

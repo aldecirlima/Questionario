@@ -40,34 +40,27 @@ public class QuestionarioBean implements Serializable {
 	}
 
 	public void preparaQuestionario() {
-
 		populaQuestionario();
-		
 		try {
 			this.objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
 			FacesMessages.info("Questionário salvo com sucesso! ID: " + objQuestionario.getIdQuestionario());
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
 		}
-
 	}
 
 	public void salvaQuestionario() {
-
 		if (this.objQuestionario.getIdQuestionario() == null) {
 			this.preparaQuestionario();
 			this.objQuestionario = new Questionario();
 			return;
 		}
-
 		try {
 			questionarioService.salvarQuestionario(objQuestionario);
 			FacesMessages.info("Questionário salvo com sucesso!");
-
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
 		}
-
 	}
 
 	public void atualizaListaQuestionarios() {
@@ -77,7 +70,7 @@ public class QuestionarioBean implements Serializable {
 			FacesMessages.error("Erro na busca por questionários - " + e.getMessage());
 		}
 	}
-	
+
 	private void populaQuestionario() {
 		this.objQuestionario.setSecoes(new ArrayList<Secao>());
 		this.objQuestionario.setMatriculaGravacao("F0394519");
