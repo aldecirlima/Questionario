@@ -51,13 +51,13 @@ public class Pergunta implements Comparable<Pergunta> {
 
 //	Strings
 
-	@Column(name = "TXT_PRGT")
+	@Column(name = "TXT_PRGT", length = 200)
 	private String textoPergunta;
 
-	@Column(name = "MTR_CDST")
+	@Column(name = "MTR_CDST", length = 8)
 	private String matriculaCadastro;
 
-	@Column(name = "MTR_EXCL")
+	@Column(name = "MTR_EXCL", length = 8)
 	private String matriculaExclusao;
 
 	@Column(name = "TTL")
@@ -73,14 +73,14 @@ public class Pergunta implements Comparable<Pergunta> {
 
 //	Integers
 //	0=não 1=sim
-	@Column(name = "PRGT_ATV")
+	@Column(name = "PRGT_ATV", length = 1)
 	private Integer perguntaAtiva;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = true, length = 30, name = "TP_PRGT")
 	private TipoPergunta tipoPergunta;
 
-	@Column(name = "ORD")
+	@Column(name = "ORD", length = 9)
 	private Integer ordem;
 
 //	Fim dos atributos

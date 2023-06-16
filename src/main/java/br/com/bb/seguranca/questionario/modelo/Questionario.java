@@ -32,19 +32,19 @@ public class Questionario {
 
 //	Strings
 
-	@Column(name = "NM_QST")
+	@Column(name = "NM_QST", length = 50)
 	private String nomeQuestionario;
 
-	@Column(name = "MTR_GRV")
+	@Column(name = "MTR_GRV", length = 8)
 	private String matriculaGravacao;
 	
-	@Column(name = "DSC_QST")
+	@Column(name = "DSC_QST", length = 150)
 	private String descricaoQuestionario;
 
-	@Column(name = "MTR_ATV")
+	@Column(name = "MTR_ATV", length = 8)
 	private String matriculaAtivacao;
 
-	@Column(name = "MTR_ENCRR")
+	@Column(name = "MTR_ENCRR", length = 8)
 	private String matriculaEncerramento;
 
 //	Dates
@@ -60,7 +60,7 @@ public class Questionario {
 
 //	Integers
 
-	@Column(name = "QST_ATV")
+	@Column(name = "QST_ATV", length = 1)
 	private Integer questionarioAtivo; // Inativo=0, ativo=1, baixado=3
 
 //	Fim dos atributos

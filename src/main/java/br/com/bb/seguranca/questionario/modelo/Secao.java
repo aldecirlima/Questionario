@@ -39,17 +39,17 @@ public class Secao {
 
 //	Strings
 
-	@Column(name = "NM_SC")
+	@Column(name = "NM_SC", length = 50)
 	private String nomeSecao;
 
 	// Alterar para descrição secao
 	@Column(name = "DSC_SC")
 	private String descricaoSecao;
 
-	@Column(name = "MTR_GRV")
+	@Column(name = "MTR_GRV", length = 8)
 	private String matriculaGravacao;
 
-	@Column(name = "MTR_EXCL")
+	@Column(name = "MTR_EXCL", length = 8)
 	private String matriculaExclusao;
 
 //	Dates
@@ -62,10 +62,10 @@ public class Secao {
 
 //	Integers
 
-	@Column(name = "SC_ATV")
+	@Column(name = "SC_ATV", length = 1)
 	private Integer secaoAtiva; // Inativo=0, ativo=1
 	
-	@Column(name = "ORD_SC")
+	@Column(name = "ORD_SC", length = 9)
 	private Integer ordemSecao; // ordem da seção no questionário
 
 //	Fim dos atributos

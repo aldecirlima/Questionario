@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"	
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	template="../WEB-INF/templates/LayoutNovo.xhtml">
+
+	<ui:define name="titulo">Cadastrar opção</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastrar opções">
+			<h:form id="formCadastroOpcao">
+				<p:panelGrid columns="2" columnClasses="cssColumn150, cssColumn700">
+					<p:outputLabel value="Rótulo:" />
+					<h:panelGroup>
+						<p:inputText required="true"
+							requiredMessage="Informe o rótulo da opção" counter="display"
+							counterTemplate="{0} caracteres restantes"
+							styleClass="cssColunm-w-100-p" maxlength="80"
+							disabled="#{opcaoBean.objOpcao.idOpcao ne null}"
+							pt:data-tooltip="Limite 80 caracteres"
+							value="#{opcaoBean.objOpcao.nomeOpcao}" />
+						<h:outputText id="display" class="block" style="font-size: 12px;" />
+					</h:panelGroup>
+				</p:panelGrid>
+
+				<br />
+				<p:commandButton
+					actionListener="#{opcaoBean.salvaOpcao}"
+					process="@this" value="Salvar" ajax="false" update="@form" />
+
+			</h:form>
+			<br />
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

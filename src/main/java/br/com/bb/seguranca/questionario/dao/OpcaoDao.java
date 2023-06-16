@@ -1,18 +1,40 @@
 package br.com.bb.seguranca.questionario.dao;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import br.com.bb.seguranca.questionario.modelo.perguntas.Opcao;
-import br.com.bb.seguranca.questionario.util.JPAUtil;
 
-public class OpcaoDao {
+public class OpcaoDao implements Serializable {
 
-	EntityManager em = JPAUtil.getEntityManagerMysql();
-	
-	MainDao mainDao = new MainDao();
-	
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private EntityManager manager;
+
+	public Opcao persistir(Opcao opcao) {
+		return manager.merge(opcao);
+	}
+
 	public void salvar(Opcao opcao) {
-		mainDao.salvar(opcao, em);
+		manager.merge(opcao);
+	}
+
+	public Opcao findById(Long id) {
+		String jpql = "SELECT o FROM Opcao o WHERE o.idOpcao = :id";
+		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
+	}
+
+	public List<Opcao> buscaTodasOpcoes() {
+		String jpql = "SELECT o FROM Opcao o";
+		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
+		return query.getResultList();
 	}
 
 }
