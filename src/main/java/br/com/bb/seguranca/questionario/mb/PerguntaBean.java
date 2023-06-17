@@ -16,6 +16,7 @@ import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
 import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
 import br.com.bb.seguranca.questionario.modelo.perguntas.TipoPergunta;
+import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.service.PerguntaService;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.service.SecaoService;
@@ -49,6 +50,9 @@ public class PerguntaBean implements Serializable {
 
 	@Inject
 	private PerguntaService perguntaService;
+
+	@Inject
+	private OpcaoService opcaoService;
 
 	@PostConstruct
 	public void init() {
@@ -156,7 +160,9 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
+//	Métodos para salvar as perguntas
 	public void salvaPerguntaNivelUm() {
+		objPerguntaNivelUm = insereListaOpcoes(objPerguntaNivelUm);
 		Integer index = objSecao.getPerguntas().indexOf(objPerguntaNivelUm);
 		objSecao.getPerguntas().set(index, objPerguntaNivelUm);
 		try {
@@ -169,6 +175,10 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void salvaPerguntaNivelDois() {
+		if (objPerguntaNivelDois.getTipoPergunta().equals(TipoPergunta.S_N)
+				|| objPerguntaNivelDois.getTipoPergunta().equals(TipoPergunta.S_N_NA)) {
+			objPerguntaNivelDois = insereListaOpcoes(objPerguntaNivelDois);
+		}
 		Integer index = objPerguntaNivelUm.getSubPerguntas().indexOf(objPerguntaNivelDois);
 		objPerguntaNivelUm.getSubPerguntas().set(index, objPerguntaNivelDois);
 		try {
@@ -181,8 +191,13 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void salvaPerguntaNivelTres() {
+		if (objPerguntaNivelTres.getTipoPergunta().equals(TipoPergunta.S_N)
+				|| objPerguntaNivelTres.getTipoPergunta().equals(TipoPergunta.S_N_NA)) {
+			objPerguntaNivelTres = insereListaOpcoes(objPerguntaNivelTres);
+		}
 		Integer index = objPerguntaNivelDois.getSubPerguntas().indexOf(objPerguntaNivelTres);
 		objPerguntaNivelDois.getSubPerguntas().set(index, objPerguntaNivelTres);
+
 		try {
 			perguntaService.salvarPergunta(objPerguntaNivelDois);
 			FacesMessages.info("Pergunta nível três salva com sucesso.");
@@ -191,10 +206,20 @@ public class PerguntaBean implements Serializable {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
 		}
 	}
+//	Fim dos métodos para salvar perguntas
 
 	public void fechaDialogPergunta() {
 		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
 		PrimeFaces.current().ajax().update("formPerguntas");
+	}
+
+	public Pergunta insereListaOpcoes(Pergunta pergunta) {
+		if (pergunta.getTipoPergunta() == TipoPergunta.S_N) {
+			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNao());
+		} else if (pergunta.getTipoPergunta() == TipoPergunta.S_N_NA) {
+			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNaoNaoSeAplica());
+		}
+		return pergunta;
 	}
 
 	public void cleanQuestionario() {

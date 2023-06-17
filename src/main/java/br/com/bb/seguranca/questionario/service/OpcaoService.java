@@ -40,4 +40,12 @@ public class OpcaoService implements Serializable {
 		return opcaoDao.findById(id);
 	}
 
+	public List<Opcao> buscaSimNao() {
+		return opcaoDao.buscaSimNao();
+	}
+
+	public List<Opcao> buscaSimNaoNaoSeAplica() {
+		return opcaoDao.buscaSimNaoNaoSeAplica();
+	}
+
 }
