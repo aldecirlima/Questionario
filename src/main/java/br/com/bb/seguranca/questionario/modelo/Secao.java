@@ -34,7 +34,7 @@ public class Secao {
 	@JoinColumn(name = "QST_ID")
 	private Questionario questionario;
 
-	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pergunta> perguntas;
 
 //	Strings

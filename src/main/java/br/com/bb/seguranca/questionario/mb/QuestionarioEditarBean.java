@@ -39,8 +39,9 @@ public class QuestionarioEditarBean implements Serializable {
 
 	public void salvaQuestionario() {
 		try {
-			questionarioService.salvarQuestionario(objQuestionario);
-			atualizaListaQuestionarios();
+			objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
+			int index = listaQuestionarios.indexOf(objQuestionario);
+			listaQuestionarios.set(index, objQuestionario);
 			FacesMessages.info("Questionário salvo com sucesso!");
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
@@ -49,17 +50,22 @@ public class QuestionarioEditarBean implements Serializable {
 
 	public void atualizaListaQuestionarios() {
 		try {
-			this.listaQuestionarios = questionarioService.buscaQuestionariosNaoAtivos();
+			this.listaQuestionarios = questionarioService.buscaQuestionariosNaoAtivosSemFetch();
 		} catch (Exception e) {
 			FacesMessages.error("Erro na busca por questionários - " + e.getMessage());
 		}
 	}
 
 	public void deleteQuestionario() {
-		this.objQuestionario.setQuestionarioAtivo(3);
-		questionarioService.salvarQuestionario(objQuestionario);
-		this.atualizaListaQuestionarios();
-		FacesMessages.info("Questionário excluído com sucesso!");
+		objQuestionario.setQuestionarioAtivo(3);
+		try {
+			objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
+			int index = listaQuestionarios.indexOf(objQuestionario);
+			listaQuestionarios.remove(index);
+			FacesMessages.info("Questionário excluído com sucesso!");
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao salvar questionário!");
+		}
 	}
 
 	public String redirect(String pagina) {

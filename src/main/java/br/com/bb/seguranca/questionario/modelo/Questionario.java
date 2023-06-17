@@ -27,7 +27,7 @@ public class Questionario {
 
 //	Objetos
 
-	@OneToMany(mappedBy = "questionario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "questionario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Secao> secoes;
 
 //	Strings

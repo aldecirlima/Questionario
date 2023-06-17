@@ -37,6 +37,10 @@ public class QuestionarioService implements Serializable {
 		return questionarioDao.buscaQuestionariosNaoAtivos();
 	}
 
+	public List<Questionario> buscaQuestionariosNaoAtivosSemFetch() {
+		return questionarioDao.buscaQuestionariosNaoAtivosSemFetch();
+	}
+
 	public Questionario findById(Long id) {
 		return questionarioDao.findById(id);
 	}

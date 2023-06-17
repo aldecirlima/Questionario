@@ -77,7 +77,6 @@ public class OpcaoEditarBean implements Serializable {
 		listaDeOpcoes = opcaoService.buscaTodasOpcoes();
 		for (Opcao opcao : listaDeOpcoes) {
 			mapOpcoes.put(opcao.getIdOpcao().longValue(), opcao);
-			System.out.println(mapOpcoes.get(opcao.getIdOpcao()).getIdOpcao());
 		}
 
 	}

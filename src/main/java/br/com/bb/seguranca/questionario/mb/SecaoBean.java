@@ -2,7 +2,9 @@ package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -19,10 +21,12 @@ public class SecaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	List<Questionario> listaQuestionarios;
+	private List<Questionario> listaQuestionarios;
+
+	private Map<Long, Questionario> mapQuestionarios;
 
 	private Questionario secaoQuestionario;
-	
+
 	private Long idLong;
 
 	private Secao objSecao;
@@ -43,8 +47,15 @@ public class SecaoBean implements Serializable {
 	public void atualizaListaQuestionarios() {
 		try {
 			this.listaQuestionarios = questionarioService.buscaQuestionariosNaoAtivos();
+			mapQuestionarios = new HashMap<>();
+			for (Questionario questionario : listaQuestionarios) {
+				if (!mapQuestionarios.containsKey(questionario.getIdQuestionario())) {
+					mapQuestionarios.put(questionario.getIdQuestionario(), questionario);
+				}
+			}
 		} catch (Exception e) {
 			FacesMessages.error("Erro na busca por questionários - " + e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -77,7 +88,7 @@ public class SecaoBean implements Serializable {
 			secaoQuestionario.getSecoes().set(indice, objSecao);
 			try {
 				secaoQuestionario = questionarioService.persisteQuestionario(secaoQuestionario);
-				atualizaListaQuestionarios();
+				mapQuestionarios.replace(secaoQuestionario.getIdQuestionario(), secaoQuestionario);
 				FacesMessages.info("Seção salva com sucesso!");
 
 			} catch (Exception e) {
@@ -91,19 +102,19 @@ public class SecaoBean implements Serializable {
 			FacesMessages.error("Nenhum questionário selecionado!");
 		}
 	}
-	
+
 	public void atualizaQuestionario() {
 		try {
-			secaoQuestionario = questionarioService.findById(idLong);
+//			secaoQuestionario = questionarioService.findById(idLong);
+			secaoQuestionario = mapQuestionarios.get(idLong);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}
 	}
-	
+
 	public void cleanQuestionario() {
 		this.secaoQuestionario = null;
 	}
-
 
 	public List<Questionario> getListaQuestionarios() {
 		return listaQuestionarios;
@@ -127,6 +138,14 @@ public class SecaoBean implements Serializable {
 
 	public void setObjSecao(Secao objSecao) {
 		this.objSecao = objSecao;
+	}
+
+	public Map<Long, Questionario> getMapQuestionarios() {
+		return mapQuestionarios;
+	}
+
+	public void setMapQuestionarios(Map<Long, Questionario> mapQuestionarios) {
+		this.mapQuestionarios = mapQuestionarios;
 	}
 
 	public Long getIdLong() {

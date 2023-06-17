@@ -19,17 +19,17 @@
 
 		<p:fieldset legend="Cadastrar um questionário">
 			<h:form id="formCadastroQuestionario">
-				<p:panelGrid columns="2" columnClasses="cssColumn120, cssColumn500">
-					<p:outputLabel value="Titulo" />
+				<p:panelGrid columns="2" columnClasses="cssColumn150, cssColumn700">
+					<p:outputLabel value="Titulo" for="inputTitle" />
 					<p:inputText required="true" requiredMessage="Informe o título"
-						styleClass="cssColunm-w-100-p"
+						styleClass="cssColunm-w-100-p" id="inputTitle"
 						disabled="#{questionarioBean.objQuestionario.idQuestionario ne null}"
 						pt:data-tooltip="Digite o título para identificar o questionário"
 						value="#{questionarioBean.objQuestionario.nomeQuestionario}" />
 
-					<p:outputLabel value="Descrição" />
-					<p:inputTextarea required="true" requiredMessage="Informe o título"
-						styleClass="cssColunm-w-100-p"
+					<p:outputLabel value="Descrição" for="inputDescricao" />
+					<p:inputTextarea required="true" requiredMessage="Informe a descrição"
+						styleClass="cssColunm-w-100-p" id="inputDescricao"
 						disabled="#{questionarioBean.objQuestionario.idQuestionario ne null}"
 						pt:data-tooltip="Digite o título para identificar o questionário"
 						value="#{questionarioBean.objQuestionario.descricaoQuestionario}" />
