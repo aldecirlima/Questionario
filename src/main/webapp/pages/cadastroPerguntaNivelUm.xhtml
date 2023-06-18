@@ -12,7 +12,6 @@
 			listener="#{perguntaBean.buscaQuestionariosNaoAtivos}" />
 	</f:metadata>
 
-
 	<ui:define name="titulo">Cadastro de perguntas nível um</ui:define>
 
 	<ui:define name="conteudo">
@@ -70,6 +69,7 @@
 						style="margin-left: 25px" title="Ver perguntas da seção"
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaSecao}" />
+						
 					<p:commandButton process="@this" styleClass="edit-button"
 						update="@form :formCadastroPeguntas :formPerguntas"
 						rendered="#{perguntaBean.objSecao ne null}"
@@ -170,7 +170,6 @@
 								value="#{perguntaBean.objPerguntaNivelUm.idPergunta}" size="9" />
 
 							<p:outputLabel for="textoPergunta" value="Rótulo" />
-
 							<p:inputText id="textoPergunta" title="Limite 150 caracteres"
 								styleClass="cssColunm-w-100-p" required="true"
 								requiredMessage="Informe um rótulo"
@@ -205,7 +204,6 @@
 								<f:selectItem itemLabel="Sim" itemValue="1" />
 								<f:selectItem itemLabel="Não" itemValue="0" />
 							</p:selectOneRadio>
-
 						</p:panelGrid>
 
 					</p:outputPanel>
@@ -217,17 +215,16 @@
 						<p:commandButton value="Cancelar" icon="fa fa-times"
 							onclick="PF('managePerguntaDialog').hide()"
 							class="ui-button-secondary" type="button" />
-
 					</div>
 				</h:form>
 			</p:dialog>
-
 
 			<p:dialog header="Editar pergunta - Opções" showEffect="fade"
 				width="898px" modal="true" fitViewport="true" closable="true"
 				resizable="false" widgetVar="manageOpcoesDialog" responsive="false">
 				<h:form id="manage-opcoes-form">
 					<p:outputPanel id="manage-opcoes" class="ui-fluid">
+					
 						<p:panelGrid columns="4"
 							columnClasses="cssColumn150-no-border, cssColumn150-no-border, cssColumn150-no-border, cssColumn400-no-border">
 							<p:outputLabel value="ID" />
@@ -237,15 +234,17 @@
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelUm.tipoPergunta.descricao}" />
 						</p:panelGrid>
+						
 						<p:panelGrid columns="2"
 							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 							<p:outputLabel value="Rótulo" />
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
-
 						</p:panelGrid>
+						
 					</p:outputPanel>
 				</h:form>
+				
 				<h:form id="dialogOpcSel">
 					<p:panelGrid columns="3"
 						columnClasses="cssColumn150-no-border, cssColumn550-no-border, cssColumn150-no-border">
@@ -258,18 +257,13 @@
 							<f:selectItems value="#{perguntaBean.listaOpcoesDisponiveis}"
 								var="opc" itemLabel="#{opc.idOpcao} - #{opc.nomeOpcao}"
 								itemValue="#{opc.idOpcao}" />
-
 						</p:selectOneMenu>
-
 						<p:commandButton process="@form"
 							update="@form :dialogOpcoes :growl" style="margin-left: 5px"
 							title="Inserir opção" ajax="true" icon="fa fa-plus"
 							value="Inserir"
 							actionListener="#{perguntaBean.insereOpcaoNivelUm}" />
-
-
 					</p:panelGrid>
-
 				</h:form>
 
 				<h:form id="dialogOpcoes">

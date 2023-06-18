@@ -21,7 +21,7 @@
 
 			<h:form id="formQst">
 				<p:panelGrid columns="3" id="gridQst"
-					columnClasses="cssColumn150, cssColumn700, cssColumn120">
+					columnClasses="cssColumn150-no-border, cssColumn700-no-border, cssColumn150-no-border">
 
 					<p:outputLabel value="Questionário " for="menuQst" />
 					<p:inputText
@@ -69,9 +69,8 @@
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaSecao}" />
 
-
-
-					<p:outputLabel value="Pergunta N1" for="menuPgt1" styleClass="mr-10"
+					<p:outputLabel value="Pergunta N1" for="menuPgt1"
+						styleClass="mr-10"
 						rendered="#{perguntaBean.objSecao.perguntas ne null}" />
 					<p:selectOneMenu id="menuPgt1" value="#{perguntaBean.idLong}"
 						styleClass="cssColunm-w-100-p"
@@ -96,11 +95,8 @@
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaPerguntaNivelUm}" />
 
-
-
-
-
-					<p:outputLabel value="Pergunta N2" for="menuPgt2" styleClass="mr-10"
+					<p:outputLabel value="Pergunta N2" for="menuPgt2"
+						styleClass="mr-10"
 						rendered="#{perguntaBean.objPerguntaNivelUm.subPerguntas ne null}" />
 					<p:selectOneMenu id="menuPgt2" value="#{perguntaBean.idLong}"
 						styleClass="cssColunm-w-100-p"
@@ -109,7 +105,8 @@
 						disabled="#{perguntaBean.objPerguntaNivelDois.idPergunta ne null}"
 						requiredMessage="Selecione uma opção">
 						<f:selectItem itemLabel="Selecione..." itemValue="" />
-						<f:selectItems value="#{perguntaBean.objPerguntaNivelUm.subPerguntas}"
+						<f:selectItems
+							value="#{perguntaBean.objPerguntaNivelUm.subPerguntas}"
 							itemValue="#{pgt.idPergunta}" var="pgt"
 							itemLabel="Id: #{pgt.idPergunta} - rótulo: #{pgt.textoPergunta}" />
 					</p:selectOneMenu>
@@ -123,14 +120,6 @@
 						style="margin-left: 25px" title="Ver perguntas nível 2"
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaPerguntaNivelDois}" />
-
-
-
-
-
-
-
-
 
 					<p:commandButton process="@this"
 						update="@form :formCadastroPeguntas :formPerguntas"
@@ -176,17 +165,34 @@
 						<h:outputText value="Não" rendered="#{pgt.perguntaAtiva ne 1}" />
 						<h:outputText value="Sim" rendered="#{pgt.perguntaAtiva eq 1}" />
 					</p:column>
-					<p:column exportable="false" headerText="Ações" width="7%"
+					<p:column exportable="false" headerText="Ações" width="12%"
 						sortable="false">
-						<p:commandButton icon="fa fa-pencil"
-							update=":dialogs:manage-pergunta"
-							oncomplete="PF('managePerguntaDialog').show()"
-							styleClass="edit-button rounded-button ui-button-success"
-							process="@this">
-							<f:setPropertyActionListener value="#{pgt}"
-								target="#{perguntaBean.objPerguntaNivelTres}" />
-							<p:resetInput target=":dialogs:manage-pergunta" />
-						</p:commandButton>
+						<div class="flex-row-start">
+							<div class="mr-10 ml-10">
+								<p:commandButton icon="fa fa-pencil"
+									update=":dialogs:manage-pergunta"
+									oncomplete="PF('managePerguntaDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this">
+									<f:setPropertyActionListener value="#{pgt}"
+										target="#{perguntaBean.objPerguntaNivelTres}" />
+									<p:resetInput target=":dialogs:manage-pergunta" />
+								</p:commandButton>
+							</div>
+							<div class="mr-10 ml-10">
+								<p:commandButton
+									class="edit-button ui-button-secondary rounded-button"
+									rendered="#{pgt.tipoPergunta eq 'MTPL_SL' or pgt.tipoPergunta eq 'UN_SL'}"
+									update=":manage-opcoes-form :dialogOpcSel :dialogOpcoes"
+									oncomplete="PF('manageOpcoesDialog').show()"
+									icon="fa fa-pencil" process="@this" title="Editar opções"
+									actionListener="#{perguntaBean.editarOpcoesSelecionadas}">
+									<f:setPropertyActionListener value="#{pgt}"
+										target="#{perguntaBean.objPerguntaNivelTres}" />
+								</p:commandButton>
+							</div>
+
+						</div>
 
 					</p:column>
 
@@ -198,11 +204,10 @@
 					style="margin: 15px 20px 0px 12px" title="Criar pergunta nível 3"
 					ajax="false" icon="fa fa-plus"
 					actionListener="#{perguntaBean.preparaPerguntaNivelTres}" />
-
 			</h:form>
 
-			<p:dialog header="Editar pergunta nível 3" showEffect="fade"
-				modal="true" fitViewport="true" closable="true" resizable="true"
+			<p:dialog header="Editar pergunta" showEffect="fade" modal="true"
+				fitViewport="true" closable="true" resizable="true"
 				widgetVar="managePerguntaDialog" responsive="true">
 				<h:form id="dialogs">
 					<p:outputPanel id="manage-pergunta" class="ui-fluid">
@@ -273,11 +278,96 @@
 						<p:commandButton value="Cancelar" icon="fa fa-times"
 							onclick="PF('managePerguntaDialog').hide()"
 							class="ui-button-secondary" type="button" />
-
 					</div>
 				</h:form>
 			</p:dialog>
 
+			<p:dialog header="Editar pergunta - Opções" showEffect="fade"
+				width="898px" modal="true" fitViewport="true" closable="true"
+				resizable="false" widgetVar="manageOpcoesDialog" responsive="false">
+				<h:form id="manage-opcoes-form">
+					<p:outputPanel id="manage-opcoes" class="ui-fluid">
+						<p:panelGrid columns="4"
+							columnClasses="cssColumn150-no-border, cssColumn150-no-border, cssColumn150-no-border, cssColumn400-no-border">
+							<p:outputLabel value="ID" />
+							<p:inputNumber disabled="true"
+								value="#{perguntaBean.objPerguntaNivelTres.idPergunta}" size="9" />
+							<p:outputLabel value="Tipo pergunta" />
+							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
+								value="#{perguntaBean.objPerguntaNivelTres.tipoPergunta.descricao}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2"
+							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
+							<p:outputLabel value="Rótulo" />
+							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
+								value="#{perguntaBean.objPerguntaNivelTres.textoPergunta}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</h:form>
+
+				<h:form id="dialogOpcSel">
+					<p:panelGrid columns="3"
+						columnClasses="cssColumn150-no-border, cssColumn550-no-border, cssColumn150-no-border">
+						<p:outputLabel for="opcDisponiveis" value="Opções" />
+						<p:selectOneMenu id="opcDisponiveis" required="true" filter="true"
+							filterMatchMode="contains" styleClass="cssColunm-w-100-p"
+							requiredMessage="Selecione uma opção"
+							value="#{perguntaBean.idLong}">
+							<f:selectItem itemLabel="Selecione..." />
+							<f:selectItems value="#{perguntaBean.listaOpcoesDisponiveis}"
+								var="opc" itemLabel="#{opc.idOpcao} - #{opc.nomeOpcao}"
+								itemValue="#{opc.idOpcao}" />
+						</p:selectOneMenu>
+
+						<p:commandButton process="@form"
+							update="@form :dialogOpcoes :growl" style="margin-left: 5px"
+							title="Inserir opção" ajax="true" icon="fa fa-plus"
+							value="Inserir"
+							actionListener="#{perguntaBean.insereOpcaoNivelTres}" />
+
+					</p:panelGrid>
+
+				</h:form>
+
+				<h:form id="dialogOpcoes">
+					<p:outputPanel id="manage-opcoes-selecao" class="ui-fluid">
+						<p:dataTable id="listOpcoesPergunta" size="small"
+							value="#{perguntaBean.objPerguntaNivelTres.opcoesParaSelecao}"
+							var="opcSel" paginator="true" rows="5"
+							emptyMessage="Nenhuma opção disponível"
+							paginatorPosition="bottom" rowKey="#{opcSel.idOpcao}">
+							<f:facet name="header">Opções disponíveis na pergunta Id: #{perguntaBean.objPerguntaNivelTres.idPergunta}</f:facet>
+							<p:column headerText="ID" width="10%">
+								<h:outputText value="#{opcSel.idOpcao}" />
+							</p:column>
+							<p:column headerText="Rótulo">
+								<h:outputText value="#{opcSel.nomeOpcao}" />
+							</p:column>
+							<p:column exportable="false" headerText="Ações" width="10%">
+								<div class="flex-row-start">
+									<div class="mr-10 ml-10">
+										<p:commandButton class="ui-button-warning rounded-button"
+											ajax="true" icon="fa fa-trash" process="@this"
+											title="Excluir" update="@form :growl"
+											action="#{perguntaBean.removeOpcaoPergunta(3)}">
+											<f:setPropertyActionListener value="#{opcSel}"
+												target="#{perguntaBean.objOpcao}" />
+										</p:commandButton>
+									</div>
+								</div>
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+					<div class="footer-dialog">
+						<p:commandButton value="Salvar" icon="fa fa-check"
+							actionListener="#{perguntaBean.salvaPerguntaNivelTres}"
+							update="@form :growl" ajax="true" process="@form" />
+						<p:commandButton value="Cancelar" icon="fa fa-times"
+							onclick="PF('manageOpcoesDialog').hide()"
+							class="ui-button-secondary" type="button" />
+					</div>
+				</h:form>
+			</p:dialog>
 
 		</p:fieldset>
 

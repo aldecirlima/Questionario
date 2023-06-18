@@ -266,7 +266,6 @@ public class PerguntaBean implements Serializable {
 		default:
 			break;
 		}
-
 	}
 
 	public void editarOpcoesSelecionadas() {
