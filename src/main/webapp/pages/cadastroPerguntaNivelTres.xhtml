@@ -221,7 +221,7 @@
 									value="ID: #{perguntaBean.objPerguntaNivelDois.idPergunta} - #{perguntaBean.objPerguntaNivelDois.textoPergunta}" />
 							</c:if>
 							<c:if
-								test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() gt 50}">
+								test="#{perguntaBean.objPerguntaNivelDois.textoPergunta.length() gt 50}">
 								<p:inputText id="idPerguntaMae2" disabled="true"
 									value="ID: #{perguntaBean.objPerguntaNivelDois.idPergunta} - #{perguntaBean.objPerguntaNivelDois.textoPergunta.substring(0,50)}" />
 							</c:if>

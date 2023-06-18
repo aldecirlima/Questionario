@@ -24,7 +24,7 @@
 				<p:outputLabel value="Questionário " for="menuQst"
 					styleClass="mr-10" />
 				<p:selectOneMenu id="menuQst" value="#{secaoBean.idLong}"
-					styleClass="mr-10" required="true"
+					styleClass="mr-10 cssColunm-w-100-p" required="true" style="width: 700px;"
 					disabled="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
 					requiredMessage="Selecione uma opção">
 					<f:selectItem itemLabel="Selecione..." itemValue="" />
@@ -34,11 +34,11 @@
 				</p:selectOneMenu>
 				
 				<p:commandButton process="@this" update="@form :formSecoes" rendered="#{secaoBean.secaoQuestionario.idQuestionario ne null}"
-					style="margin: 0px 15px 0px 15px"
+					style="margin: 0px 15px 0px 15px;"
 					title="Desbloquear" ajax="false"
 					icon="fa fa-lock" actionListener="#{secaoBean.cleanQuestionario}" />
 				<p:commandButton process="@this" update="@form :formSecoes" rendered="#{secaoBean.secaoQuestionario.idQuestionario eq null}"
-					style="margin: 0px 15px 0px 15px"
+					style="margin: 0px 15px 0px 15px;"
 					title="Ver seções do questionário" ajax="false"
 					icon="fa fa-search" actionListener="#{secaoBean.atualizaQuestionario}" />
 
@@ -108,7 +108,7 @@
 					responsive="true">
 					<p:outputPanel id="manage-secao" class="ui-fluid">
 						<p:panelGrid columns="2"
-							columnClasses="cssColumn150, cssColumn500">
+							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 
 							<p:outputLabel for="nomeSecao" value="Rotulo" />
 							<p:inputText id="nomeSecao" title="Limite 150 caracteres"

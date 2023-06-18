@@ -35,6 +35,9 @@ public class OpcaoService implements Serializable {
 	public List<Opcao> buscaTodasOpcoes() {
 		return opcaoDao.buscaTodasOpcoes();
 	}
+	public List<Opcao> buscaTodasOpcoesAtivas() {
+		return opcaoDao.buscaTodasOpcoesAtivas();
+	}
 
 	public Opcao findById(Long id) {
 		return opcaoDao.findById(id);

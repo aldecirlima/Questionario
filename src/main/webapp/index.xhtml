@@ -11,14 +11,42 @@
 	<ui:define name="conteudo">
 
 		<p:fieldset legend="Página inicial">
-			<p:messages />
-			<h:form id="formInicial">
 
-				<p:commandButton
-					action="/pages/cadastroQuestionario?faces-redirect=true"
-					ajax="false" value="Novo questionário" update="@this" />
-			</h:form>
-			<br />
+			<h2>Bem vindo!</h2>
+			<p>Este é um sistema de cadastramento de formulários
+				automatizado. Com ele você poderá configurar de forma fácil um novo
+				formulário para sua aplicação.</p>
+			<p>Utiliza o painel de navegação ao lado para realizar iniciar o
+				cadastramento.</p>
+
+			<h2>Como utilizar?</h2>
+			<p>A ferramenta segue uma hierarquia de cadastramento, ou seja os
+				elementos do questionário devem ser cadastrados na seguinte ordem:</p>
+			<ol>
+				<li>Questionário;</li>
+				<li>Seção;</li>
+				<li>Perguntas nível 1;</li>
+				<li>Perguntas nível 2;</li>
+				<li>Perguntas nível 3.</li>
+			</ol>
+			<p>As perguntas com múltiplas opções de resposta (exceto aquelas
+				dos tipos "Sim/Não" e "Sim/Não/Não se aplica") devem seguir a
+				seguinte ordem para cadastramento:</p>
+			<ol>
+				<li>Cadastrar opções;</li>
+				<li>Vincular as opções nas perguntas.</li>
+			</ol>
+			<h2>Ordem</h2>
+			<p>Os elementos "Seção" e "Perguntas" possuem um atributo chamado
+				"Ordem" que determina a posição que o elemento aparece na interface
+				do usuário. Este atributo é representado por um número inteiro
+				gerado automaticamente durante a criação do elemento, mas que pode
+				ser alterado a qualquer momento.</p>
+			<h2>Exibição</h2>
+			<p>Todos os elementos possuem o atributo "Ativo" disponível para
+				configuração nas páginas de edição. Os elementos recém criados são
+				marcados como inativos e só podem ser ativados após atenderem às
+				condições mínimas exigidas.</p>
 
 		</p:fieldset>
 

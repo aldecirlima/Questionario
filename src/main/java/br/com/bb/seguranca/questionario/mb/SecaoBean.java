@@ -41,7 +41,6 @@ public class SecaoBean implements Serializable {
 		if (this.listaQuestionarios == null) {
 			this.atualizaListaQuestionarios();
 		}
-
 	}
 
 	public void atualizaListaQuestionarios() {
@@ -60,7 +59,6 @@ public class SecaoBean implements Serializable {
 	}
 
 	public void preparaSecao() {
-
 		if (secaoQuestionario == null) {
 			FacesMessages.error("Nenhum questionário selecionado!");
 			return;
@@ -105,7 +103,6 @@ public class SecaoBean implements Serializable {
 
 	public void atualizaQuestionario() {
 		try {
-//			secaoQuestionario = questionarioService.findById(idLong);
 			secaoQuestionario = mapQuestionarios.get(idLong);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
@@ -114,6 +111,7 @@ public class SecaoBean implements Serializable {
 
 	public void cleanQuestionario() {
 		this.secaoQuestionario = null;
+		this.idLong = null;
 	}
 
 	public List<Questionario> getListaQuestionarios() {

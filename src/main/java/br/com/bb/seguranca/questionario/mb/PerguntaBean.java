@@ -271,7 +271,7 @@ public class PerguntaBean implements Serializable {
 	public void editarOpcoesSelecionadas() {
 		idLong = null;
 		if (listaOpcoesDisponiveis == null || listaOpcoesDisponiveis.size() == 0) {
-			listaOpcoesDisponiveis = opcaoService.buscaTodasOpcoes();
+			listaOpcoesDisponiveis = opcaoService.buscaTodasOpcoesAtivas();
 			opcoesMap = new HashMap<>();
 			for (Opcao opcao : listaOpcoesDisponiveis) {
 				opcoesMap.put(opcao.getIdOpcao(), opcao);

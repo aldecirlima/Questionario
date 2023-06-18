@@ -1,12 +1,15 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
@@ -38,14 +41,43 @@ public class QuestionarioEditarBean implements Serializable {
 	}
 
 	public void salvaQuestionario() {
+		// Se o questionário estiver sendo ativado, buscar o questionário ativo e
+		// baixar.
+		if (objQuestionario.getQuestionarioAtivo().equals(1)) {
+			objQuestionario.setDataAtivacao(new Date());
+			objQuestionario.setMatriculaAtivacao("F0394519");
+			try {
+				List<Questionario> questionariosAtivos = questionarioService.buscaQuestionariosAtivos();
+				if (questionariosAtivos != null && questionariosAtivos.size() > 0) {
+					for (Questionario questionario : questionariosAtivos) {
+						questionario.setQuestionarioAtivo(3);
+						questionario.setDataEncerramento(new Date());
+						questionario.setMatriculaEncerramento("F0394519");
+						questionarioService.salvarQuestionario(questionario);
+					}
+				}
+			} catch (Exception e) {
+				FacesMessages.error("Erro ao salvar questionário!");
+				return;
+			}
+		}
+
 		try {
 			objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
-			int index = listaQuestionarios.indexOf(objQuestionario);
-			listaQuestionarios.set(index, objQuestionario);
-			FacesMessages.info("Questionário salvo com sucesso!");
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar questionário!");
+			return;
 		}
+
+		if (objQuestionario.getQuestionarioAtivo().equals(1)) {
+			listaQuestionarios.remove(objQuestionario);
+		} else {
+			int index = listaQuestionarios.indexOf(objQuestionario);
+			listaQuestionarios.set(index, objQuestionario);
+		}
+		FacesMessages.info("Questionário salvo com sucesso!");
+		PrimeFaces.current().executeScript("PF('manageQuestionarioDialog').hide()");
+		PrimeFaces.current().ajax().update("formCadastroQuestionario");
 	}
 
 	public void atualizaListaQuestionarios() {
@@ -58,6 +90,8 @@ public class QuestionarioEditarBean implements Serializable {
 
 	public void deleteQuestionario() {
 		objQuestionario.setQuestionarioAtivo(3);
+		objQuestionario.setMatriculaEncerramento("F0394519");
+		objQuestionario.setDataEncerramento(new Date());
 		try {
 			objQuestionario = questionarioService.persisteQuestionario(objQuestionario);
 			int index = listaQuestionarios.indexOf(objQuestionario);

@@ -77,48 +77,74 @@
 				</p:confirmDialog>
 
 			</h:form>
-			<h:form id="dialogs">
 
 				<p:dialog header="Editar questionário" showEffect="fade"
 					modal="true" closable="true" resizable="true"
 					widgetVar="manageQuestionarioDialog" responsive="true">
+				<h:form id="dialogs">
 					<p:outputPanel id="manage-questionario" class="ui-fluid">
 						<p:panelGrid columns="2"
-							columnClasses="cssColumn150, cssColumn500">
+							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 
-							<p:outputLabel for="tituloQuestionario" value="Título" />
+							<p:outputLabel for="@next" value="Título" />
 							<p:inputText id="tituloQuestionario"
-								title="Limite 150 caracteres"
+								title="Limite 150 caracteres" required="true"
+								requiredMessage="Título é obrigatório"
 								value="#{questionarioEditarBean.objQuestionario.nomeQuestionario}"
 								maxlength="150" />
-							<p:outputLabel for="descricaoQuestionario" value="Descrição" />
+							<p:outputLabel for="@next" value="Descrição" />
 							<p:inputTextarea id="descricaoQuestionario"
 								title="Limite 250 caracteres"
 								value="#{questionarioEditarBean.objQuestionario.descricaoQuestionario}"
 								cols="50" rows="3" maxlength="250" />
-
+							<p:outputLabel for="@next" value="Ativa" />
+							<p:selectOneRadio id="qstAtivo" required="true"
+								requiredMessage="Informe se a pergunta está ativa"
+								value="#{questionarioEditarBean.objQuestionario.questionarioAtivo}">
+								<f:selectItem itemLabel="Sim" itemValue="1" />
+								<f:selectItem itemLabel="Não" itemValue="0" />
+								<p:ajax process="@this" update="gridAtivacao" />
+							</p:selectOneRadio>
 
 						</p:panelGrid>
+						<p:panelGrid columns="2" id="gridAtivacao"
+							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
+							<p:outputLabel
+								rendered="#{questionarioEditarBean.objQuestionario.questionarioAtivo eq 1}"
+								value="" />
+							<p:outputPanel
+								rendered="#{questionarioEditarBean.objQuestionario.questionarioAtivo eq 1}">
+								<div id="avisoAtivacao" class="ui-messages ui-widget">
+									<div class="ui-messages-warn ui-corner-all">
+										<a href="#" class="ui-messages-close"
+											onclick="$(this).parent().slideUp();return false;"><span
+											class="ui-icon ui-icon-close"></span></a><span
+											class="ui-messages-warn-icon"></span>
+										<ul>
+											<li><span class="ui-messages-warn-summary">Atenção:</span><span
+												class="ui-messages-warn-detail">este questionário
+													substituirá o questionário vigente. Certifique-se se que
+													todas as seções, perguntas e opções estão corretamente
+													configuradas.</span></li>
+										</ul>
+									</div>
+								</div>
 
+							</p:outputPanel>
 
+						</p:panelGrid>
 					</p:outputPanel>
 
 					<div class="footer-dialog">
 						<p:commandButton value="Salvar" icon="fa fa-check"
 							actionListener="#{questionarioEditarBean.salvaQuestionario}"
-							update=":formCadastroQuestionario"
-							oncomplete="PF('manageQuestionarioDialog').hide()" ajax="false"
-							process="manage-secao @this" />
+							update="@form :growl" ajax="true" process="@form" />
 						<p:commandButton value="Cancelar" icon="fa fa-times"
 							onclick="PF('manageQuestionarioDialog').hide()"
 							class="ui-button-secondary" type="button" />
-
 					</div>
-				</p:dialog>
-
-			</h:form>
-
-			<br />
+				</h:form>
+			</p:dialog>
 
 		</p:fieldset>
 

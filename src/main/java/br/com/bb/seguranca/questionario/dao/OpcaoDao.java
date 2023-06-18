@@ -36,6 +36,12 @@ public class OpcaoDao implements Serializable {
 		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
 		return query.getResultList();
 	}
+	
+	public List<Opcao> buscaTodasOpcoesAtivas() {
+		String jpql = "SELECT o FROM Opcao o WHERE o.ativa = 1";
+		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
+		return query.getResultList();
+	}
 
 	public List<Opcao> buscaSimNao() {
 		String jpql = "SELECT o FROM Opcao o WHERE o.idOpcao IN (1,2)";
