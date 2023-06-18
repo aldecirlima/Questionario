@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -122,10 +123,7 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void preparaPerguntaNivelUm() {
-		Pergunta pergunta = new Pergunta();
-		pergunta.setDataCadastro(new Date());
-		pergunta.setMatriculaCadastro("F0394519");
-		pergunta.setPerguntaAtiva(0);
+		Pergunta pergunta = novaInstanciaPergunta();
 		pergunta.setOrdem(objSecao.getPerguntas().size() + 1);
 		pergunta.setSecao(objSecao);
 		objSecao.getPerguntas().add(0, pergunta);
@@ -138,10 +136,7 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void preparaPerguntaNivelDois() {
-		Pergunta pergunta = new Pergunta();
-		pergunta.setDataCadastro(new Date());
-		pergunta.setMatriculaCadastro("F0394519");
-		pergunta.setPerguntaAtiva(0);
+		Pergunta pergunta = novaInstanciaPergunta();
 		pergunta.setOrdem(objPerguntaNivelUm.getSubPerguntas().size() + 1);
 		pergunta.setPerguntaMae(objPerguntaNivelUm);
 		objPerguntaNivelUm.getSubPerguntas().add(0, pergunta);
@@ -154,10 +149,7 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void preparaPerguntaNivelTres() {
-		Pergunta pergunta = new Pergunta();
-		pergunta.setDataCadastro(new Date());
-		pergunta.setMatriculaCadastro("F0394519");
-		pergunta.setPerguntaAtiva(0);
+		Pergunta pergunta = novaInstanciaPergunta();
 		pergunta.setOrdem(objPerguntaNivelDois.getSubPerguntas().size() + 1);
 		pergunta.setPerguntaMae(objPerguntaNivelDois);
 		objPerguntaNivelDois.getSubPerguntas().add(0, pergunta);
@@ -169,6 +161,14 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
+	public Pergunta novaInstanciaPergunta() {
+		Pergunta pergunta = new Pergunta();
+		pergunta.setDataCadastro(new Date());
+		pergunta.setMatriculaCadastro("F0394519");
+		pergunta.setPerguntaAtiva(0);
+		return pergunta;
+	}
+
 //	Métodos para salvar as perguntas
 	public void salvaPerguntaNivelUm() {
 		objPerguntaNivelUm = insereListaOpcoes(objPerguntaNivelUm);
@@ -176,7 +176,7 @@ public class PerguntaBean implements Serializable {
 		objSecao.getPerguntas().set(index, objPerguntaNivelUm);
 		try {
 			secaoService.salvarSecao(objSecao);
-			FacesMessages.info("Pergunta nível um salva com sucesso.");
+			FacesMessages.info("Pergunta salva com sucesso.");
 			this.fechaDialogPergunta();
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
@@ -184,15 +184,12 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void salvaPerguntaNivelDois() {
-		if (objPerguntaNivelDois.getTipoPergunta().equals(TipoPergunta.S_N)
-				|| objPerguntaNivelDois.getTipoPergunta().equals(TipoPergunta.S_N_NA)) {
-			objPerguntaNivelDois = insereListaOpcoes(objPerguntaNivelDois);
-		}
+		objPerguntaNivelDois = insereListaOpcoes(objPerguntaNivelDois);
 		Integer index = objPerguntaNivelUm.getSubPerguntas().indexOf(objPerguntaNivelDois);
 		objPerguntaNivelUm.getSubPerguntas().set(index, objPerguntaNivelDois);
 		try {
 			perguntaService.salvarPergunta(objPerguntaNivelUm);
-			FacesMessages.info("Pergunta nível dois salva com sucesso.");
+			FacesMessages.info("Pergunta salva com sucesso.");
 			this.fechaDialogPergunta();
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
@@ -200,16 +197,13 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void salvaPerguntaNivelTres() {
-		if (objPerguntaNivelTres.getTipoPergunta().equals(TipoPergunta.S_N)
-				|| objPerguntaNivelTres.getTipoPergunta().equals(TipoPergunta.S_N_NA)) {
-			objPerguntaNivelTres = insereListaOpcoes(objPerguntaNivelTres);
-		}
+		objPerguntaNivelTres = insereListaOpcoes(objPerguntaNivelTres);
 		Integer index = objPerguntaNivelDois.getSubPerguntas().indexOf(objPerguntaNivelTres);
 		objPerguntaNivelDois.getSubPerguntas().set(index, objPerguntaNivelTres);
 
 		try {
 			perguntaService.salvarPergunta(objPerguntaNivelDois);
-			FacesMessages.info("Pergunta nível três salva com sucesso.");
+			FacesMessages.info("Pergunta salva com sucesso.");
 			this.fechaDialogPergunta();
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao salvar pergunta " + e.getMessage());
@@ -228,8 +222,9 @@ public class PerguntaBean implements Serializable {
 			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNao());
 		} else if (pergunta.getTipoPergunta() == TipoPergunta.S_N_NA) {
 			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNaoNaoSeAplica());
-		} else if (pergunta.getTipoPergunta() == TipoPergunta.TXT_CRT || pergunta.getTipoPergunta() == TipoPergunta.TXT_LNG) {
-			pergunta.setOpcoesParaSelecao(null);
+		} else if (pergunta.getTipoPergunta() == TipoPergunta.TXT_CRT
+				|| pergunta.getTipoPergunta() == TipoPergunta.TXT_LNG) {
+			pergunta.setOpcoesParaSelecao(new ArrayList<>());
 		}
 		return pergunta;
 	}
@@ -243,10 +238,35 @@ public class PerguntaBean implements Serializable {
 		this.objPerguntaNivelTres = new Pergunta();
 	}
 
-	public void removeOpcaoNivelUm() {
-		if (objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
-			objPerguntaNivelUm.getOpcoesParaSelecao().remove(objOpcao);
+	/**
+	 * Parametro de entrada deve corresponder ao nível da pergunta 1, 2, 3...
+	 * passado diretamente na Expression Language na pagina .xhtml Ex: nível 1 =
+	 * removeOpcaoPergunta(1)
+	 * 
+	 * @param nivel
+	 */
+	public void removeOpcaoPergunta(int nivel) {
+		switch (nivel) {
+		case 1:
+			if (objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
+				objPerguntaNivelUm.getOpcoesParaSelecao().remove(objOpcao);
+			}
+			break;
+		case 2:
+			if (objPerguntaNivelDois.getOpcoesParaSelecao().contains(objOpcao)) {
+				objPerguntaNivelDois.getOpcoesParaSelecao().remove(objOpcao);
+			}
+			break;
+		case 3:
+			if (objPerguntaNivelTres.getOpcoesParaSelecao().contains(objOpcao)) {
+				objPerguntaNivelTres.getOpcoesParaSelecao().remove(objOpcao);
+			}
+			break;
+
+		default:
+			break;
 		}
+
 	}
 
 	public void editarOpcoesSelecionadas() {
@@ -264,6 +284,24 @@ public class PerguntaBean implements Serializable {
 		objOpcao = opcoesMap.get(idLong);
 		if (!objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
 			objPerguntaNivelUm.getOpcoesParaSelecao().add(objOpcao);
+		} else {
+			FacesMessages.error("Opção já inserida.");
+		}
+	}
+
+	public void insereOpcaoNivelDois() {
+		objOpcao = opcoesMap.get(idLong);
+		if (!objPerguntaNivelDois.getOpcoesParaSelecao().contains(objOpcao)) {
+			objPerguntaNivelDois.getOpcoesParaSelecao().add(objOpcao);
+		} else {
+			FacesMessages.error("Opção já inserida.");
+		}
+	}
+
+	public void insereOpcaoNivelTres() {
+		objOpcao = opcoesMap.get(idLong);
+		if (!objPerguntaNivelTres.getOpcoesParaSelecao().contains(objOpcao)) {
+			objPerguntaNivelTres.getOpcoesParaSelecao().add(objOpcao);
 		} else {
 			FacesMessages.error("Opção já inserida.");
 		}

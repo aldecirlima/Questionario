@@ -2,6 +2,12 @@
 	width: 120px;
 }
 
+.cssColumn120-no-border {
+	width: 120px;
+	border: none !important;
+	border-style: none !important;
+}
+
 .cssColumn150 {
 	width: 150px;
 }
@@ -16,12 +22,30 @@
 	width: 200px;
 }
 
+.cssColumn200-no-border {
+	width: 200px;
+	border: none !important;
+	border-style: none !important;
+}
+
 .cssColumn300 {
 	width: 300px;
 }
 
+.cssColumn300-no-border {
+	width: 300px;
+	border: none !important;
+	border-style: none !important;
+}
+
 .cssColumn400 {
 	width: 400px;
+}
+
+.cssColumn400-no-border {
+	width: 400px;
+	border: none !important;
+	border-style: none !important;
 }
 
 .cssColumn500 {
@@ -34,6 +58,10 @@
 	border-style: none !important;
 }
 
+.cssColumn550 {
+	width: 550px;
+}
+
 .cssColumn550-no-border {
 	width: 550px;
 	border: none !important;
@@ -42,6 +70,12 @@
 
 .cssColumn600 {
 	width: 600px;
+}
+
+.cssColumn600-no-border {
+	width: 600px;
+	border: none !important;
+	border-style: none !important;
 }
 
 .cssColumn700 {
