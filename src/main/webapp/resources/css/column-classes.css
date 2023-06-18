@@ -5,6 +5,7 @@
 .cssColumn150 {
 	width: 150px;
 }
+
 .cssColumn150-no-border {
 	width: 150px;
 	border: none !important;
@@ -27,6 +28,18 @@
 	width: 500px;
 }
 
+.cssColumn500-no-border {
+	width: 500px;
+	border: none !important;
+	border-style: none !important;
+}
+
+.cssColumn550-no-border {
+	width: 550px;
+	border: none !important;
+	border-style: none !important;
+}
+
 .cssColumn600 {
 	width: 600px;
 }
@@ -34,6 +47,7 @@
 .cssColumn700 {
 	width: 700px;
 }
+
 .cssColumn700-no-border {
 	width: 700px;
 	border: none !important;

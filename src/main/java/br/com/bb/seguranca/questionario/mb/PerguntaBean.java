@@ -3,7 +3,9 @@ package br.com.bb.seguranca.questionario.mb;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,6 +16,7 @@ import org.primefaces.PrimeFaces;
 
 import br.com.bb.seguranca.questionario.modelo.Questionario;
 import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.perguntas.Opcao;
 import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
 import br.com.bb.seguranca.questionario.modelo.perguntas.TipoPergunta;
 import br.com.bb.seguranca.questionario.service.OpcaoService;
@@ -30,7 +33,13 @@ public class PerguntaBean implements Serializable {
 
 	List<Questionario> listaQuestionarios;
 
+	List<Opcao> listaOpcoesDisponiveis;
+
+	Map<Long, Opcao> opcoesMap;
+
 	private Long idLong;
+
+	private Opcao objOpcao;
 
 	private Questionario perguntaQuestionario;
 
@@ -210,6 +219,7 @@ public class PerguntaBean implements Serializable {
 
 	public void fechaDialogPergunta() {
 		PrimeFaces.current().executeScript("PF('managePerguntaDialog').hide()");
+		PrimeFaces.current().executeScript("PF('manageOpcoesDialog').hide()");
 		PrimeFaces.current().ajax().update("formPerguntas");
 	}
 
@@ -218,6 +228,8 @@ public class PerguntaBean implements Serializable {
 			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNao());
 		} else if (pergunta.getTipoPergunta() == TipoPergunta.S_N_NA) {
 			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNaoNaoSeAplica());
+		} else if (pergunta.getTipoPergunta() == TipoPergunta.TXT_CRT || pergunta.getTipoPergunta() == TipoPergunta.TXT_LNG) {
+			pergunta.setOpcoesParaSelecao(null);
 		}
 		return pergunta;
 	}
@@ -229,6 +241,32 @@ public class PerguntaBean implements Serializable {
 		this.objPerguntaNivelUm = new Pergunta();
 		this.objPerguntaNivelDois = new Pergunta();
 		this.objPerguntaNivelTres = new Pergunta();
+	}
+
+	public void removeOpcaoNivelUm() {
+		if (objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
+			objPerguntaNivelUm.getOpcoesParaSelecao().remove(objOpcao);
+		}
+	}
+
+	public void editarOpcoesSelecionadas() {
+		idLong = null;
+		if (listaOpcoesDisponiveis == null || listaOpcoesDisponiveis.size() == 0) {
+			listaOpcoesDisponiveis = opcaoService.buscaTodasOpcoes();
+			opcoesMap = new HashMap<>();
+			for (Opcao opcao : listaOpcoesDisponiveis) {
+				opcoesMap.put(opcao.getIdOpcao(), opcao);
+			}
+		}
+	}
+
+	public void insereOpcaoNivelUm() {
+		objOpcao = opcoesMap.get(idLong);
+		if (!objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
+			objPerguntaNivelUm.getOpcoesParaSelecao().add(objOpcao);
+		} else {
+			FacesMessages.error("Opção já inserida.");
+		}
 	}
 
 	public TipoPergunta[] getTipoPergunta() {
@@ -289,6 +327,22 @@ public class PerguntaBean implements Serializable {
 
 	public void setIdLong(Long idLong) {
 		this.idLong = idLong;
+	}
+
+	public Opcao getObjOpcao() {
+		return objOpcao;
+	}
+
+	public void setObjOpcao(Opcao objOpcao) {
+		this.objOpcao = objOpcao;
+	}
+
+	public List<Opcao> getListaOpcoesDisponiveis() {
+		return listaOpcoesDisponiveis;
+	}
+
+	public void setListaOpcoesDisponiveis(List<Opcao> listaOpcoesDisponiveis) {
+		this.listaOpcoesDisponiveis = listaOpcoesDisponiveis;
 	}
 
 }
