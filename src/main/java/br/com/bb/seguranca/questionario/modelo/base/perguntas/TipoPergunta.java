@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo.perguntas;
+package br.com.bb.seguranca.questionario.modelo.base.perguntas;
 
 public enum TipoPergunta {
 	

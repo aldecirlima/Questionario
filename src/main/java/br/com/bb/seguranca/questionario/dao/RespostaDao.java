@@ -2,7 +2,7 @@ package br.com.bb.seguranca.questionario.dao;
 
 import javax.persistence.EntityManager;
 
-import br.com.bb.seguranca.questionario.modelo.perguntas.Resposta;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Resposta;
 import br.com.bb.seguranca.questionario.util.JPAUtil;
 
 public class RespostaDao {

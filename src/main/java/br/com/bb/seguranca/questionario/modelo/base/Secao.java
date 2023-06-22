@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo;
+package br.com.bb.seguranca.questionario.modelo.base;
 
 import java.util.Date;
 import java.util.List;
@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
 
 @Entity
 @Table(name = "SECAO")

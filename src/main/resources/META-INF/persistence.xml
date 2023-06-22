@@ -10,11 +10,16 @@
 		<jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
 
 
-		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Opcao</class>
-		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta</class>
-		<class>br.com.bb.seguranca.questionario.modelo.perguntas.Resposta</class>
-		<class>br.com.bb.seguranca.questionario.modelo.Questionario</class>
-		<class>br.com.bb.seguranca.questionario.modelo.Secao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Resposta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.Questionario</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.Secao</class>
+
+		<class>br.com.bb.seguranca.questionario.modelo.form.Avaliacao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.PerguntaForm</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.SecaoForm</class>
+
 
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

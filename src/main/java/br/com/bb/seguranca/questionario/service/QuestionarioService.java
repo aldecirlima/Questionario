@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.QuestionarioDao;
-import br.com.bb.seguranca.questionario.modelo.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.Questionario;
 
 public class QuestionarioService implements Serializable {
 
@@ -33,12 +33,17 @@ public class QuestionarioService implements Serializable {
 		return questionarioDao.persistir(questionario);
 	}
 
+	@Transactional
 	public List<Questionario> buscaQuestionariosNaoAtivos() {
 		return questionarioDao.buscaQuestionariosNaoAtivos();
 	}
 	
 	public List<Questionario> buscaQuestionariosAtivos() {
 		return questionarioDao.buscaQuestionariosAtivos();
+	}
+	
+	public Questionario buscaQuestionarioAtivo() {
+		return questionarioDao.buscaQuestionarioAtivo();
 	}
 
 	public List<Questionario> buscaQuestionariosNaoAtivosSemFetch() {

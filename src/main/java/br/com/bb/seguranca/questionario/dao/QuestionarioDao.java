@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.Questionario;
 
 public class QuestionarioDao implements Serializable {
 
@@ -32,16 +32,21 @@ public class QuestionarioDao implements Serializable {
 	}
 
 	public List<Questionario> buscaQuestionariosNaoAtivos() {
-		String jpql = "SELECT DISTINCT q FROM Questionario q JOIN FETCH q.secoes s "
-				+ "WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
+		String jpql = "SELECT q FROM Questionario q " + "WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
 		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
 		return query.getResultList();
 	}
-	
+
 	public List<Questionario> buscaQuestionariosAtivos() {
 		String jpql = "SELECT q FROM Questionario q WHERE q.questionarioAtivo = 1";
 		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
 		return query.getResultList();
+	}
+
+	public Questionario buscaQuestionarioAtivo() {
+		String jpql = "SELECT q FROM Questionario q " + "WHERE q.questionarioAtivo = 1";
+		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+		return query.getSingleResult();
 	}
 
 	public List<Questionario> buscaQuestionariosNaoAtivosSemFetch() {

@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo.perguntas;
+package br.com.bb.seguranca.questionario.modelo.base.perguntas;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.Secao;
 
 @Entity
 @Table(name = "PERGUNTA")

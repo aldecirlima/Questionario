@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
 
 public class OpcaoDao implements Serializable {
 

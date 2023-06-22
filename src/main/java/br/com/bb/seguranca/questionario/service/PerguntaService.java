@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.PerguntaDao;
-import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
 
 public class PerguntaService implements Serializable {
 

@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo.perguntas;
+package br.com.bb.seguranca.questionario.modelo.base.perguntas;
 
 import java.util.Date;
 import java.util.Objects;

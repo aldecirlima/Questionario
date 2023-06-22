@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
 
 public class PerguntaDao implements Serializable {
 

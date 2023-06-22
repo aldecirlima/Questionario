@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo;
+package br.com.bb.seguranca.questionario.modelo.base;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Questionario {
 
 //	Objetos
 
-	@OneToMany(mappedBy = "questionario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "questionario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Secao> secoes;
 
 //	Strings

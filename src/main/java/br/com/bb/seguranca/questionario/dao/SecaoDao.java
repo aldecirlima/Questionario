@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.Secao;
 
 public class SecaoDao implements Serializable {
 
@@ -27,6 +27,14 @@ public class SecaoDao implements Serializable {
 		String jpql = "SELECT s FROM Secao s WHERE s.idSecao = :id";
 		TypedQuery<Secao> query = manager.createQuery(jpql, Secao.class);
 		query.setParameter("id", id);
+		return query.getSingleResult();
+	}
+
+	public Secao buscaPerguntasDaSecao(Long idSecao) {
+		String jpql = "SELECT s FROM Secao s JOIN FETCH s.perguntas p "
+				+ "WHERE s.idSecao = :idSecao";
+		TypedQuery<Secao> query = manager.createQuery(jpql, Secao.class);
+		query.setParameter("idSecao", idSecao);
 		return query.getSingleResult();
 	}
 

@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
-import br.com.bb.seguranca.questionario.modelo.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.Questionario;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 

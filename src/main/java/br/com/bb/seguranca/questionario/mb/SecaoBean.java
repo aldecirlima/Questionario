@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.bb.seguranca.questionario.modelo.Questionario;
-import br.com.bb.seguranca.questionario.modelo.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.Secao;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
@@ -104,6 +104,9 @@ public class SecaoBean implements Serializable {
 	public void atualizaQuestionario() {
 		try {
 			secaoQuestionario = mapQuestionarios.get(idLong);
+//			if (secaoQuestionario.getSecoes() == null)  {
+//				secaoQuestionario.setSecoes(new ArrayList<Secao>());
+//			}
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}

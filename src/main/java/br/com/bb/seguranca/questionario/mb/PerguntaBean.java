@@ -15,11 +15,11 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
-import br.com.bb.seguranca.questionario.modelo.Questionario;
-import br.com.bb.seguranca.questionario.modelo.Secao;
-import br.com.bb.seguranca.questionario.modelo.perguntas.Opcao;
-import br.com.bb.seguranca.questionario.modelo.perguntas.Pergunta;
-import br.com.bb.seguranca.questionario.modelo.perguntas.TipoPergunta;
+import br.com.bb.seguranca.questionario.modelo.base.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.base.perguntas.TipoPergunta;
 import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.service.PerguntaService;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;

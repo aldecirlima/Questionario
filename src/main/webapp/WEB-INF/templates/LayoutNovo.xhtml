@@ -49,29 +49,33 @@
 								<p:menuitem value="Início" outcome="/index" icon="fa fa-home"
 									title="Página inicial" />
 							</p:submenu>
+							<p:submenu label="Avaliação" rendered="true">
+								<p:menuitem value="Nova" outcome="/pages/avaliacao/avaliacao"
+									title="Nova avaliação" icon="fa fa-file-o" />
+							</p:submenu>
 							<p:submenu label="Questionário" rendered="true">
-								<p:menuitem value="Novo" outcome="/pages/cadastroQuestionario"
+								<p:menuitem value="Novo" outcome="/pages/questionario/cadastroQuestionario"
 									title="Cadastrar novo questionário" icon="fa fa-file-o" />
-								<p:menuitem value="Editar" outcome="/pages/questionarioEditar"
+								<p:menuitem value="Editar" outcome="/pages/questionario/questionarioEditar"
 									title="Editar questionário" icon="fa fa-edit" />
 							</p:submenu>
 							<p:submenu label="Seção" rendered="true">
-								<p:menuitem value="Criar/Editar" outcome="/pages/cadastroSecao"
+								<p:menuitem value="Criar/Editar" outcome="/pages/questionario/cadastroSecao"
 									title="Criar ou editar uma seção" icon="fa fa-edit" />
 
 							</p:submenu>
 							<p:submenu label="Perguntas" rendered="true">
-								<p:menuitem value="Perguntas N1" outcome="/pages/cadastroPerguntaNivelUm"
+								<p:menuitem value="Perguntas N1" outcome="/pages/questionario/cadastroPerguntaNivelUm"
 									title="Cadastrar ou alterar perguntas nível 1" icon="fa fa-product-hunt" />
-								<p:menuitem value="Perguntas N2" outcome="/pages/cadastroPerguntaNivelDois"
+								<p:menuitem value="Perguntas N2" outcome="/pages/questionario/cadastroPerguntaNivelDois"
 									title="Cadastrar ou alterar perguntas nível 2" icon="fa fa-product-hunt" />
-								<p:menuitem value="Perguntas N3" outcome="/pages/cadastroPerguntaNivelTres"
+								<p:menuitem value="Perguntas N3" outcome="/pages/questionario/cadastroPerguntaNivelTres"
 									title="Cadastrar ou alterar perguntas nível 3" icon="fa fa-product-hunt" />
 							</p:submenu>
 							<p:submenu label="Opções" rendered="true">
-								<p:menuitem value="Nova" outcome="/pages/cadastroOpcao"
+								<p:menuitem value="Nova" outcome="/pages/questionario/cadastroOpcao"
 									title="Criar nova opção" icon="fa fa-file-o" />
-								<p:menuitem value="Editar" outcome="/pages/opcaoEditar"
+								<p:menuitem value="Editar" outcome="/pages/questionario/opcaoEditar"
 									title="Editar opções" icon="fa fa-edit" />
 								
 							</p:submenu>
