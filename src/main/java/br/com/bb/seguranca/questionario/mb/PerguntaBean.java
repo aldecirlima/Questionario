@@ -110,6 +110,7 @@ public class PerguntaBean implements Serializable {
 		try {
 			this.objPerguntaNivelUm = perguntaService.findById(idLong);
 			this.objPerguntaNivelUm.getSubPerguntas().sort(Collections.reverseOrder());
+//			System.out.println("Opção: " + objPerguntaNivelUm.getOpcoesParaSelecao().get(0).getNomeOpcao());
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
 		}
@@ -230,6 +231,9 @@ public class PerguntaBean implements Serializable {
 		} else if (pergunta.getTipoPergunta() == TipoPergunta.TXT_CRT
 				|| pergunta.getTipoPergunta() == TipoPergunta.TXT_LNG) {
 			pergunta.setOpcoesParaSelecao(new ArrayList<>());
+		}
+		if (pergunta.getPerguntaVisivel() == 1){
+			pergunta.setOpcaoVisivel(null);
 		}
 		return pergunta;
 	}

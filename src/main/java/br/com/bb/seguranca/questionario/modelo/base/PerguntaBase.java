@@ -52,7 +52,7 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 
 //	Strings
 
-	@Column(name = "TXT_PRGT", length = 200)
+	@Column(name = "TXT_PRGT", length = 250)
 	private String textoPergunta;
 
 	@Column(name = "MTR_CDST", length = 8)
@@ -61,7 +61,7 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@Column(name = "MTR_EXCL", length = 8)
 	private String matriculaExclusao;
 
-	@Column(name = "TTL")
+	@Column(name = "TTL", length = 155)
 	private String title;
 
 //	Dates
@@ -77,12 +77,19 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@Column(name = "PRGT_ATV", length = 1)
 	private Integer perguntaAtiva;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true, length = 30, name = "TP_PRGT")
-	private TipoPergunta tipoPergunta;
+	@Column(name = "PRGT_VSVL", length = 1)
+	private Integer perguntaVisivel;
+
+
+	@Column(name = "OPC_VSVL_ID")
+	private Long opcaoVisivel;
 
 	@Column(name = "ORD", length = 9)
 	private Integer ordem;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = true, length = 30, name = "TP_PRGT")
+	private TipoPergunta tipoPergunta;
 
 //	Fim dos atributos
 
@@ -192,6 +199,22 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 
 	public List<PerguntaBase> getSubPerguntas() {
 		return subPerguntas;
+	}
+
+	public Integer getPerguntaVisivel() {
+		return perguntaVisivel;
+	}
+
+	public Long getOpcaoVisivel() {
+		return opcaoVisivel;
+	}
+
+	public void setPerguntaVisivel(Integer perguntaVisivel) {
+		this.perguntaVisivel = perguntaVisivel;
+	}
+
+	public void setOpcaoVisivel(Long opcaoVisivel) {
+		this.opcaoVisivel = opcaoVisivel;
 	}
 
 	public void setPerguntaMae(PerguntaBase perguntaMae) {

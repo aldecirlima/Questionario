@@ -58,7 +58,8 @@
 							itemValue="#{sc.idSecaoBase}" var="sc"
 							itemLabel="Id: #{sc.idSecaoBase} - rótulo: #{sc.nomeSecao}" />
 					</p:selectOneMenu>
-					<p:inputText rendered="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
+					<p:inputText
+						rendered="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
 						disabled="true" styleClass="cssColunm-w-100-p"
 						value="Id: #{perguntaBean.objSecaoBase.idSecaoBase} - título: #{perguntaBean.objSecaoBase.nomeSecao}" />
 
@@ -227,7 +228,8 @@
 							</c:if>
 							<p:outputLabel for="idPerguntaBase" value="ID" />
 							<p:inputNumber id="idPerguntaBase" disabled="true"
-								value="#{perguntaBean.objPerguntaNivelTres.idPerguntaBase}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelTres.idPerguntaBase}"
+								size="9" />
 
 							<p:outputLabel for="textoPergunta" value="Rótulo" />
 
@@ -242,6 +244,10 @@
 								title="Texto de ajuda da pergunta (não obrigatório). Limite 150 caracteres"
 								value="#{perguntaBean.objPerguntaNivelTres.title}"
 								maxlength="150" />
+						</p:panelGrid>
+
+						<p:panelGrid columns="4" id="grid-manage02"
+							columnClasses="cssColumn150-no-border, cssColumn300-no-border, cssColumn150-no-border, cssColumn200-no-border">
 
 							<p:outputLabel value="Tipo" for="tipoPergunta" />
 							<p:selectOneMenu id="tipoPergunta" required="true" filter="true"
@@ -267,6 +273,37 @@
 								<f:selectItem itemLabel="Não" itemValue="0" />
 							</p:selectOneRadio>
 
+							<p:outputLabel for="perguntaVisivel" value="Visível"
+								rendered="#{perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'S_N' or perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'S_N_NA' or perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'UN_SL'}" />
+							<p:selectOneRadio id="perguntaVisivel" required="true"
+								rendered="#{perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'S_N' or perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'S_N_NA' or perguntaBean.objPerguntaNivelDois.tipoPergunta eq 'UN_SL'}"
+								requiredMessage="Informe se a pergunta será visível por padrão"
+								value="#{perguntaBean.objPerguntaNivelTres.perguntaVisivel}">
+								<f:selectItem itemLabel="Sim" itemValue="1" />
+								<f:selectItem itemLabel="Não" itemValue="0" />
+								<p:ajax process="@this" update="grid-manage03" />
+							</p:selectOneRadio>
+
+						</p:panelGrid>
+
+						<p:panelGrid columns="2" id="grid-manage03"
+							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
+
+							<p:outputLabel for="opcaoVisivel" value="Opção visível"
+								id="opcaoVisivelLabel" title="Resposta da pergunta mãe que torna esta visível"
+								rendered="#{perguntaBean.objPerguntaNivelTres.perguntaVisivel eq 0}" />
+							<p:selectOneMenu id="opcaoVisivel" required="true" filter="true"
+								rendered="#{perguntaBean.objPerguntaNivelTres.perguntaVisivel eq 0}"
+								filterMatchMode="contains" title="Resposta da pergunta mãe que torna esta visível"
+								requiredMessage="Informe a opção para tornar a pergunta visível"
+								value="#{perguntaBean.objPerguntaNivelTres.opcaoVisivel}">
+								<f:selectItem itemLabel="Selecione..." />
+								<f:selectItems
+									value="#{perguntaBean.objPerguntaNivelDois.opcoesParaSelecao}"
+									var="opc" itemLabel="#{opc.nomeOpcao}"
+									itemValue="#{opc.idOpcao}" />
+							</p:selectOneMenu>
+
 						</p:panelGrid>
 
 					</p:outputPanel>
@@ -291,7 +328,8 @@
 							columnClasses="cssColumn150-no-border, cssColumn150-no-border, cssColumn150-no-border, cssColumn400-no-border">
 							<p:outputLabel value="ID" />
 							<p:inputNumber disabled="true"
-								value="#{perguntaBean.objPerguntaNivelTres.idPerguntaBase}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelTres.idPerguntaBase}"
+								size="9" />
 							<p:outputLabel value="Tipo pergunta" />
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelTres.tipoPergunta.descricao}" />
