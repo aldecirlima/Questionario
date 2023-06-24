@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 
 public class SecaoDao implements Serializable {
 
@@ -15,26 +15,22 @@ public class SecaoDao implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	public Secao persistir(Secao secao) {
-		return manager.merge(secao);
+	public SecaoBase persistir(SecaoBase secaoBase) {
+		return manager.merge(secaoBase);
 	}
 
-	public void salvar(Secao secao) {
-		manager.merge(secao);
+	public void salvar(SecaoBase secaoBase) {
+		manager.merge(secaoBase);
 	}
 
-	public Secao findById(Long id) {
-		String jpql = "SELECT s FROM Secao s WHERE s.idSecao = :id";
-		TypedQuery<Secao> query = manager.createQuery(jpql, Secao.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+	public SecaoBase findById(Long id) {
+		return manager.find(SecaoBase.class, id);
 	}
 
-	public Secao buscaPerguntasDaSecao(Long idSecao) {
-		String jpql = "SELECT s FROM Secao s JOIN FETCH s.perguntas p "
-				+ "WHERE s.idSecao = :idSecao";
-		TypedQuery<Secao> query = manager.createQuery(jpql, Secao.class);
-		query.setParameter("idSecao", idSecao);
+	public SecaoBase buscaPerguntasDaSecao(Long idSecaoBase) {
+		String jpql = "SELECT s FROM SecaoBase s JOIN FETCH s.perguntas p " + "WHERE s.idSecaoBase = :idSecaoBase";
+		TypedQuery<SecaoBase> query = manager.createQuery(jpql, SecaoBase.class);
+		query.setParameter("idSecaoBase", idSecaoBase);
 		return query.getSingleResult();
 	}
 

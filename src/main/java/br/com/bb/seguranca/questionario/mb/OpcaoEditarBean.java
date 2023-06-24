@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 

@@ -10,15 +10,15 @@
 		<jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
 
 
-		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao</class>
-		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta</class>
-		<class>br.com.bb.seguranca.questionario.modelo.base.perguntas.Resposta</class>
-		<class>br.com.bb.seguranca.questionario.modelo.base.Questionario</class>
-		<class>br.com.bb.seguranca.questionario.modelo.base.Secao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.PerguntaBase</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase</class>
+		<class>br.com.bb.seguranca.questionario.modelo.base.SecaoBase</class>
 
 		<class>br.com.bb.seguranca.questionario.modelo.form.Avaliacao</class>
-		<class>br.com.bb.seguranca.questionario.modelo.form.PerguntaForm</class>
-		<class>br.com.bb.seguranca.questionario.modelo.form.SecaoForm</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.Pergunta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.Resposta</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.Secao</class>
+		<class>br.com.bb.seguranca.questionario.modelo.form.Opcao</class>
 
 
 		<properties>

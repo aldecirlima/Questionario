@@ -16,16 +16,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 
 @Entity
-@Table(name = "SECAO_FORM")
-public class SecaoForm {
+@Table(name = "SECAO")
+public class Secao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Long idSecaoForm;
+	private Long idSecao;
 
 	@ManyToOne()
 	@JoinColumn(name = "AVL_ID")
@@ -33,46 +33,46 @@ public class SecaoForm {
 
 	@OneToOne
 	@JoinColumn(name = "SC_ID")
-	private Secao secao;
+	private SecaoBase secao;
 	
-	@OneToMany(mappedBy = "secaoForm", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<PerguntaForm> perguntasForm;
+	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Pergunta> perguntas;
 
-	public Long getIdSecaoForm() {
-		return idSecaoForm;
+	public Long getIdSecao() {
+		return idSecao;
 	}
 
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
 	}
 
-	public void setIdSecaoForm(Long idSecaoForm) {
-		this.idSecaoForm = idSecaoForm;
+	public void setIdSecao(Long idSecao) {
+		this.idSecao = idSecao;
 	}
 
 	public void setAvaliacao(Avaliacao avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 
-	public Secao getSecao() {
+	public SecaoBase getSecao() {
 		return secao;
 	}
 
-	public void setSecao(Secao secao) {
+	public void setSecao(SecaoBase secao) {
 		this.secao = secao;
 	}
 
-	public List<PerguntaForm> getPerguntasForm() {
-		return perguntasForm;
+	public List<Pergunta> getPerguntas() {
+		return perguntas;
 	}
 
-	public void setPerguntasForm(List<PerguntaForm> perguntasForm) {
-		this.perguntasForm = perguntasForm;
+	public void setPerguntasForm(List<Pergunta> perguntas) {
+		this.perguntas = perguntas;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idSecaoForm);
+		return Objects.hash(idSecao);
 	}
 
 	@Override
@@ -83,8 +83,8 @@ public class SecaoForm {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SecaoForm other = (SecaoForm) obj;
-		return Objects.equals(idSecaoForm, other.idSecaoForm);
+		Secao other = (Secao) obj;
+		return Objects.equals(idSecao, other.idSecao);
 	}
 
 }

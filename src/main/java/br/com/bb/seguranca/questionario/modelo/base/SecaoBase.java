@@ -16,26 +16,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
-
 @Entity
-@Table(name = "SECAO")
-public class Secao {
+@Table(name = "SECAO_BASE")
+public class SecaoBase {
 
 //	Id
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idSecao;
+	private Long idSecaoBase;
 
 //	Objetos
 
 	@ManyToOne()
-	@JoinColumn(name = "QST_ID")
-	private Questionario questionario;
+	@JoinColumn(name = "QST_BS_ID")
+	private QuestionarioBase questionarioBase;
 
-	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Pergunta> perguntas;
+	@OneToMany(mappedBy = "secaoBase", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<PerguntaBase> perguntas;
 
 //	Strings
 
@@ -70,15 +68,15 @@ public class Secao {
 
 //	Fim dos atributos
 
-	public Secao() {
+	public SecaoBase() {
 	}
 
-	public Long getIdSecao() {
-		return idSecao;
+	public Long getIdSecaoBase() {
+		return idSecaoBase;
 	}
 
-	public void setIdSecao(Long idSecao) {
-		this.idSecao = idSecao;
+	public void setIdSecaoBase(Long idSecaoBase) {
+		this.idSecaoBase = idSecaoBase;
 	}
 
 	public String getNomeSecao() {
@@ -145,31 +143,31 @@ public class Secao {
 		this.ordemSecao = ordemSecao;
 	}
 
-	public List<Pergunta> getPerguntas() {
+	public List<PerguntaBase> getPerguntas() {
 		return perguntas;
 	}
 
-	public void setPerguntas(List<Pergunta> perguntas) {
+	public void setPerguntas(List<PerguntaBase> perguntas) {
 		this.perguntas = perguntas;
 	}
 
-	public Questionario getQuestionario() {
-		return questionario;
+	public QuestionarioBase getQuestionario() {
+		return questionarioBase;
 	}
 
-	public void setQuestionario(Questionario questionario) {
-		this.questionario = questionario;
+	public void setQuestionario(QuestionarioBase questionarioBase) {
+		this.questionarioBase = questionarioBase;
 	}
 
 	@Override
 	public String toString() {
-		return "Secao [idSecao=" + idSecao + ", nomeSecao=" + nomeSecao + ", matriculaGravacao=" + matriculaGravacao
+		return "SecaoBase [idSecao=" + idSecaoBase + ", nomeSecao=" + nomeSecao + ", matriculaGravacao=" + matriculaGravacao
 				+ ", secaoAtiva=" + secaoAtiva + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idSecao);
+		return Objects.hash(idSecaoBase);
 	}
 
 	@Override
@@ -180,8 +178,8 @@ public class Secao {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Secao other = (Secao) obj;
-		return Objects.equals(idSecao, other.idSecao);
+		SecaoBase other = (SecaoBase) obj;
+		return Objects.equals(idSecaoBase, other.idSecaoBase);
 	}
 
 }

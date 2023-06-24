@@ -15,8 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "QUESTIONARIO")
-public class Questionario {
+@Table(name = "QUESTIONARIO_BASE")
+public class QuestionarioBase {
 
 //	Id
 
@@ -27,8 +27,8 @@ public class Questionario {
 
 //	Objetos
 
-	@OneToMany(mappedBy = "questionario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Secao> secoes;
+	@OneToMany(mappedBy = "questionarioBase", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SecaoBase> secoesBase;
 
 //	Strings
 
@@ -37,7 +37,7 @@ public class Questionario {
 
 	@Column(name = "MTR_GRV", length = 8)
 	private String matriculaGravacao;
-	
+
 	@Column(name = "DSC_QST", length = 150)
 	private String descricaoQuestionario;
 
@@ -65,7 +65,7 @@ public class Questionario {
 
 //	Fim dos atributos
 
-	public Questionario() {
+	public QuestionarioBase() {
 
 	}
 
@@ -117,17 +117,17 @@ public class Questionario {
 		this.dataEncerramento = dataEncerramento;
 	}
 
-	public List<Secao> getSecoes() {
-		return secoes;
+	public List<SecaoBase> getSecoes() {
+		return secoesBase;
 	}
 
-	public void setSecoes(List<Secao> secoes) {
-		this.secoes = secoes;
+	public void setSecoes(List<SecaoBase> secoes) {
+		this.secoesBase = secoes;
 	}
 
 	/**
 	 * Status: Inativo=0; Ativo=1; Baixado=3
-	 *  
+	 * 
 	 * @return {@code Integer}
 	 */
 	public Integer getQuestionarioAtivo() {
@@ -136,7 +136,7 @@ public class Questionario {
 
 	/**
 	 * Status: Inativo=0; Ativo=1; Baixado=3
-	 *  
+	 * 
 	 */
 	public void setQuestionarioAtivo(Integer questionatioAtivo) {
 		this.questionarioAtivo = questionatioAtivo;
@@ -157,8 +157,6 @@ public class Questionario {
 	public void setNomeQuestionario(String nomeQuestionario) {
 		this.nomeQuestionario = nomeQuestionario;
 	}
-	
-	
 
 	public String getDescricaoQuestionario() {
 		return descricaoQuestionario;
@@ -170,7 +168,7 @@ public class Questionario {
 
 	@Override
 	public String toString() {
-		return "Id: " + idQuestionario + " - Titulo: " + nomeQuestionario ;
+		return "Id: " + idQuestionario + " - Titulo: " + nomeQuestionario;
 	}
 
 	@Override
@@ -186,7 +184,7 @@ public class Questionario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Questionario other = (Questionario) obj;
+		QuestionarioBase other = (QuestionarioBase) obj;
 		return Objects.equals(idQuestionario, other.idQuestionario);
 	}
 

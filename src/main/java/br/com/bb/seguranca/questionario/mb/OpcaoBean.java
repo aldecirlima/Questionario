@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 

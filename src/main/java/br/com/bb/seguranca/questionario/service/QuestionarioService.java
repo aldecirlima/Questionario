@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.QuestionarioDao;
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
 
 public class QuestionarioService implements Serializable {
 
@@ -17,40 +17,40 @@ public class QuestionarioService implements Serializable {
 	QuestionarioDao questionarioDao;
 
 	@Transactional
-	public void salvarQuestionario(Questionario questionario) {
+	public void salvarQuestionario(QuestionarioBase questionario) {
 		questionarioDao.salvar(questionario);
 	}
 
 	/**
 	 * Persiste o objeto e devolve o objeto com ID
 	 * 
-	 * @param Questionario
-	 * @return Questionario
+	 * @param QuestionarioBase
+	 * @return QuestionarioBase
 	 */
 	@Transactional
-	public Questionario persisteQuestionario(Questionario questionario) {
+	public QuestionarioBase persisteQuestionario(QuestionarioBase questionario) {
 
 		return questionarioDao.persistir(questionario);
 	}
 
 	@Transactional
-	public List<Questionario> buscaQuestionariosNaoAtivos() {
+	public List<QuestionarioBase> buscaQuestionariosNaoAtivos() {
 		return questionarioDao.buscaQuestionariosNaoAtivos();
 	}
 	
-	public List<Questionario> buscaQuestionariosAtivos() {
+	public List<QuestionarioBase> buscaQuestionariosAtivos() {
 		return questionarioDao.buscaQuestionariosAtivos();
 	}
 	
-	public Questionario buscaQuestionarioAtivo() {
+	public QuestionarioBase buscaQuestionarioAtivo() {
 		return questionarioDao.buscaQuestionarioAtivo();
 	}
 
-	public List<Questionario> buscaQuestionariosNaoAtivosSemFetch() {
+	public List<QuestionarioBase> buscaQuestionariosNaoAtivosSemFetch() {
 		return questionarioDao.buscaQuestionariosNaoAtivosSemFetch();
 	}
 
-	public Questionario findById(Long id) {
+	public QuestionarioBase findById(Long id) {
 		return questionarioDao.findById(id);
 	}
 

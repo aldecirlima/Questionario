@@ -1,5 +1,6 @@
 package br.com.bb.seguranca.questionario.modelo.form;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
 
 @Entity
 @Table(name = "AVALIACAO")
@@ -28,10 +29,31 @@ public class Avaliacao {
 
 	@OneToOne
 	@JoinColumn(name = "QST_ID")
-	private Questionario questionario;
+	private QuestionarioBase questionarioBase;
 
 	@OneToMany(mappedBy = "avaliacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<SecaoForm> secoesForm;
+	private List<Secao> secoes;
+
+	@Column(name = "DT_AVL")
+	private Date dataAvaliacao;
+
+	@Column(name = "DT_DSPCH")
+	private Date dataDespacho;
+
+	@Column(name = "DT_EXCL")
+	private Date dataExclusao;
+
+	@Column(name = "MTRC_AVL", length = 8)
+	private String matriculaAvaliacao;
+
+	@Column(name = "MTRC_DSPCH", length = 8)
+	private String matriculaDespacho;
+
+	@Column(name = "MTRC_EXCL", length = 8)
+	private String matriculaExclusao;
+	
+	@Column(name = "DSPCHD", length = 1)
+	private Integer despacho; // 1 - sim, 0 - Não
 
 	public Long getIdAvaliacao() {
 		return idAvaliacao;
@@ -41,20 +63,76 @@ public class Avaliacao {
 		this.idAvaliacao = idAvaliacao;
 	}
 
-	public Questionario getQuestionario() {
-		return questionario;
+	public QuestionarioBase getQuestionarioBase() {
+		return questionarioBase;
 	}
 
-	public List<SecaoForm> getSecoesForm() {
-		return secoesForm;
+	public List<Secao> getSecoes() {
+		return secoes;
 	}
 
-	public void setQuestionario(Questionario questionario) {
-		this.questionario = questionario;
+	public void setQuestionarioBase(QuestionarioBase questionarioBase) {
+		this.questionarioBase = questionarioBase;
 	}
 
-	public void setSecoesForm(List<SecaoForm> secoesForm) {
-		this.secoesForm = secoesForm;
+	public void setSecoes(List<Secao> secoes) {
+		this.secoes = secoes;
+	}
+
+	public Date getDataAvaliacao() {
+		return dataAvaliacao;
+	}
+
+	public Date getDataDespacho() {
+		return dataDespacho;
+	}
+
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public String getMatriculaAvaliacao() {
+		return matriculaAvaliacao;
+	}
+
+	public String getMatriculaDespacho() {
+		return matriculaDespacho;
+	}
+
+	public String getMatriculaExclusao() {
+		return matriculaExclusao;
+	}
+
+	public void setDataAvaliacao(Date dataAvaliacao) {
+		this.dataAvaliacao = dataAvaliacao;
+	}
+
+	public void setDataDespacho(Date dataDespacho) {
+		this.dataDespacho = dataDespacho;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
+
+	public void setMatriculaAvaliacao(String matriculaAvaliacao) {
+		this.matriculaAvaliacao = matriculaAvaliacao;
+	}
+
+	public void setMatriculaDespacho(String matriculaDespacho) {
+		this.matriculaDespacho = matriculaDespacho;
+	}
+
+	public void setMatriculaExclusao(String matriculaExclusao) {
+		this.matriculaExclusao = matriculaExclusao;
+	}
+
+	public Integer getDespacho() {
+		return despacho;
+	}
+
+	public void setDespacho(Integer despacho) {
+		this.despacho = despacho;
 	}
 
 	@Override

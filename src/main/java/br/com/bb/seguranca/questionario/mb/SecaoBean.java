@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
@@ -21,22 +21,22 @@ public class SecaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Questionario> listaQuestionarios;
+	private List<QuestionarioBase> listaQuestionarios;
 
-	private Map<Long, Questionario> mapQuestionarios;
+	private Map<Long, QuestionarioBase> mapQuestionarios;
 
-	private Questionario secaoQuestionario;
+	private QuestionarioBase secaoQuestionario;
 
 	private Long idLong;
 
-	private Secao objSecao;
+	private SecaoBase objSecaoBase;
 
 	@Inject
 	private QuestionarioService questionarioService;
 
 	public void buscaQuestionariosNaoAtivos() {
 		if (this.secaoQuestionario == null) {
-			this.secaoQuestionario = new Questionario();
+			this.secaoQuestionario = new QuestionarioBase();
 		}
 		if (this.listaQuestionarios == null) {
 			this.atualizaListaQuestionarios();
@@ -47,7 +47,7 @@ public class SecaoBean implements Serializable {
 		try {
 			this.listaQuestionarios = questionarioService.buscaQuestionariosNaoAtivos();
 			mapQuestionarios = new HashMap<>();
-			for (Questionario questionario : listaQuestionarios) {
+			for (QuestionarioBase questionario : listaQuestionarios) {
 				if (!mapQuestionarios.containsKey(questionario.getIdQuestionario())) {
 					mapQuestionarios.put(questionario.getIdQuestionario(), questionario);
 				}
@@ -63,13 +63,13 @@ public class SecaoBean implements Serializable {
 			FacesMessages.error("Nenhum questionário selecionado!");
 			return;
 		}
-		objSecao = new Secao();
-		objSecao.setMatriculaGravacao("F0394519");
-		objSecao.setOrdemSecao(secaoQuestionario.getSecoes().size() + 1);
-		objSecao.setDataGravacao(new Date());
-		objSecao.setSecaoAtiva(0);
-		objSecao.setQuestionario(secaoQuestionario);
-		secaoQuestionario.getSecoes().add(objSecao);
+		objSecaoBase = new SecaoBase();
+		objSecaoBase.setMatriculaGravacao("F0394519");
+		objSecaoBase.setOrdemSecao(secaoQuestionario.getSecoes().size() + 1);
+		objSecaoBase.setDataGravacao(new Date());
+		objSecaoBase.setSecaoAtiva(0);
+		objSecaoBase.setQuestionario(secaoQuestionario);
+		secaoQuestionario.getSecoes().add(objSecaoBase);
 		try {
 			secaoQuestionario = questionarioService.persisteQuestionario(secaoQuestionario);
 			atualizaListaQuestionarios();
@@ -82,8 +82,8 @@ public class SecaoBean implements Serializable {
 
 	public void salvarSecao() {
 		if (secaoQuestionario != null) {
-			Integer indice = secaoQuestionario.getSecoes().indexOf(objSecao);
-			secaoQuestionario.getSecoes().set(indice, objSecao);
+			Integer indice = secaoQuestionario.getSecoes().indexOf(objSecaoBase);
+			secaoQuestionario.getSecoes().set(indice, objSecaoBase);
 			try {
 				secaoQuestionario = questionarioService.persisteQuestionario(secaoQuestionario);
 				mapQuestionarios.replace(secaoQuestionario.getIdQuestionario(), secaoQuestionario);
@@ -105,7 +105,7 @@ public class SecaoBean implements Serializable {
 		try {
 			secaoQuestionario = mapQuestionarios.get(idLong);
 //			if (secaoQuestionario.getSecoes() == null)  {
-//				secaoQuestionario.setSecoes(new ArrayList<Secao>());
+//				secaoQuestionario.setSecoes(new ArrayList<SecaoBase>());
 //			}
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
@@ -117,35 +117,35 @@ public class SecaoBean implements Serializable {
 		this.idLong = null;
 	}
 
-	public List<Questionario> getListaQuestionarios() {
+	public List<QuestionarioBase> getListaQuestionarios() {
 		return listaQuestionarios;
 	}
 
-	public Questionario getSecaoQuestionario() {
+	public QuestionarioBase getSecaoQuestionario() {
 		return secaoQuestionario;
 	}
 
-	public void setListaQuestionarios(List<Questionario> listaQuestionarios) {
+	public void setListaQuestionarios(List<QuestionarioBase> listaQuestionarios) {
 		this.listaQuestionarios = listaQuestionarios;
 	}
 
-	public void setSecaoQuestionario(Questionario secaoQuestionario) {
+	public void setSecaoQuestionario(QuestionarioBase secaoQuestionario) {
 		this.secaoQuestionario = secaoQuestionario;
 	}
 
-	public Secao getObjSecao() {
-		return objSecao;
+	public SecaoBase getObjSecaoBase() {
+		return objSecaoBase;
 	}
 
-	public void setObjSecao(Secao objSecao) {
-		this.objSecao = objSecao;
+	public void setObjSecaoBase(SecaoBase objSecaoBase) {
+		this.objSecaoBase = objSecaoBase;
 	}
 
-	public Map<Long, Questionario> getMapQuestionarios() {
+	public Map<Long, QuestionarioBase> getMapQuestionarios() {
 		return mapQuestionarios;
 	}
 
-	public void setMapQuestionarios(Map<Long, Questionario> mapQuestionarios) {
+	public void setMapQuestionarios(Map<Long, QuestionarioBase> mapQuestionarios) {
 		this.mapQuestionarios = mapQuestionarios;
 	}
 

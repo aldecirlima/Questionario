@@ -52,12 +52,12 @@
 					value="#{secaoBean.secaoQuestionario.secoes}" var="sc"
 					paginator="true" rows="5"
 					emptyMessage="Questionário selecionado não possui seções ativas"
-					paginatorPosition="bottom" selection="#{secaoBean.objSecao}"
-					rowKey="#{sc.idSecao}">
+					paginatorPosition="bottom" selection="#{secaoBean.objSecaoBase}"
+					rowKey="#{sc.idSecaoBase}">
 					<f:facet name="header">Seções do questionário Id: #{secaoBean.secaoQuestionario.idQuestionario}</f:facet>
 
 					<p:column headerText="Id" width="5%">
-						<h:outputText value="#{sc.idSecao}" />
+						<h:outputText value="#{sc.idSecaoBase}" />
 					</p:column>
 					<p:column headerText="Rótulo" width="35%">
 						<h:outputText value="#{sc.nomeSecao}" />
@@ -84,7 +84,7 @@
 							styleClass="edit-button rounded-button ui-button-success"
 							process="@this">
 							<f:setPropertyActionListener value="#{sc}"
-								target="#{secaoBean.objSecao}" />
+								target="#{secaoBean.objSecaoBase}" />
 							<p:resetInput target=":dialogs:manage-secao" />
 						</p:commandButton>
 
@@ -113,22 +113,22 @@
 							<p:outputLabel for="nomeSecao" value="Rotulo" />
 							<p:inputText id="nomeSecao" title="Limite 150 caracteres"
 								styleClass="cssColunm-w-100-p"
-								value="#{secaoBean.objSecao.nomeSecao}" maxlength="150" />
+								value="#{secaoBean.objSecaoBase.nomeSecao}" maxlength="150" />
 
 							<p:outputLabel for="descricaoSecao" value="Descrição" />
 							<p:inputTextarea id="descricaoSecao"
 								styleClass="cssColunm-w-100-p" title="Limite 250 caracteres"
-								value="#{secaoBean.objSecao.descricaoSecao}" 
+								value="#{secaoBean.objSecaoBase.descricaoSecao}" 
 								maxlength="250" />
 
 							<p:outputLabel for="ordemSecao" value="Ordem" />
 							<p:inputNumber id="ordemSecao"
 								title="Ordem que a seção aparecerá"
-								value="#{secaoBean.objSecao.ordemSecao}" minValue="0" />
+								value="#{secaoBean.objSecaoBase.ordemSecao}" minValue="0" />
 
 							<p:outputLabel for="secaoAtiva" value="Ativa" />
 							<p:selectOneRadio id="secaoAtiva"
-								value="#{secaoBean.objSecao.secaoAtiva}">
+								value="#{secaoBean.objSecaoBase.secaoAtiva}">
 								<f:selectItem itemLabel="Sim" itemValue="1" />
 								<f:selectItem itemLabel="Não" itemValue="0" />
 							</p:selectOneRadio>

@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo.base.perguntas;
+package br.com.bb.seguranca.questionario.modelo.base;
 
 import java.util.Date;
 import java.util.List;
@@ -20,34 +20,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.enuns.TipoPergunta;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 
 @Entity
-@Table(name = "PERGUNTA")
-public class Pergunta implements Comparable<Pergunta> {
+@Table(name = "PERGUNTA_BASE")
+public class PerguntaBase implements Comparable<PerguntaBase> {
 
 //	Id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Long idPergunta;
+	private Long idPerguntaBase;
 
 //	Objects
 
 	@ManyToOne
 	@JoinColumn(name = "SC_ID")
-	private Secao secao;
+	private SecaoBase secaoBase;
 
 	@ManyToOne
 	@JoinColumn(name = "PRGT_M_ID")
-	private Pergunta perguntaMae;
+	private PerguntaBase perguntaMae;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "PERGUNTA_OPCAO", joinColumns = @JoinColumn(name = "PRGT_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
 	private List<Opcao> opcoesParaSelecao;
 
 	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Pergunta> subPerguntas;
+	private List<PerguntaBase> subPerguntas;
 
 //	Strings
 
@@ -85,16 +86,16 @@ public class Pergunta implements Comparable<Pergunta> {
 
 //	Fim dos atributos
 
-	public Pergunta() {
+	public PerguntaBase() {
 
 	}
 
-	public Long getIdPergunta() {
-		return idPergunta;
+	public Long getIdPerguntaBase() {
+		return idPerguntaBase;
 	}
 
-	public void setIdPergunta(Long idPergunta) {
-		this.idPergunta = idPergunta;
+	public void setIdPerguntaBase(Long idPerguntaBase) {
+		this.idPerguntaBase = idPerguntaBase;
 	}
 
 	public String getTextoPergunta() {
@@ -153,12 +154,12 @@ public class Pergunta implements Comparable<Pergunta> {
 		this.opcoesParaSelecao = opcoesParaSelecao;
 	}
 
-	public Secao getSecao() {
-		return secao;
+	public SecaoBase getSecaoBase() {
+		return secaoBase;
 	}
 
-	public void setSecao(Secao secao) {
-		this.secao = secao;
+	public void setSecaoBase(SecaoBase secaoBase) {
+		this.secaoBase = secaoBase;
 	}
 
 	public String getTitle() {
@@ -185,25 +186,25 @@ public class Pergunta implements Comparable<Pergunta> {
 		this.tipoPergunta = tipoPergunta;
 	}
 
-	public Pergunta getPerguntaMae() {
+	public PerguntaBase getPerguntaMae() {
 		return perguntaMae;
 	}
 
-	public List<Pergunta> getSubPerguntas() {
+	public List<PerguntaBase> getSubPerguntas() {
 		return subPerguntas;
 	}
 
-	public void setPerguntaMae(Pergunta perguntaMae) {
+	public void setPerguntaMae(PerguntaBase perguntaMae) {
 		this.perguntaMae = perguntaMae;
 	}
 
-	public void setSubPerguntas(List<Pergunta> subPerguntas) {
+	public void setSubPerguntas(List<PerguntaBase> subPerguntas) {
 		this.subPerguntas = subPerguntas;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idPergunta);
+		return Objects.hash(idPerguntaBase);
 	}
 
 	@Override
@@ -214,16 +215,16 @@ public class Pergunta implements Comparable<Pergunta> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pergunta other = (Pergunta) obj;
-		return Objects.equals(idPergunta, other.idPergunta);
+		PerguntaBase other = (PerguntaBase) obj;
+		return Objects.equals(idPerguntaBase, other.idPerguntaBase);
 	}
 
 	@Override
-	public int compareTo(Pergunta pergunta) {
-		if (this.idPergunta < pergunta.idPergunta) {
+	public int compareTo(PerguntaBase pergunta) {
+		if (this.idPerguntaBase < pergunta.idPerguntaBase) {
 			return -1;
 		}
-		if (this.idPergunta > pergunta.idPergunta) {
+		if (this.idPerguntaBase > pergunta.idPerguntaBase) {
 			return 1;
 		}
 		return 0;

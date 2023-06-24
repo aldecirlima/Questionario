@@ -1,19 +1,21 @@
 package br.com.bb.seguranca.questionario.dao;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Resposta;
-import br.com.bb.seguranca.questionario.util.JPAUtil;
+import br.com.bb.seguranca.questionario.modelo.form.Resposta;
 
-public class RespostaDao {
-	
-	EntityManager em = JPAUtil.getEntityManagerMysql();
+public class RespostaDao implements Serializable {
 
-	public void inserir(Resposta resposta) {
-		em.getTransaction().begin();
-		em.persist(resposta);
-		em.getTransaction().commit();
-		em.close();
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private EntityManager manager;
+
+	public Resposta findById(Long id) {
+		return manager.find(Resposta.class, id);
 	}
 
 }

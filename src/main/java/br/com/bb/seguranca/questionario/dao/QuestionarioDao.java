@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
 
 public class QuestionarioDao implements Serializable {
 
@@ -16,42 +16,42 @@ public class QuestionarioDao implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	public Questionario persistir(Questionario questionario) {
+	public QuestionarioBase persistir(QuestionarioBase questionario) {
 		return manager.merge(questionario);
 	}
 
-	public void salvar(Questionario questionario) {
+	public void salvar(QuestionarioBase questionario) {
 		manager.merge(questionario);
 	}
 
-	public Questionario findById(Long id) {
-		String jpql = "SELECT q FROM Questionario q WHERE q.idQuestionario = :id";
-		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+	public QuestionarioBase findById(Long id) {
+		String jpql = "SELECT q FROM QuestionarioBase q WHERE q.idQuestionario = :id";
+		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		query.setParameter("id", id);
 		return query.getSingleResult();
 	}
 
-	public List<Questionario> buscaQuestionariosNaoAtivos() {
-		String jpql = "SELECT q FROM Questionario q " + "WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
-		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+	public List<QuestionarioBase> buscaQuestionariosNaoAtivos() {
+		String jpql = "SELECT q FROM QuestionarioBase q " + "WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
+		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		return query.getResultList();
 	}
 
-	public List<Questionario> buscaQuestionariosAtivos() {
-		String jpql = "SELECT q FROM Questionario q WHERE q.questionarioAtivo = 1";
-		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+	public List<QuestionarioBase> buscaQuestionariosAtivos() {
+		String jpql = "SELECT q FROM QuestionarioBase q WHERE q.questionarioAtivo = 1";
+		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		return query.getResultList();
 	}
 
-	public Questionario buscaQuestionarioAtivo() {
-		String jpql = "SELECT q FROM Questionario q " + "WHERE q.questionarioAtivo = 1";
-		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+	public QuestionarioBase buscaQuestionarioAtivo() {
+		String jpql = "SELECT q FROM QuestionarioBase q " + "WHERE q.questionarioAtivo = 1";
+		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		return query.getSingleResult();
 	}
 
-	public List<Questionario> buscaQuestionariosNaoAtivosSemFetch() {
-		String jpql = "SELECT q FROM Questionario q WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
-		TypedQuery<Questionario> query = manager.createQuery(jpql, Questionario.class);
+	public List<QuestionarioBase> buscaQuestionariosNaoAtivosSemFetch() {
+		String jpql = "SELECT q FROM QuestionarioBase q WHERE q.questionarioAtivo = 0 ORDER BY q.idQuestionario DESC";
+		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		return query.getResultList();
 	}
 

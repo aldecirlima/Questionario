@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
 
@@ -21,14 +21,14 @@ public class QuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	List<Questionario> listaQuestionarios;
+	List<QuestionarioBase> listaQuestionarios;
 
 	private Long idLong;
 
 	@Inject
 	private QuestionarioService questionarioService;
 
-	private Questionario objQuestionario;
+	private QuestionarioBase objQuestionario;
 
 	@PostConstruct
 	public void init() {
@@ -36,7 +36,7 @@ public class QuestionarioBean implements Serializable {
 	}
 
 	public void novoQuestionario() {
-		objQuestionario = new Questionario();
+		objQuestionario = new QuestionarioBase();
 	}
 
 	public void preparaQuestionario() {
@@ -52,7 +52,7 @@ public class QuestionarioBean implements Serializable {
 	public void salvaQuestionario() {
 		if (this.objQuestionario.getIdQuestionario() == null) {
 			this.preparaQuestionario();
-			this.objQuestionario = new Questionario();
+			this.objQuestionario = new QuestionarioBase();
 			return;
 		}
 		try {
@@ -72,7 +72,7 @@ public class QuestionarioBean implements Serializable {
 	}
 
 	private void populaQuestionario() {
-		this.objQuestionario.setSecoes(new ArrayList<Secao>());
+		this.objQuestionario.setSecoes(new ArrayList<SecaoBase>());
 		this.objQuestionario.setMatriculaGravacao("F0394519");
 		this.objQuestionario.setQuestionarioAtivo(0);
 		this.objQuestionario.setDataGravacao(new Date());
@@ -86,11 +86,11 @@ public class QuestionarioBean implements Serializable {
 		return pagina;
 	};
 
-	public Questionario getObjQuestionario() {
+	public QuestionarioBase getObjQuestionario() {
 		return objQuestionario;
 	}
 
-	public void setObjQuestionario(Questionario objQuestionario) {
+	public void setObjQuestionario(QuestionarioBase objQuestionario) {
 		this.objQuestionario = objQuestionario;
 	}
 
@@ -102,11 +102,11 @@ public class QuestionarioBean implements Serializable {
 		this.questionarioService = questionarioService;
 	}
 
-	public List<Questionario> getListaQuestionarios() {
+	public List<QuestionarioBase> getListaQuestionarios() {
 		return listaQuestionarios;
 	}
 
-	public void setListaQuestionarios(List<Questionario> listaQuestionarios) {
+	public void setListaQuestionarios(List<QuestionarioBase> listaQuestionarios) {
 		this.listaQuestionarios = listaQuestionarios;
 	}
 

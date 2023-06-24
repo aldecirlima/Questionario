@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.OpcaoDao;
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 
 public class OpcaoService implements Serializable {
 

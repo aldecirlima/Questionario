@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.SecaoDao;
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 
 public class SecaoService implements Serializable {
 
@@ -16,27 +16,27 @@ public class SecaoService implements Serializable {
 	SecaoDao secaoDao;
 
 	@Transactional
-	public void salvarSecao(Secao secao) {
+	public void salvarSecao(SecaoBase secao) {
 		secaoDao.salvar(secao);
 	}
 
 	/**
 	 * Persiste o objeto e devolve o objeto com ID
 	 * 
-	 * @param Secao
-	 * @return Secao
+	 * @param SecaoBase
+	 * @return SecaoBase
 	 */
 	@Transactional
-	public Secao persisteSecao(Secao secao) {
+	public SecaoBase persisteSecao(SecaoBase secao) {
 		return secaoDao.persistir(secao);
 	}
 
-	public Secao findById(Long id) {
+	public SecaoBase findById(Long id) {
 		return secaoDao.findById(id);
 	}
 
-	public Secao buscaPerguntasDaSecao(Long idSecao) {
-		return secaoDao.buscaPerguntasDaSecao(idSecao);
+	public SecaoBase buscaPerguntasDaSecao(Long idSecaoBase) {
+		return secaoDao.buscaPerguntasDaSecao(idSecaoBase);
 	}
 
 }

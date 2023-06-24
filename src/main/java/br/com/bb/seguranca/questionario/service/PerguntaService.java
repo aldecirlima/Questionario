@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.PerguntaDao;
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
 
 public class PerguntaService implements Serializable {
 
@@ -17,22 +17,22 @@ public class PerguntaService implements Serializable {
 	
 	/**
 	 * Salva uma pergunta no banco de dados
-	 * @param Pergunta
+	 * @param PerguntaBase
 	 */
 
 	@Transactional
-	public void salvarPergunta(Pergunta pergunta) {
+	public void salvarPergunta(PerguntaBase pergunta) {
 		perguntaDao.salvar(pergunta);
 	}
 
 	/**
 	 * Persiste o objeto e devolve o objeto com ID
 	 * 
-	 * @param Pergunta
-	 * @return Pergunta
+	 * @param PerguntaBase
+	 * @return PerguntaBase
 	 */
 	@Transactional
-	public Pergunta persistePergunta(Pergunta pergunta) {
+	public PerguntaBase persistePergunta(PerguntaBase pergunta) {
 		return perguntaDao.persistir(pergunta);
 	}
 	
@@ -40,10 +40,10 @@ public class PerguntaService implements Serializable {
 	 * Busca um objeto pelo ID
 	 * 
 	 * @param Long
-	 * @return Pergunta
+	 * @return PerguntaBase
 	 */
 
-	public Pergunta findById(Long id) {
+	public PerguntaBase findById(Long id) {
 		return perguntaDao.findById(id);
 	}
 

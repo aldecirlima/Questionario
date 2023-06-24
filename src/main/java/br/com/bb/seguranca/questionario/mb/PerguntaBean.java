@@ -15,11 +15,11 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
-import br.com.bb.seguranca.questionario.modelo.base.Questionario;
-import br.com.bb.seguranca.questionario.modelo.base.Secao;
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Pergunta;
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.TipoPergunta;
+import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
+import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
+import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
+import br.com.bb.seguranca.questionario.modelo.enuns.TipoPergunta;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.service.PerguntaService;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
@@ -32,7 +32,7 @@ public class PerguntaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	List<Questionario> listaQuestionarios;
+	List<QuestionarioBase> listaQuestionarios;
 
 	List<Opcao> listaOpcoesDisponiveis;
 
@@ -42,15 +42,15 @@ public class PerguntaBean implements Serializable {
 
 	private Opcao objOpcao;
 
-	private Questionario perguntaQuestionario;
+	private QuestionarioBase perguntaQuestionario;
 
-	private Secao objSecao;
+	private SecaoBase objSecaoBase;
 
-	private Pergunta objPerguntaNivelUm;
+	private PerguntaBase objPerguntaNivelUm;
 
-	private Pergunta objPerguntaNivelDois;
+	private PerguntaBase objPerguntaNivelDois;
 
-	private Pergunta objPerguntaNivelTres;
+	private PerguntaBase objPerguntaNivelTres;
 
 	@Inject
 	private QuestionarioService questionarioService;
@@ -66,14 +66,14 @@ public class PerguntaBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		objPerguntaNivelUm = new Pergunta();
-		objPerguntaNivelDois = new Pergunta();
-		objPerguntaNivelTres = new Pergunta();
+		objPerguntaNivelUm = new PerguntaBase();
+		objPerguntaNivelDois = new PerguntaBase();
+		objPerguntaNivelTres = new PerguntaBase();
 	}
 
 	public void buscaQuestionariosNaoAtivos() {
 		if (this.perguntaQuestionario == null) {
-			this.perguntaQuestionario = new Questionario();
+			this.perguntaQuestionario = new QuestionarioBase();
 		}
 		if (this.listaQuestionarios == null) {
 			this.atualizaListaQuestionarios();
@@ -94,14 +94,16 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}
+		idLong = null;
 	}
 
 	public void atualizaSecao() {
 		try {
-			this.objSecao = secaoService.findById(idLong);
+			this.objSecaoBase = secaoService.findById(idLong);
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar seção " + e.getMessage());
 		}
+		idLong = null;
 	}
 
 	public void atualizaPerguntaNivelUm() {
@@ -111,6 +113,7 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
 		}
+		idLong = null;
 	}
 
 	public void atualizaPerguntaNivelDois() {
@@ -120,23 +123,25 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar pergunta " + e.getMessage());
 		}
+		idLong = null;
 	}
 
 	public void preparaPerguntaNivelUm() {
-		Pergunta pergunta = novaInstanciaPergunta();
-		pergunta.setOrdem(objSecao.getPerguntas().size() + 1);
-		pergunta.setSecao(objSecao);
-		objSecao.getPerguntas().add(0, pergunta);
+		PerguntaBase pergunta = novaInstanciaPergunta();
+		pergunta.setOrdem(objSecaoBase.getPerguntas().size() + 1);
+		pergunta.setSecaoBase(objSecaoBase);
+		objSecaoBase.getPerguntas().add(0, pergunta);
 		try {
-			objSecao = secaoService.persisteSecao(objSecao);
+			objSecaoBase = secaoService.persisteSecao(objSecaoBase);
 			FacesMessages.info("Pergunta nível um incluída. Utilize a opção editar.");
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao criar pergunta " + e.getMessage());
 		}
+		
 	}
 
 	public void preparaPerguntaNivelDois() {
-		Pergunta pergunta = novaInstanciaPergunta();
+		PerguntaBase pergunta = novaInstanciaPergunta();
 		pergunta.setOrdem(objPerguntaNivelUm.getSubPerguntas().size() + 1);
 		pergunta.setPerguntaMae(objPerguntaNivelUm);
 		objPerguntaNivelUm.getSubPerguntas().add(0, pergunta);
@@ -149,7 +154,7 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void preparaPerguntaNivelTres() {
-		Pergunta pergunta = novaInstanciaPergunta();
+		PerguntaBase pergunta = novaInstanciaPergunta();
 		pergunta.setOrdem(objPerguntaNivelDois.getSubPerguntas().size() + 1);
 		pergunta.setPerguntaMae(objPerguntaNivelDois);
 		objPerguntaNivelDois.getSubPerguntas().add(0, pergunta);
@@ -161,8 +166,8 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
-	public Pergunta novaInstanciaPergunta() {
-		Pergunta pergunta = new Pergunta();
+	public PerguntaBase novaInstanciaPergunta() {
+		PerguntaBase pergunta = new PerguntaBase();
 		pergunta.setDataCadastro(new Date());
 		pergunta.setMatriculaCadastro("F0394519");
 		pergunta.setPerguntaAtiva(0);
@@ -172,10 +177,10 @@ public class PerguntaBean implements Serializable {
 //	Métodos para salvar as perguntas
 	public void salvaPerguntaNivelUm() {
 		objPerguntaNivelUm = insereListaOpcoes(objPerguntaNivelUm);
-		Integer index = objSecao.getPerguntas().indexOf(objPerguntaNivelUm);
-		objSecao.getPerguntas().set(index, objPerguntaNivelUm);
+		Integer index = objSecaoBase.getPerguntas().indexOf(objPerguntaNivelUm);
+		objSecaoBase.getPerguntas().set(index, objPerguntaNivelUm);
 		try {
-			secaoService.salvarSecao(objSecao);
+			secaoService.salvarSecao(objSecaoBase);
 			FacesMessages.info("Pergunta salva com sucesso.");
 			this.fechaDialogPergunta();
 		} catch (Exception e) {
@@ -217,7 +222,7 @@ public class PerguntaBean implements Serializable {
 		PrimeFaces.current().ajax().update("formPerguntas");
 	}
 
-	public Pergunta insereListaOpcoes(Pergunta pergunta) {
+	public PerguntaBase insereListaOpcoes(PerguntaBase pergunta) {
 		if (pergunta.getTipoPergunta() == TipoPergunta.S_N) {
 			pergunta.setOpcoesParaSelecao(opcaoService.buscaSimNao());
 		} else if (pergunta.getTipoPergunta() == TipoPergunta.S_N_NA) {
@@ -232,10 +237,10 @@ public class PerguntaBean implements Serializable {
 	public void cleanQuestionario() {
 		this.idLong = null;
 		this.perguntaQuestionario = null;
-		this.objSecao = null;
-		this.objPerguntaNivelUm = new Pergunta();
-		this.objPerguntaNivelDois = new Pergunta();
-		this.objPerguntaNivelTres = new Pergunta();
+		this.objSecaoBase = null;
+		this.objPerguntaNivelUm = new PerguntaBase();
+		this.objPerguntaNivelDois = new PerguntaBase();
+		this.objPerguntaNivelTres = new PerguntaBase();
 	}
 
 	/**
@@ -310,51 +315,51 @@ public class PerguntaBean implements Serializable {
 		return TipoPergunta.values();
 	}
 
-	public List<Questionario> getListaQuestionarios() {
+	public List<QuestionarioBase> getListaQuestionarios() {
 		return listaQuestionarios;
 	}
 
-	public Questionario getPerguntaQuestionario() {
+	public QuestionarioBase getPerguntaQuestionario() {
 		return perguntaQuestionario;
 	}
 
-	public void setListaQuestionarios(List<Questionario> listaQuestionarios) {
+	public void setListaQuestionarios(List<QuestionarioBase> listaQuestionarios) {
 		this.listaQuestionarios = listaQuestionarios;
 	}
 
-	public void setPerguntaQuestionario(Questionario perguntaQuestionario) {
+	public void setPerguntaQuestionario(QuestionarioBase perguntaQuestionario) {
 		this.perguntaQuestionario = perguntaQuestionario;
 	}
 
-	public Secao getObjSecao() {
-		return objSecao;
+	public SecaoBase getObjSecaoBase() {
+		return objSecaoBase;
 	}
 
-	public void setObjSecao(Secao objSecao) {
-		this.objSecao = objSecao;
+	public void setObjSecaoBase(SecaoBase objSecaoBase) {
+		this.objSecaoBase = objSecaoBase;
 	}
 
-	public Pergunta getObjPerguntaNivelUm() {
+	public PerguntaBase getObjPerguntaNivelUm() {
 		return objPerguntaNivelUm;
 	}
 
-	public void setObjPerguntaNivelUm(Pergunta objPerguntaNivelUm) {
+	public void setObjPerguntaNivelUm(PerguntaBase objPerguntaNivelUm) {
 		this.objPerguntaNivelUm = objPerguntaNivelUm;
 	}
 
-	public Pergunta getObjPerguntaNivelDois() {
+	public PerguntaBase getObjPerguntaNivelDois() {
 		return objPerguntaNivelDois;
 	}
 
-	public void setObjPerguntaNivelDois(Pergunta objPerguntaNivelDois) {
+	public void setObjPerguntaNivelDois(PerguntaBase objPerguntaNivelDois) {
 		this.objPerguntaNivelDois = objPerguntaNivelDois;
 	}
 
-	public Pergunta getObjPerguntaNivelTres() {
+	public PerguntaBase getObjPerguntaNivelTres() {
 		return objPerguntaNivelTres;
 	}
 
-	public void setObjPerguntaNivelTres(Pergunta objPerguntaNivelTres) {
+	public void setObjPerguntaNivelTres(PerguntaBase objPerguntaNivelTres) {
 		this.objPerguntaNivelTres = objPerguntaNivelTres;
 	}
 

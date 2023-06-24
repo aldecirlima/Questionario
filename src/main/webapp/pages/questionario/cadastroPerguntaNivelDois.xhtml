@@ -48,52 +48,52 @@
 						rendered="#{perguntaBean.perguntaQuestionario.secoes ne null}" />
 					<p:selectOneMenu id="menuSc" value="#{perguntaBean.idLong}"
 						styleClass="cssColunm-w-100-p"
-						rendered="#{perguntaBean.perguntaQuestionario.secoes ne null and perguntaBean.objSecao.idSecao eq null}"
+						rendered="#{perguntaBean.perguntaQuestionario.secoes ne null and perguntaBean.objSecaoBase.idSecaoBase eq null}"
 						required="true" filter="true" filterMatchMode="contains"
-						disabled="#{perguntaBean.objSecao.idSecao ne null}"
+						disabled="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
 						requiredMessage="Selecione uma opção">
 						<f:selectItem itemLabel="Selecione..." itemValue="" />
 						<f:selectItems value="#{perguntaBean.perguntaQuestionario.secoes}"
-							itemValue="#{sc.idSecao}" var="sc"
-							itemLabel="Id: #{sc.idSecao} - rótulo: #{sc.nomeSecao}" />
+							itemValue="#{sc.idSecaoBase}" var="sc"
+							itemLabel="Id: #{sc.idSecaoBase} - rótulo: #{sc.nomeSecao}" />
 					</p:selectOneMenu>
-					<p:inputText rendered="#{perguntaBean.objSecao.idSecao ne null}"
+					<p:inputText rendered="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
 						disabled="true" styleClass="cssColunm-w-100-p"
-						value="Id: #{perguntaBean.objSecao.idSecao} - título: #{perguntaBean.objSecao.nomeSecao}" />
+						value="Id: #{perguntaBean.objSecaoBase.idSecaoBase} - título: #{perguntaBean.objSecaoBase.nomeSecao}" />
 					<p:commandButton process="@this" update="@this"
 						rendered="#{perguntaBean.perguntaQuestionario.secoes ne null}"
-						disabled="#{perguntaBean.objSecao.idSecao ne null}"
+						disabled="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
 						style="margin-left: 25px" title="Ver perguntas da seção"
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaSecao}" />
 
 					<p:outputLabel value="Pergunta" for="menuPgt" styleClass="mr-10"
-						rendered="#{perguntaBean.objSecao.perguntas ne null}" />
+						rendered="#{perguntaBean.objSecaoBase.perguntas ne null}" />
 					<p:selectOneMenu id="menuPgt" value="#{perguntaBean.idLong}"
 						styleClass="cssColunm-w-100-p"
-						rendered="#{perguntaBean.objSecao.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPergunta eq null}"
+						rendered="#{perguntaBean.objSecaoBase.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPerguntaBase eq null}"
 						required="true" filter="true" filterMatchMode="contains"
-						disabled="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+						disabled="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase ne null}"
 						requiredMessage="Selecione uma opção">
 						<f:selectItem itemLabel="Selecione..." itemValue="" />
-						<f:selectItems value="#{perguntaBean.objSecao.perguntas}"
-							itemValue="#{pgt.idPergunta}" var="pgt"
-							itemLabel="Id: #{pgt.idPergunta} - rótulo: #{pgt.textoPergunta}" />
+						<f:selectItems value="#{perguntaBean.objSecaoBase.perguntas}"
+							itemValue="#{pgt.idPerguntaBase}" var="pgt"
+							itemLabel="Id: #{pgt.idPerguntaBase} - rótulo: #{pgt.textoPergunta}" />
 					</p:selectOneMenu>
 					<p:inputText
-						rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+						rendered="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase ne null}"
 						disabled="true" styleClass="cssColunm-w-100-p"
-						value="Id: #{perguntaBean.objPerguntaNivelUm.idPergunta} - título: #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
+						value="Id: #{perguntaBean.objPerguntaNivelUm.idPerguntaBase} - título: #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
 
 					<p:commandButton process="@this" update="@this"
-						rendered="#{perguntaBean.objSecao.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPergunta eq null}"
+						rendered="#{perguntaBean.objSecaoBase.perguntas ne null and perguntaBean.objPerguntaNivelUm.idPerguntaBase eq null}"
 						style="margin-left: 25px" title="Ver perguntas nível 2"
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaPerguntaNivelUm}" />
 
 					<p:commandButton process="@this"
 						update="@form :formCadastroPeguntas :formPerguntas"
-						rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+						rendered="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase ne null}"
 						style="margin-left: 25px" title="Desbloquear" ajax="false"
 						icon="fa fa-lock"
 						actionListener="#{perguntaBean.cleanQuestionario}" />
@@ -106,15 +106,15 @@
 			<h:form id="formPerguntas">
 				<p:dataTable id="listPerguntas" size="small" allowUnsorting="true"
 					sortMode="single"
-					rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+					rendered="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase ne null}"
 					value="#{perguntaBean.objPerguntaNivelUm.subPerguntas}" var="pgt"
 					paginator="true" rows="10"
 					emptyMessage="Pergunta selecionada não possui subperguntas"
-					paginatorPosition="bottom" rowKey="#{pgt.idPergunta}">
-					<f:facet name="header">Perguntas filhas da pergunta mãe Id: #{perguntaBean.objPerguntaNivelUm.idPergunta}</f:facet>
+					paginatorPosition="bottom" rowKey="#{pgt.idPerguntaBase}">
+					<f:facet name="header">Perguntas filhas da pergunta mãe Id: #{perguntaBean.objPerguntaNivelUm.idPerguntaBase}</f:facet>
 
-					<p:column headerText="Id" width="5%" sortBy="#{pgt.idPergunta}">
-						<h:outputText value="#{pgt.idPergunta}" />
+					<p:column headerText="Id" width="5%" sortBy="#{pgt.idPerguntaBase}">
+						<h:outputText value="#{pgt.idPerguntaBase}" />
 					</p:column>
 					<p:column headerText="Rótulo" width="35%"
 						sortBy="#{pgt.textoPergunta}">
@@ -168,7 +168,7 @@
 				</p:dataTable>
 
 				<p:commandButton process="@this" styleClass="edit-button"
-					rendered="#{perguntaBean.objPerguntaNivelUm.idPergunta ne null}"
+					rendered="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase ne null}"
 					update="@form :formPerguntas" value="Pergunta N2"
 					style="margin: 15px 20px 0px 12px" title="Criar pergunta nível 2"
 					ajax="false" icon="fa fa-plus"
@@ -188,16 +188,16 @@
 							<c:if
 								test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() lt 51}">
 								<p:inputText id="idPerguntaMae" disabled="true"
-									value="ID: #{perguntaBean.objPerguntaNivelUm.idPergunta} - #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
+									value="ID: #{perguntaBean.objPerguntaNivelUm.idPerguntaBase} - #{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
 							</c:if>
 							<c:if
 								test="#{perguntaBean.objPerguntaNivelUm.textoPergunta.length() gt 50}">
 								<p:inputText id="idPerguntaMae2" disabled="true"
-									value="ID: #{perguntaBean.objPerguntaNivelUm.idPergunta} - #{perguntaBean.objPerguntaNivelUm.textoPergunta.substring(0,50)}" />
+									value="ID: #{perguntaBean.objPerguntaNivelUm.idPerguntaBase} - #{perguntaBean.objPerguntaNivelUm.textoPergunta.substring(0,50)}" />
 							</c:if>
-							<p:outputLabel for="idPergunta" value="ID" />
-							<p:inputNumber id="idPergunta" disabled="true"
-								value="#{perguntaBean.objPerguntaNivelDois.idPergunta}" size="9" />
+							<p:outputLabel for="idPerguntaBase" value="ID" />
+							<p:inputNumber id="idPerguntaBase" disabled="true"
+								value="#{perguntaBean.objPerguntaNivelDois.idPerguntaBase}" size="9" />
 
 							<p:outputLabel for="textoPergunta" value="Rótulo" />
 							<p:inputText id="textoPergunta" title="Limite 150 caracteres"
@@ -261,7 +261,7 @@
 							columnClasses="cssColumn150-no-border, cssColumn150-no-border, cssColumn150-no-border, cssColumn400-no-border">
 							<p:outputLabel value="ID" />
 							<p:inputNumber disabled="true"
-								value="#{perguntaBean.objPerguntaNivelDois.idPergunta}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelDois.idPerguntaBase}" size="9" />
 							<p:outputLabel value="Tipo pergunta" />
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelDois.tipoPergunta.descricao}" />
@@ -306,7 +306,7 @@
 							var="opcSel" paginator="true" rows="5"
 							emptyMessage="Nenhuma opção disponível"
 							paginatorPosition="bottom" rowKey="#{opcSel.idOpcao}">
-							<f:facet name="header">Opções disponíveis na pergunta Id: #{perguntaBean.objPerguntaNivelDois.idPergunta}</f:facet>
+							<f:facet name="header">Opções disponíveis na pergunta Id: #{perguntaBean.objPerguntaNivelDois.idPerguntaBase}</f:facet>
 							<p:column headerText="ID" width="10%">
 								<h:outputText value="#{opcSel.idOpcao}" />
 							</p:column>

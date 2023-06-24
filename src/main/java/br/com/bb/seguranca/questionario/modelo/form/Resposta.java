@@ -1,4 +1,4 @@
-package br.com.bb.seguranca.questionario.modelo.base.perguntas;
+package br.com.bb.seguranca.questionario.modelo.form;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
+
 @Entity
 @Table(name = "RESPOSTA")
 public class Resposta {
@@ -30,7 +32,7 @@ public class Resposta {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PRGT_ID")
-	private Pergunta pergunta;
+	private PerguntaBase pergunta;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "RESPOSTA_OPCAO", joinColumns = @JoinColumn(name = "RSP_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
@@ -74,7 +76,7 @@ public class Resposta {
 		this.opcaoUnicaSelecionada = opcaoUnicaSelecionada;
 	}
 
-	public Pergunta getPergunta() {
+	public PerguntaBase getPergunta() {
 		return pergunta;
 	}
 
@@ -86,7 +88,7 @@ public class Resposta {
 		return respostaTextoLongo;
 	}
 
-	public void setPergunta(Pergunta pergunta) {
+	public void setPergunta(PerguntaBase pergunta) {
 		this.pergunta = pergunta;
 	}
 

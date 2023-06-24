@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.bb.seguranca.questionario.modelo.base.perguntas.Opcao;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 
 public class OpcaoDao implements Serializable {
 
@@ -25,10 +25,7 @@ public class OpcaoDao implements Serializable {
 	}
 
 	public Opcao findById(Long id) {
-		String jpql = "SELECT o FROM Opcao o WHERE o.idOpcao = :id";
-		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+		return manager.find(Opcao.class, id);
 	}
 
 	public List<Opcao> buscaTodasOpcoes() {
@@ -36,7 +33,7 @@ public class OpcaoDao implements Serializable {
 		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
 		return query.getResultList();
 	}
-	
+
 	public List<Opcao> buscaTodasOpcoesAtivas() {
 		String jpql = "SELECT o FROM Opcao o WHERE o.ativa = 1";
 		TypedQuery<Opcao> query = manager.createQuery(jpql, Opcao.class);
