@@ -138,7 +138,7 @@ public class PerguntaBean implements Serializable {
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao criar pergunta " + e.getMessage());
 		}
-		
+
 	}
 
 	public void preparaPerguntaNivelDois() {
@@ -232,7 +232,7 @@ public class PerguntaBean implements Serializable {
 				|| pergunta.getTipoPergunta() == TipoPergunta.TXT_LNG) {
 			pergunta.setOpcoesParaSelecao(new ArrayList<>());
 		}
-		if (pergunta.getPerguntaVisivel() == 1){
+		if (pergunta.getPerguntaVisivel() != null && pergunta.getPerguntaVisivel() == 1) {
 			pergunta.setOpcaoVisivel(null);
 		}
 		return pergunta;

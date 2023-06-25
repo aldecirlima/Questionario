@@ -42,6 +42,10 @@ public class Pergunta {
 	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pergunta> subPerguntas;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "RSP_ID")
+	private Resposta resposta;
+	
 
 	public Long getIdPergunta() {
 		return idPergunta;
@@ -81,6 +85,14 @@ public class Pergunta {
 
 	public void setSubPerguntas(List<Pergunta> subPerguntas) {
 		this.subPerguntas = subPerguntas;
+	}
+
+	public Resposta getResposta() {
+		return resposta;
+	}
+
+	public void setResposta(Resposta resposta) {
+		this.resposta = resposta;
 	}
 
 	@Override

@@ -33,8 +33,8 @@ public class Secao {
 
 	@OneToOne
 	@JoinColumn(name = "SC_ID")
-	private SecaoBase secao;
-	
+	private SecaoBase secaoBase;
+
 	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pergunta> perguntas;
 
@@ -54,12 +54,12 @@ public class Secao {
 		this.avaliacao = avaliacao;
 	}
 
-	public SecaoBase getSecao() {
-		return secao;
+	public SecaoBase getSecaoBase() {
+		return secaoBase;
 	}
 
-	public void setSecao(SecaoBase secao) {
-		this.secao = secao;
+	public void setSecaoBase(SecaoBase secaoBase) {
+		this.secaoBase = secaoBase;
 	}
 
 	public List<Pergunta> getPerguntas() {

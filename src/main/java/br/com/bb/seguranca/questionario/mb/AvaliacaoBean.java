@@ -15,6 +15,7 @@ import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
 import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 import br.com.bb.seguranca.questionario.modelo.form.Avaliacao;
 import br.com.bb.seguranca.questionario.modelo.form.Pergunta;
+import br.com.bb.seguranca.questionario.modelo.form.Resposta;
 import br.com.bb.seguranca.questionario.modelo.form.Secao;
 import br.com.bb.seguranca.questionario.service.AvaliacaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
@@ -35,6 +36,7 @@ public class AvaliacaoBean implements Serializable {
 
 	@PostConstruct
 	private void init() {
+		criaNovaAvaliacao();
 	}
 
 	public void criaNovaAvaliacao() {
@@ -48,7 +50,9 @@ public class AvaliacaoBean implements Serializable {
 		try {
 			avaliacao.setQuestionarioBase(applicationBean.getQuestionarioBase());
 		} catch (Exception e) {
-			throw new NoResultException("Nenhum questionário ativo encontrado.");
+			FacesMessages.error("Nenhum questionário ativo encontrado.");
+//			throw new NoResultException("Nenhum questionário ativo encontrado.");
+			return;
 		}
 
 		List<SecaoBase> secoesBase = avaliacao.getQuestionarioBase().getSecoes();
@@ -60,19 +64,23 @@ public class AvaliacaoBean implements Serializable {
 
 		for (SecaoBase secaoBase : secoesBase) {
 			Secao secao = new Secao();
-			secao.setSecao(secaoBase);
+			secao.setSecaoBase(secaoBase);
 			secao.setAvaliacao(avaliacao);
 
-			if (secao.getSecao().getPerguntas() != null && secao.getSecao().getPerguntas().size() > 0) {
+			if (secao.getSecaoBase().getPerguntas() != null && secao.getSecaoBase().getPerguntas().size() > 0) {
 
 //				Buscando as perguntas da seção
 				secao.setPerguntasForm(new ArrayList<>());
 				// Perguntas N1
 				for (PerguntaBase perguntaBaseN1 : secaoBase.getPerguntas()) {
+
 					Pergunta perguntaN1 = new Pergunta();
 					perguntaN1.setPergunta(perguntaBaseN1);
 					perguntaN1.setSecao(secao);
 					perguntaN1.setSubPerguntas(new ArrayList<>());
+
+					Resposta respostaN1 = new Resposta();
+					perguntaN1.setResposta(respostaN1);
 
 					// Perguntas N2
 					for (PerguntaBase perguntaBaseN2 : perguntaBaseN1.getSubPerguntas()) {
@@ -81,12 +89,19 @@ public class AvaliacaoBean implements Serializable {
 						perguntaN2.setPergunta(perguntaBaseN2);
 						perguntaN2.setPerguntaMae(perguntaN1);
 						perguntaN2.setSubPerguntas(new ArrayList<>());
+
+						Resposta respostaN2 = new Resposta();
+						perguntaN2.setResposta(respostaN2);
+
 						// Perguntas N3
 						for (PerguntaBase perguntaBaseN3 : perguntaBaseN2.getSubPerguntas()) {
 							Pergunta perguntaN3 = new Pergunta();
 							perguntaN3.setPergunta(perguntaBaseN3);
 							perguntaN3.setPerguntaMae(perguntaN2);
 							perguntaN2.getSubPerguntas().add(perguntaN3);
+
+							Resposta respostaN3 = new Resposta();
+							perguntaN3.setResposta(respostaN3);
 
 						} // Fim do for PerguntaBase N3
 
@@ -111,6 +126,22 @@ public class AvaliacaoBean implements Serializable {
 
 	}
 
+	public String salvaAvaliacao() {
+			
+		avaliacao.setDataAvaliacao(new Date());
+		avaliacao.setMatriculaAvaliacao("F0394519");
+
+		try {
+			avaliacao = avaliacaoService.persisteAvaliacao(avaliacao);
+			FacesMessages.info("Avaliação salva com sucesso.");
+			return "index?faces-redirect=true";
+		} catch (Exception e) {
+			FacesMessages.error("Erro ao salvar avaliação. " + e);
+			return null;
+		}
+
+	}
+
 	public void imprimeQuestoes() {
 		try {
 			criaNovaAvaliacao();
@@ -128,8 +159,8 @@ public class AvaliacaoBean implements Serializable {
 				+ avaliacao.getQuestionarioBase().getNomeQuestionario());
 
 		for (Secao secao : avaliacao.getSecoes()) {
-			System.out.print("    Seção ID: " + secao.getSecao().getIdSecaoBase());
-			System.out.println(" Nome: " + secao.getSecao().getNomeSecao());
+			System.out.print("    Seção ID: " + secao.getSecaoBase().getIdSecaoBase());
+			System.out.println(" Nome: " + secao.getSecaoBase().getNomeSecao());
 
 			for (Pergunta perguntaN1 : secao.getPerguntas()) {
 				System.out.print("        PerguntaBase N1 ID: " + perguntaN1.getPergunta().getIdPerguntaBase());
@@ -150,6 +181,11 @@ public class AvaliacaoBean implements Serializable {
 		}
 	}
 
+	
+	public String redirect(String pagina) {
+		return pagina + "?faces-redirect=true";
+	}
+	
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
 	}
