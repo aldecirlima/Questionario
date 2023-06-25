@@ -8,17 +8,21 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	template="../../WEB-INF/templates/LayoutNovo.xhtml">
 
-	<ui:define name="titulo">#{applicationBean.questionarioBase.nomeQuestionario}</ui:define>
+	<ui:define name="titulo">
+		<p:outputLabel
+			rendered="#{applicationBean.questionarioBase.nomeQuestionario ne null}"
+			value="#{applicationBean.questionarioBase.nomeQuestionario}"
+			style="font-size: 1em" />
+		<p:outputLabel
+			rendered="#{applicationBean.questionarioBase.nomeQuestionario eq null}"
+			value="Questionários USI" style="font-size: 1em" />
+	</ui:define>
 
 	<ui:define name="conteudo">
 
-		<p:fieldset legend="Questionario">
-			<h:form id="formCadastroOpcao">
-
-				<p:outputLabel
-					rendered="#{avaliacaoBean.avaliacao.idAvaliacao ne null}"
-					value="ID avaliação: #{avaliacaoBean.avaliacao.idAvaliacao}" />
-				<br />
+		<p:fieldset legend="Responder questionario"
+			rendered="#{avaliacaoBean.avaliacao.questionarioBase ne null}">
+			<h:form id="formResponderAvaliacao">
 
 				<ui:repeat value="#{avaliacaoBean.avaliacao.secoes}" var="secao">
 					<p:fieldset legend="#{secao.secaoBase.nomeSecao}"
@@ -27,7 +31,7 @@
 						<ui:repeat var="pergN1" value="#{secao.perguntas}">
 							<p:panelGrid columns="2"
 								rendered="#{pergN1.pergunta.tipoPergunta eq 'S_N' or pergN1.pergunta.tipoPergunta eq 'S_N_NA'}"
-								columnClasses="cssColumn600-no-border, cssColumn500-no-border">
+								columnClasses="cssColumn700-no-border, cssColumn500-no-border">
 								<p:outputLabel for="@next"
 									value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}. #{pergN1.pergunta.textoPergunta}" />
 
@@ -42,7 +46,7 @@
 							</p:panelGrid>
 							<p:panelGrid columns="1"
 								rendered="#{pergN1.pergunta.tipoPergunta ne 'S_N' and pergN1.pergunta.tipoPergunta ne 'S_N_NA'}"
-								columnClasses="cssColumn1100-no-border">
+								columnClasses="cssColumn1300-no-border">
 								<p:outputLabel for="@next"
 									value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}. #{pergN1.pergunta.textoPergunta}" />
 
@@ -71,7 +75,6 @@
 									cols="150" rows="3" pt:data-tooltip="Limite 500 caracteres"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'TXT_LNG'}" />
 
-
 								<p:selectManyMenu value="#{pergN1.resposta.opcoesSelecionadas}"
 									disabled="#{avaliacaoBean.avaliacao.idAvaliacao ne null}"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'MTPL_SL'}"
@@ -80,11 +83,9 @@
 									showCheckbox="true" styleClass="cssColunm-w-100-p">
 									<f:selectItems value="#{pergN1.pergunta.opcoesParaSelecao}"
 										var="opc" itemLabel="#{opc.nomeOpcao}" itemValue="#{opc}" />
-
 									<p:column>
 										<h:outputText value="#{opcSel.nomeOpcao}" />
 									</p:column>
-
 								</p:selectManyMenu>
 
 							</p:panelGrid>
@@ -92,7 +93,7 @@
 							<ui:repeat var="pergN2" value="#{pergN1.subPerguntas}">
 								<p:panelGrid columns="2"
 									rendered="#{pergN2.pergunta.tipoPergunta eq 'S_N' or pergN2.pergunta.tipoPergunta eq 'S_N_NA'}"
-									columnClasses="cssColumn600-no-border, cssColumn500-no-border">
+									columnClasses="cssColumn700-no-border, cssColumn500-no-border">
 									<p:outputLabel for="@next" title="#{pergN2.pergunta.title}"
 										value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}. #{pergN2.pergunta.textoPergunta}" />
 
@@ -109,7 +110,7 @@
 
 								<p:panelGrid columns="1"
 									rendered="#{pergN2.pergunta.tipoPergunta ne 'S_N' and pergN2.pergunta.tipoPergunta ne 'S_N_NA'}"
-									columnClasses="cssColumn1100-no-border">
+									columnClasses="cssColumn1300-no-border">
 									<p:outputLabel for="@next" title="#{pergN2.pergunta.title}"
 										value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}. #{pergN2.pergunta.textoPergunta}" />
 
@@ -149,17 +150,14 @@
 										<p:column>
 											<h:outputText value="#{opcSel.nomeOpcao}" />
 										</p:column>
-
 									</p:selectManyMenu>
-
-
 
 								</p:panelGrid>
 
 								<ui:repeat var="pergN3" value="#{pergN2.subPerguntas}">
 									<p:panelGrid columns="2"
 										rendered="#{pergN3.pergunta.tipoPergunta eq 'S_N' or pergN3.pergunta.tipoPergunta eq 'S_N_NA'}"
-										columnClasses="cssColumn600-no-border, cssColumn500-no-border">
+										columnClasses="cssColumn700-no-border, cssColumn500-no-border">
 										<p:outputLabel title="#{pergN3.pergunta.title}" for="@next"
 											value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}. #{pergN3.pergunta.textoPergunta}" />
 
@@ -171,12 +169,11 @@
 											<f:selectItems value="#{pergN3.pergunta.opcoesParaSelecao}"
 												var="opc" itemValue="#{opc}" itemLabel="#{opc.nomeOpcao}" />
 										</p:selectOneRadio>
-
 									</p:panelGrid>
 
 									<p:panelGrid columns="1"
 										rendered="#{pergN3.pergunta.tipoPergunta ne 'S_N' and pergN3.pergunta.tipoPergunta ne 'S_N_NA'}"
-										columnClasses="cssColumn1100-no-border">
+										columnClasses="cssColumn1300-no-border">
 										<p:outputLabel title="#{pergN3.pergunta.title}" for="@next"
 											value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}. #{pergN3.pergunta.textoPergunta}" />
 
@@ -206,7 +203,6 @@
 											pt:data-tooltip="Limite 500 caracteres"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'TXT_LNG'}" />
 
-
 										<p:selectManyMenu
 											value="#{pergN3.resposta.opcoesSelecionadas}"
 											label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}."
@@ -233,9 +229,23 @@
 
 				</ui:repeat>
 
-				<p:commandButton actionListener="#{avaliacaoBean.salvaAvaliacao}" style="margin: 5px 20px 10px 30px;"
-					process="@form" value="Enviar respostas" ajax="false" update="@form" />
+				<p:commandButton actionListener="#{avaliacaoBean.salvaAvaliacao}"
+					rendered="#{avaliacaoBean.avaliacao.idAvaliacao eq null}"
+					
+					style="margin: 5px 20px 10px 30px;" process="@form"
+					value="Enviar respostas" ajax="false" update="@form" >
+						
+					</p:commandButton>
 			</h:form>
+
+		</p:fieldset>
+
+		<p:fieldset
+			rendered="#{avaliacaoBean.avaliacao.questionarioBase eq null}">
+			<h2>Bem vindo!</h2>
+			<p>No momento não há questionários disponíveis.</p>
+			<p>Fique à vontade para navegar por nossa página. Você pode
+				utilizar o painel de navegação ao lado para mais opções.</p>
 
 		</p:fieldset>
 

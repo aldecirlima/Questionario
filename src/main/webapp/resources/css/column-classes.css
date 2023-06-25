@@ -108,6 +108,25 @@
 	border-style: none !important;
 }
 
+.cssColumn1200 {
+	width: 1200px;
+}
+
+.cssColumn1200-no-border {
+	width: 1200px;
+	border: none !important;
+	border-style: none !important;
+}
+.cssColumn1300 {
+	width: 1300px;
+}
+
+.cssColumn1300-no-border {
+	width: 1300px;
+	border: none !important;
+	border-style: none !important;
+}
+
 .cssColunm-w-100-p {
 	width: 100%;
 }

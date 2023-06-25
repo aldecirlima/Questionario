@@ -10,11 +10,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
 		lang="pt-BR" />
 	<title>USI - Unidade Seguranca Institucional</title>
+	
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-	<link rel="icon" type="image/ico" href="resources/images/bbicon.ico" />
+			
+	<link rel="icon" type="image/ico" href="#{request.contextPath}/resources/images/bbicon.ico" />
 	<h:outputStylesheet library="css" name="estilo.css" />
 	<h:outputStylesheet library="css" name="column-classes.css" />
 	<h:outputStylesheet library="css" name="layout.css" />
@@ -25,7 +27,7 @@
 
 <h:body>
 
-	<p:growl id="growl" life="5000"  />
+	<p:growl id="growl" life="5000" />
 
 	<div class="barra-layout">
 		<h3>
@@ -41,7 +43,6 @@
 			<div class="nav-esquerda">
 				<div class="card">
 					<h:form>
-
 						<p:panelMenu style="width: 100%">
 							<p:submenu label="Páginas">
 								<p:menuitem value="Primefaces" url="http://www.primefaces.org"
@@ -49,37 +50,48 @@
 								<p:menuitem value="Início" outcome="/index" icon="fa fa-home"
 									title="Página inicial" />
 							</p:submenu>
-							<p:submenu label="Avaliação" rendered="true">
-								<p:menuitem value="Nova" outcome="/pages/avaliacao/avaliacao"
-									title="Nova avaliação" icon="fa fa-file-o" />
+							<p:submenu label="Formulários" rendered="true" expanded="false">
+								<p:menuitem value="Responder"
+									outcome="/pages/questions/responderFormulario"
+									title="Responder formulários disponíveis"
+									icon="fa fa-file-text-o" />
 							</p:submenu>
-							<p:submenu label="Questionário" rendered="true">
-								<p:menuitem value="Novo" outcome="/pages/questionario/cadastroQuestionario"
+							<p:submenu label="Questionário" rendered="true" expanded="false">
+								<p:menuitem value="Novo"
+									outcome="/pages/questionario/cadastroQuestionario"
 									title="Cadastrar novo questionário" icon="fa fa-file-o" />
-								<p:menuitem value="Editar" outcome="/pages/questionario/questionarioEditar"
+								<p:menuitem value="Editar"
+									outcome="/pages/questionario/questionarioEditar"
 									title="Editar questionário" icon="fa fa-edit" />
 							</p:submenu>
-							<p:submenu label="Seção" rendered="true">
-								<p:menuitem value="Criar/Editar" outcome="/pages/questionario/cadastroSecao"
+							<p:submenu label="Seção" rendered="true" expanded="false">
+								<p:menuitem value="Criar/Editar"
+									outcome="/pages/questionario/cadastroSecao"
 									title="Criar ou editar uma seção" icon="fa fa-edit" />
 
 							</p:submenu>
-							<p:submenu label="Perguntas" rendered="true">
-								<p:menuitem value="Perguntas N1" outcome="/pages/questionario/cadastroPerguntaNivelUm"
-									title="Cadastrar ou alterar perguntas nível 1" icon="fa fa-product-hunt" />
-								<p:menuitem value="Perguntas N2" outcome="/pages/questionario/cadastroPerguntaNivelDois"
-									title="Cadastrar ou alterar perguntas nível 2" icon="fa fa-product-hunt" />
-								<p:menuitem value="Perguntas N3" outcome="/pages/questionario/cadastroPerguntaNivelTres"
-									title="Cadastrar ou alterar perguntas nível 3" icon="fa fa-product-hunt" />
+							<p:submenu label="Perguntas" rendered="true" expanded="false">
+								<p:menuitem value="Perguntas N1"
+									outcome="/pages/questionario/cadastroPerguntaNivelUm"
+									title="Cadastrar ou alterar perguntas nível 1"
+									icon="fa fa-product-hunt" />
+								<p:menuitem value="Perguntas N2"
+									outcome="/pages/questionario/cadastroPerguntaNivelDois"
+									title="Cadastrar ou alterar perguntas nível 2"
+									icon="fa fa-product-hunt" />
+								<p:menuitem value="Perguntas N3"
+									outcome="/pages/questionario/cadastroPerguntaNivelTres"
+									title="Cadastrar ou alterar perguntas nível 3"
+									icon="fa fa-product-hunt" />
 							</p:submenu>
-							<p:submenu label="Opções" rendered="true">
-								<p:menuitem value="Nova" outcome="/pages/questionario/cadastroOpcao"
+							<p:submenu label="Opções" rendered="true" expanded="false">
+								<p:menuitem value="Nova"
+									outcome="/pages/questionario/cadastroOpcao"
 									title="Criar nova opção" icon="fa fa-file-o" />
-								<p:menuitem value="Editar" outcome="/pages/questionario/opcaoEditar"
-									title="Editar opções" icon="fa fa-edit" />
-								
+								<p:menuitem value="Editar"
+									outcome="/pages/questionario/opcaoEditar" title="Editar opções"
+									icon="fa fa-edit" />
 							</p:submenu>
-							
 						</p:panelMenu>
 					</h:form>
 				</div>
@@ -91,7 +103,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<footer>
 		<div class="barra-layout h-50">Rodapé</div>

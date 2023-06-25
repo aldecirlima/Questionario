@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,11 +48,10 @@ public class AvaliacaoBean implements Serializable {
 		avaliacao.setDespacho(0);
 
 //		Buscando questionário
-		try {
-			avaliacao.setQuestionarioBase(applicationBean.getQuestionarioBase());
-		} catch (Exception e) {
-			FacesMessages.error("Nenhum questionário ativo encontrado.");
-//			throw new NoResultException("Nenhum questionário ativo encontrado.");
+		avaliacao.setQuestionarioBase(applicationBean.getQuestionarioBase());
+
+		if (avaliacao.getQuestionarioBase() == null) {
+
 			return;
 		}
 
@@ -59,8 +59,8 @@ public class AvaliacaoBean implements Serializable {
 
 		avaliacao.setSecoes(new ArrayList<>());
 
-		System.out.println("Avaliacao :" + avaliacao);
-		System.out.println("Questionário :" + avaliacao.getQuestionarioBase());
+//		System.out.println("Avaliacao :" + avaliacao);
+//		System.out.println("Questionário :" + avaliacao.getQuestionarioBase());
 
 		for (SecaoBase secaoBase : secoesBase) {
 			Secao secao = new Secao();
@@ -126,18 +126,19 @@ public class AvaliacaoBean implements Serializable {
 
 	}
 
-	public String salvaAvaliacao() {
-			
+	public void salvaAvaliacao() {
+
 		avaliacao.setDataAvaliacao(new Date());
 		avaliacao.setMatriculaAvaliacao("F0394519");
 
 		try {
 			avaliacao = avaliacaoService.persisteAvaliacao(avaliacao);
-			FacesMessages.info("Avaliação salva com sucesso.");
-			return "index?faces-redirect=true";
+			FacesMessages.info("Respostas enviadas com sucesso.");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("avaliacao", avaliacao);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("consultaResposta.xhtml");
 		} catch (Exception e) {
-			FacesMessages.error("Erro ao salvar avaliação. " + e);
-			return null;
+			FacesMessages.error("Erro ao enviar respostas. " + e);
 		}
 
 	}
@@ -181,11 +182,10 @@ public class AvaliacaoBean implements Serializable {
 		}
 	}
 
-	
 	public String redirect(String pagina) {
 		return pagina + "?faces-redirect=true";
 	}
-	
+
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
 	}

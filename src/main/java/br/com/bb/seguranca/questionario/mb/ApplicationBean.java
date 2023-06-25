@@ -31,7 +31,12 @@ public class ApplicationBean implements Serializable {
 		questionarioBase = new QuestionarioBase();
 
 //		Buscando questionário
-		questionarioBase = questionarioService.buscaQuestionarioAtivo();
+		try {
+			questionarioBase = questionarioService.buscaQuestionarioAtivo();			
+		} catch (Exception e) {
+			questionarioBase = null;
+			return;
+		}
 
 		for (int i = 0; i < questionarioBase.getSecoes().size(); i++) {
 

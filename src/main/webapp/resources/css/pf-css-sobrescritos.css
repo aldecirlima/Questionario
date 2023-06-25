@@ -56,3 +56,20 @@ body .ui-growl .ui-growl-item-container.ui-growl-error .ui-growl-image,
 	font-size: 1.5rem;
 	color: #b71c1c;
 }
+
+body .ui-panelgrid .ui-panelgrid-cell {
+	border: 1px solid #dee2e6;
+	background: none !important;
+	background-color: #f8f8f8;
+	color: #495057;
+	padding: 1rem;
+}
+
+body .ui-fieldset {
+	border: 1px solid #dee2e6;
+	background: none !important;
+	background-color: #f8f8f8;
+	color: #495057;
+	padding: 1rem;
+	border-radius: 4px;
+}
