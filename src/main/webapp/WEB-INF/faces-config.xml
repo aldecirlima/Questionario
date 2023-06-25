@@ -6,6 +6,8 @@
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 		</locale-config>
+		
+		<message-bundle>br.com.bb.seguranca.Messages</message-bundle>
 	</application>
 
 

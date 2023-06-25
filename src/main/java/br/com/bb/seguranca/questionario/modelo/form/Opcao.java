@@ -35,6 +35,15 @@ public class Opcao {
 
 	}
 
+	public Opcao(Long idOpcao, String nomeOpcao, Date dataCadastro, String matriculaCadastro, Integer ativa) {
+		super();
+		this.idOpcao = idOpcao;
+		this.nomeOpcao = nomeOpcao;
+		this.dataCadastro = dataCadastro;
+		this.matriculaCadastro = matriculaCadastro;
+		this.ativa = ativa;
+	}
+
 	public Long getIdOpcao() {
 		return idOpcao;
 	}
