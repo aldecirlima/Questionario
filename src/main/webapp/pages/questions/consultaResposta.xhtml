@@ -13,19 +13,39 @@
 			rendered="#{flash.avaliacao.questionarioBase.nomeQuestionario ne null}"
 			value="#{flash.avaliacao.questionarioBase.nomeQuestionario}"
 			style="font-size: 1em;" />
-			
-		<p:outputLabel
-			rendered="#{flash.avaliacao eq null}"
+
+		<p:outputLabel rendered="#{flash.avaliacao eq null}"
 			value="Questionários USI" style="font-size: 1em" />
 	</ui:define>
 
+
 	<ui:define name="conteudo">
 
-		<p:fieldset legend="Responder questionario"
+		<h:form id="buttonVoltar">
+			<p:linkButton outcome="consultas" value="Voltar"
+				style="margin: 0px 0px 20px 20px; text-decoration: none;" />
+		</h:form>
+
+		<p:fieldset legend="Resposta"
 			rendered="#{flash.avaliacao.questionarioBase ne null}">
-			<h:form id="formResponderAvaliacao">
+
+			<h:form id="formConsultaResposta">
 				<h3 style="margin: 0px 0px 16px 16px">
-					<p:outputLabel value="Resposta enviada: ID #{flash.avaliacao.idAvaliacao}."  style="font-size: 1em;"/>
+					<p:outputLabel
+						value="Resposta: ID #{flash.avaliacao.idAvaliacao}, enviada em "
+						style="font-size: 0.9em;" />
+					<h:outputText value="#{flash.avaliacao.dataAvaliacao}"
+						style="font-size: 0.9em;">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+					<h:outputText value=" às " style="font-size: 0.9em;">
+					</h:outputText>
+					<h:outputText value="#{flash.avaliacao.dataAvaliacao}"
+						style="font-size: 0.9em;">
+						<f:convertDateTime pattern="HH:mm:ss" />
+					</h:outputText>
+					<h:outputText value="." style="font-size: 0.9em;">
+					</h:outputText>
 				</h3>
 
 				<ui:repeat value="#{flash.avaliacao.secoes}" var="secao">
@@ -236,9 +256,8 @@
 			</h:form>
 
 		</p:fieldset>
-		
-		<p:fieldset
-			rendered="#{flash.avaliacao eq null}">
+
+		<p:fieldset rendered="#{flash.avaliacao eq null}">
 			<h3>Nenhum questionário para exibir!</h3>
 			<p>Não há questionários disponíveis para exibição.</p>
 			<p>Fique à vontade para navegar por nossa página. Você pode

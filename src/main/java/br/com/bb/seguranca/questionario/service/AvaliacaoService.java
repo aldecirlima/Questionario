@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -43,9 +44,13 @@ public class AvaliacaoService implements Serializable {
 	 * @param Long
 	 * @return Avaliacao
 	 */
-	
+
 	public Avaliacao findById(Long id) {
 		return avaliacaoDao.findById(id);
+	}
+
+	public List<Avaliacao> buscaAvaliacoes() {
+		return avaliacaoDao.buscaAvaliacoes();
 	}
 
 }

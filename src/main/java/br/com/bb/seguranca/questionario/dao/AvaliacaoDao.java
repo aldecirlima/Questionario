@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -23,11 +24,15 @@ public class AvaliacaoDao implements Serializable {
 		manager.merge(avaliacao);
 	}
 
-	public Avaliacao findById(Long id) {
-		String jpql = "SELECT a FROM Avaliacao a WHERE p.idAvaliacao = :id";
+	public List<Avaliacao> buscaAvaliacoes() {
+		String jpql = "SELECT DISTINCT a FROM Avaliacao a JOIN FETCH a.secoes s";
 		TypedQuery<Avaliacao> query = manager.createQuery(jpql, Avaliacao.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+		query.setMaxResults(50);
+		return query.getResultList();
+	}
+
+	public Avaliacao findById(Long id) {
+		return manager.find(Avaliacao.class, id);
 	}
 
 }

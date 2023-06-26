@@ -1,7 +1,7 @@
 package br.com.bb.seguranca.questionario.modelo.form;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,9 +34,9 @@ public class Resposta {
 	@JoinColumn(name = "PRGT_ID")
 	private PerguntaBase pergunta;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "RESPOSTA_OPCAO", joinColumns = @JoinColumn(name = "RSP_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
-	private List<Opcao> opcoesSelecionadas;
+	private Set<Opcao> opcoesSelecionadas;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "OPC_SEL_ID")
@@ -60,11 +60,11 @@ public class Resposta {
 		this.idResposta = idResposta;
 	}
 
-	public List<Opcao> getOpcoesSelecionadas() {
+	public Set<Opcao> getOpcoesSelecionadas() {
 		return opcoesSelecionadas;
 	}
 
-	public void setOpcoesSelecionadas(List<Opcao> opcoesSelecionadas) {
+	public void setOpcoesSelecionadas(Set<Opcao> opcoesSelecionadas) {
 		this.opcoesSelecionadas = opcoesSelecionadas;
 	}
 

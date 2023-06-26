@@ -25,7 +25,7 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<!-- property hibernate.event.merge.entity_copy_observer=allow serve para evitar o erro de persistência -->
 			<property name="hibernate.event.merge.entity_copy_observer" value="allow" />
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL8Dialect" />
 			<property name="hibernate.default_catalog"

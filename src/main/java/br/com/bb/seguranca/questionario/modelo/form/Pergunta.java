@@ -39,7 +39,7 @@ public class Pergunta {
 	@JoinColumn(name = "PRGT_M_ID")
 	private Pergunta perguntaMae;
 	
-	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Pergunta> subPerguntas;
 
 	@OneToOne(cascade = CascadeType.ALL)

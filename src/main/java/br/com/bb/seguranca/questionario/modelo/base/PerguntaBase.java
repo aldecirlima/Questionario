@@ -47,7 +47,7 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@JoinTable(name = "PERGUNTA_OPCAO", joinColumns = @JoinColumn(name = "PRGT_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
 	private List<Opcao> opcoesParaSelecao;
 
-	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<PerguntaBase> subPerguntas;
 
 //	Strings
@@ -79,7 +79,6 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 
 	@Column(name = "PRGT_VSVL", length = 1)
 	private Integer perguntaVisivel;
-
 
 	@Column(name = "OPC_VSVL_ID")
 	private Long opcaoVisivel;

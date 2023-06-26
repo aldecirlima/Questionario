@@ -35,7 +35,7 @@ public class Secao {
 	@JoinColumn(name = "SC_ID")
 	private SecaoBase secaoBase;
 
-	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "secao", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Pergunta> perguntas;
 
 	public Long getIdSecao() {
