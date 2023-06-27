@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.PerguntaDao;
 import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
+import br.com.bb.seguranca.questionario.modelo.form.Pergunta;
 
 public class PerguntaService implements Serializable {
 
@@ -45,6 +46,10 @@ public class PerguntaService implements Serializable {
 
 	public PerguntaBase findById(Long id) {
 		return perguntaDao.findById(id);
+	}
+	
+	public Pergunta findPerguntaId(Long id) {
+		return perguntaDao.findPerguntaId(id);
 	}
 
 }

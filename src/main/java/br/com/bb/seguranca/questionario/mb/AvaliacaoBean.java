@@ -132,7 +132,11 @@ public class AvaliacaoBean implements Serializable {
 		avaliacao.setMatriculaAvaliacao("F0394519");
 
 		try {
-			avaliacao = avaliacaoService.persisteAvaliacao(avaliacao);
+			if (avaliacao.getDataAvaliacao() == null) {
+				avaliacaoService.persisteAvaliacao(avaliacao);				
+			} else {
+				avaliacaoService.salvarAvaliacao(avaliacao);
+			}
 			FacesMessages.info("Respostas enviadas com sucesso.");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("avaliacao", avaliacao);

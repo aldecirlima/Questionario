@@ -19,10 +19,8 @@
 					value="#{consultaAvaliacaoBean.listAvaliacoes}" var="avaliacao"
 					paginator="true" rows="10"
 					emptyMessage="Questionário selecionado não possui seções ativas"
-					paginatorPosition="bottom" selectionMode="single"
-					selection="#{consultaAvaliacaoBean.objAvaliacao}"
-					rowKey="#{avaliacao.idAvaliacao}">
-					<f:facet name="header">Questionários respondidos - Clique na linha para selecionar</f:facet>
+					paginatorPosition="bottom" rowKey="#{avaliacao.idAvaliacao}">
+					<f:facet name="header">Questionários respondidos</f:facet>
 
 					<p:column headerText="Id" width="5%">
 						<h:outputText value="#{avaliacao.idAvaliacao}" />
@@ -40,13 +38,18 @@
 					<p:column headerText="Cadastro" width="10%">
 						<h:outputText value="#{avaliacao.matriculaAvaliacao}" />
 					</p:column>
+					<p:column headerText="Visualizar" width="10%">
+						<p:commandButton icon="fa fa-search" ajax="false"
+							title="Visualizar resposta"
+							actionListener="#{consultaAvaliacaoBean.carregaAvaliacao}"
+							styleClass="edit-button ui-button-primary" process="@form">
+							<f:setPropertyActionListener value="#{avaliacao.idAvaliacao}"
+								target="#{consultaAvaliacaoBean.idLong}" />
+						</p:commandButton>
+					</p:column>
 
 
 				</p:dataTable>
-				<p:commandButton icon="fa fa-search" ajax="false" value="Visualizar resposta"
-					actionListener="#{consultaAvaliacaoBean.carregaAvaliacao}"
-					styleClass="edit-button ui-button-primary" process="@form">
-				</p:commandButton>
 			</h:form>
 
 		</p:fieldset>

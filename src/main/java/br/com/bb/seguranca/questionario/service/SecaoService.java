@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import br.com.bb.seguranca.questionario.dao.SecaoDao;
 import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
+import br.com.bb.seguranca.questionario.modelo.form.Secao;
 
 public class SecaoService implements Serializable {
 
@@ -15,6 +16,8 @@ public class SecaoService implements Serializable {
 	@Inject
 	SecaoDao secaoDao;
 
+//	Metodos Seção base
+	
 	@Transactional
 	public void salvarSecao(SecaoBase secao) {
 		secaoDao.salvar(secao);
@@ -38,5 +41,14 @@ public class SecaoService implements Serializable {
 	public SecaoBase buscaPerguntasDaSecao(Long idSecaoBase) {
 		return secaoDao.buscaPerguntasDaSecao(idSecaoBase);
 	}
+	
+	
+	// Metodos Secao
+	
+	
+	public Secao findSecaoId(Long idSecao) {
+		return secaoDao.findSecaoId(idSecao);
+	}
+	
 
 }

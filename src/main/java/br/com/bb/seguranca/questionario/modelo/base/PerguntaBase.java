@@ -43,11 +43,11 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@JoinColumn(name = "PRGT_M_ID")
 	private PerguntaBase perguntaMae;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "PERGUNTA_OPCAO", joinColumns = @JoinColumn(name = "PRGT_ID"), inverseJoinColumns = @JoinColumn(name = "OPC_ID"))
 	private List<Opcao> opcoesParaSelecao;
 
-	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PerguntaBase> subPerguntas;
 
 //	Strings

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
+import br.com.bb.seguranca.questionario.modelo.form.Secao;
 
 public class SecaoDao implements Serializable {
 
@@ -32,6 +33,11 @@ public class SecaoDao implements Serializable {
 		TypedQuery<SecaoBase> query = manager.createQuery(jpql, SecaoBase.class);
 		query.setParameter("idSecaoBase", idSecaoBase);
 		return query.getSingleResult();
+	}
+	
+	
+	public Secao findSecaoId(Long idSecao) {
+		return manager.find(Secao.class, idSecao);
 	}
 
 }

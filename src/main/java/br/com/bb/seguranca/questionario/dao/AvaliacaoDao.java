@@ -16,8 +16,8 @@ public class AvaliacaoDao implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	public Avaliacao persistir(Avaliacao avaliacao) {
-		return manager.merge(avaliacao);
+	public void persistir(Avaliacao avaliacao) {
+		manager.persist(avaliacao);
 	}
 
 	public void salvar(Avaliacao avaliacao) {
@@ -25,7 +25,9 @@ public class AvaliacaoDao implements Serializable {
 	}
 
 	public List<Avaliacao> buscaAvaliacoes() {
-		String jpql = "SELECT DISTINCT a FROM Avaliacao a JOIN FETCH a.secoes s";
+		String jpql = "SELECT a FROM Avaliacao a ";
+//				+ "JOIN a.secoes s ";
+//				+ "JOIN s.perguntas p";
 		TypedQuery<Avaliacao> query = manager.createQuery(jpql, Avaliacao.class);
 		query.setMaxResults(50);
 		return query.getResultList();

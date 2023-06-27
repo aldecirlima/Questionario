@@ -31,11 +31,12 @@ public class AvaliacaoService implements Serializable {
 	 * Persiste o objeto e devolve o objeto com ID
 	 * 
 	 * @param Avaliacao
+	 * @return 
 	 * @return Avaliacao
 	 */
 	@Transactional
-	public Avaliacao persisteAvaliacao(Avaliacao avaliacao) {
-		return avaliacaoDao.persistir(avaliacao);
+	public void persisteAvaliacao(Avaliacao avaliacao) {
+		avaliacaoDao.persistir(avaliacao);
 	}
 
 	/**
