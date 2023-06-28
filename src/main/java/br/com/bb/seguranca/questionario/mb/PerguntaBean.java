@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 import org.primefaces.PrimeFaces;
 
@@ -36,7 +35,7 @@ public class PerguntaBean implements Serializable {
 
 	List<Opcao> listaOpcoesDisponiveis;
 
-	Map<Long, Opcao> opcoesMap;
+//	Map<Long, Opcao> opcoesMap;
 
 	private Long idLong;
 
@@ -277,19 +276,49 @@ public class PerguntaBean implements Serializable {
 		}
 	}
 
-	public void editarOpcoesSelecionadas() {
-		idLong = null;
-		if (listaOpcoesDisponiveis == null || listaOpcoesDisponiveis.size() == 0) {
+	public void editarOpcoesSelecionadasNivelUm() {
+		objOpcao = null;
+		try {
+			PerguntaBase perguntaBase = perguntaService.findOpcoesParaSelecao(objPerguntaNivelUm);
+			objPerguntaNivelUm = perguntaBase;
+		} catch (NoResultException e) {
+			objPerguntaNivelUm.setOpcoesParaSelecao(new ArrayList<>());
+		}
+		atualizaListaOpcoes();
+
+	}
+
+	public void editarOpcoesSelecionadasNivelDois() {
+		objOpcao = null;
+		try {
+			PerguntaBase perguntaBase = perguntaService.findOpcoesParaSelecao(objPerguntaNivelDois);
+			objPerguntaNivelDois = perguntaBase;
+		} catch (NoResultException e) {
+			objPerguntaNivelDois.setOpcoesParaSelecao(new ArrayList<>());
+		}
+		atualizaListaOpcoes();
+
+	}
+
+	public void editarOpcoesSelecionadasNivelTres() {
+		objOpcao = null;
+		try {
+			PerguntaBase perguntaBase = perguntaService.findOpcoesParaSelecao(objPerguntaNivelTres);
+			objPerguntaNivelTres = perguntaBase;
+		} catch (NoResultException e) {
+			objPerguntaNivelTres.setOpcoesParaSelecao(new ArrayList<>());
+		}
+		atualizaListaOpcoes();
+
+	}
+
+	public void atualizaListaOpcoes() {
+		if (listaOpcoesDisponiveis == null) {
 			listaOpcoesDisponiveis = opcaoService.buscaTodasOpcoesAtivas();
-			opcoesMap = new HashMap<>();
-			for (Opcao opcao : listaOpcoesDisponiveis) {
-				opcoesMap.put(opcao.getIdOpcao(), opcao);
-			}
 		}
 	}
 
 	public void insereOpcaoNivelUm() {
-		objOpcao = opcoesMap.get(idLong);
 		if (!objPerguntaNivelUm.getOpcoesParaSelecao().contains(objOpcao)) {
 			objPerguntaNivelUm.getOpcoesParaSelecao().add(objOpcao);
 		} else {
@@ -298,7 +327,6 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void insereOpcaoNivelDois() {
-		objOpcao = opcoesMap.get(idLong);
 		if (!objPerguntaNivelDois.getOpcoesParaSelecao().contains(objOpcao)) {
 			objPerguntaNivelDois.getOpcoesParaSelecao().add(objOpcao);
 		} else {
@@ -307,7 +335,6 @@ public class PerguntaBean implements Serializable {
 	}
 
 	public void insereOpcaoNivelTres() {
-		objOpcao = opcoesMap.get(idLong);
 		if (!objPerguntaNivelTres.getOpcoesParaSelecao().contains(objOpcao)) {
 			objPerguntaNivelTres.getOpcoesParaSelecao().add(objOpcao);
 		} else {

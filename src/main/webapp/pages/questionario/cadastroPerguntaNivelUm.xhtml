@@ -135,7 +135,7 @@
 									update=":manage-opcoes-form :dialogOpcSel :dialogOpcoes"
 									oncomplete="PF('manageOpcoesDialog').show()"
 									icon="fa fa-pencil" process="@this" title="Editar opções"
-									actionListener="#{perguntaBean.editarOpcoesSelecionadas}">
+									action="#{perguntaBean.editarOpcoesSelecionadasNivelUm}">
 									<f:setPropertyActionListener value="#{pgt}"
 										target="#{perguntaBean.objPerguntaNivelUm}" />
 								</p:commandButton>
@@ -251,12 +251,12 @@
 						<p:outputLabel for="opcDisponiveis" value="Opções" />
 						<p:selectOneMenu id="opcDisponiveis" required="true" filter="true"
 							filterMatchMode="contains" styleClass="cssColunm-w-100-p"
-							requiredMessage="Selecione uma opção"
-							value="#{perguntaBean.idLong}">
+							requiredMessage="Selecione uma opção" converter="opcaoConverter"
+							value="#{perguntaBean.objOpcao}">
 							<f:selectItem itemLabel="Selecione..." />
 							<f:selectItems value="#{perguntaBean.listaOpcoesDisponiveis}"
 								var="opc" itemLabel="#{opc.idOpcao} - #{opc.nomeOpcao}"
-								itemValue="#{opc.idOpcao}" />
+								itemValue="#{opc}" />
 						</p:selectOneMenu>
 						<p:commandButton process="@form"
 							update="@form :dialogOpcoes :growl" style="margin-left: 5px"

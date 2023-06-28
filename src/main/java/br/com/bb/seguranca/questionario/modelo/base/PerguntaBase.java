@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.bb.seguranca.questionario.modelo.enuns.TipoPergunta;
@@ -80,8 +81,9 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@Column(name = "PRGT_VSVL", length = 1)
 	private Integer perguntaVisivel;
 
-	@Column(name = "OPC_VSVL_ID")
-	private Long opcaoVisivel;
+	@OneToOne
+	@JoinColumn(name = "OPC_VSVL_ID")
+	private Opcao opcaoVisivel;
 
 	@Column(name = "ORD", length = 9)
 	private Integer ordem;
@@ -204,7 +206,7 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 		return perguntaVisivel;
 	}
 
-	public Long getOpcaoVisivel() {
+	public Opcao getOpcaoVisivel() {
 		return opcaoVisivel;
 	}
 
@@ -212,7 +214,7 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 		this.perguntaVisivel = perguntaVisivel;
 	}
 
-	public void setOpcaoVisivel(Long opcaoVisivel) {
+	public void setOpcaoVisivel(Opcao opcaoVisivel) {
 		this.opcaoVisivel = opcaoVisivel;
 	}
 

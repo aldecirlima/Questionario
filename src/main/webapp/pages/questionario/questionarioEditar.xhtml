@@ -20,7 +20,6 @@
 				<p:dataTable id="listQuestionario" var="qst" size="small"
 					value="#{questionarioEditarBean.listaQuestionarios}"
 					paginator="true" rows="5" paginatorPosition="bottom"
-					selection="#{questionarioEditarBean.secaoQuestionario}"
 					rowKey="#{qst.idQuestionario}">
 					<f:facet name="header">Questionários disponíveis para edição</f:facet>
 					<p:column headerText="Id" width="7%">

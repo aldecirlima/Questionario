@@ -187,7 +187,7 @@
 									update=":manage-opcoes-form :dialogOpcSel :dialogOpcoes"
 									oncomplete="PF('manageOpcoesDialog').show()"
 									icon="fa fa-pencil" process="@this" title="Editar opções"
-									actionListener="#{perguntaBean.editarOpcoesSelecionadas}">
+									action="#{perguntaBean.editarOpcoesSelecionadasNivelTres}">
 									<f:setPropertyActionListener value="#{pgt}"
 										target="#{perguntaBean.objPerguntaNivelTres}" />
 								</p:commandButton>
@@ -290,18 +290,20 @@
 							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 
 							<p:outputLabel for="opcaoVisivel" value="Opção visível"
-								id="opcaoVisivelLabel" title="Resposta da pergunta mãe que torna esta visível"
+								id="opcaoVisivelLabel"
+								title="Resposta da pergunta mãe que torna esta visível"
 								rendered="#{perguntaBean.objPerguntaNivelTres.perguntaVisivel eq 0}" />
 							<p:selectOneMenu id="opcaoVisivel" required="true" filter="true"
+								converter="opcaoConverter"
 								rendered="#{perguntaBean.objPerguntaNivelTres.perguntaVisivel eq 0}"
-								filterMatchMode="contains" title="Resposta da pergunta mãe que torna esta visível"
+								filterMatchMode="contains"
+								title="Resposta da pergunta mãe que torna esta visível"
 								requiredMessage="Informe a opção para tornar a pergunta visível"
 								value="#{perguntaBean.objPerguntaNivelTres.opcaoVisivel}">
 								<f:selectItem itemLabel="Selecione..." />
 								<f:selectItems
 									value="#{perguntaBean.objPerguntaNivelDois.opcoesParaSelecao}"
-									var="opc" itemLabel="#{opc.nomeOpcao}"
-									itemValue="#{opc.idOpcao}" />
+									var="opc" itemLabel="#{opc.nomeOpcao}" itemValue="#{opc}" />
 							</p:selectOneMenu>
 
 						</p:panelGrid>
@@ -349,12 +351,12 @@
 						<p:outputLabel for="opcDisponiveis" value="Opções" />
 						<p:selectOneMenu id="opcDisponiveis" required="true" filter="true"
 							filterMatchMode="contains" styleClass="cssColunm-w-100-p"
-							requiredMessage="Selecione uma opção"
-							value="#{perguntaBean.idLong}">
+							requiredMessage="Selecione uma opção" converter="opcaoConverter"
+							value="#{perguntaBean.objOpcao}">
 							<f:selectItem itemLabel="Selecione..." />
 							<f:selectItems value="#{perguntaBean.listaOpcoesDisponiveis}"
 								var="opc" itemLabel="#{opc.idOpcao} - #{opc.nomeOpcao}"
-								itemValue="#{opc.idOpcao}" />
+								itemValue="#{opc}" />
 						</p:selectOneMenu>
 
 						<p:commandButton process="@form"

@@ -25,9 +25,7 @@ public class AvaliacaoDao implements Serializable {
 	}
 
 	public List<Avaliacao> buscaAvaliacoes() {
-		String jpql = "SELECT a FROM Avaliacao a ";
-//				+ "JOIN a.secoes s ";
-//				+ "JOIN s.perguntas p";
+		String jpql = "SELECT a FROM Avaliacao a ORDER BY a.idAvaliacao DESC";
 		TypedQuery<Avaliacao> query = manager.createQuery(jpql, Avaliacao.class);
 		query.setMaxResults(50);
 		return query.getResultList();

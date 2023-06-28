@@ -15,9 +15,10 @@ public class PerguntaService implements Serializable {
 
 	@Inject
 	PerguntaDao perguntaDao;
-	
+
 	/**
 	 * Salva uma pergunta no banco de dados
+	 * 
 	 * @param PerguntaBase
 	 */
 
@@ -36,7 +37,7 @@ public class PerguntaService implements Serializable {
 	public PerguntaBase persistePergunta(PerguntaBase pergunta) {
 		return perguntaDao.persistir(pergunta);
 	}
-	
+
 	/**
 	 * Busca um objeto pelo ID
 	 * 
@@ -47,7 +48,11 @@ public class PerguntaService implements Serializable {
 	public PerguntaBase findById(Long id) {
 		return perguntaDao.findById(id);
 	}
-	
+
+	public PerguntaBase findOpcoesParaSelecao(PerguntaBase perguntaBase) {
+		return perguntaDao.findOpcoesParaSelecao(perguntaBase);
+	}
+
 	public Pergunta findPerguntaId(Long id) {
 		return perguntaDao.findPerguntaId(id);
 	}
