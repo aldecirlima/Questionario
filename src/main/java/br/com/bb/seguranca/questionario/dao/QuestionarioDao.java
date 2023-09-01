@@ -36,7 +36,7 @@ public class QuestionarioDao implements Serializable {
 		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);
 		return query.getResultList();
 	}
-
+	
 	public List<QuestionarioBase> buscaQuestionariosAtivos() {
 		String jpql = "SELECT q FROM QuestionarioBase q WHERE q.questionarioAtivo = 1";
 		TypedQuery<QuestionarioBase> query = manager.createQuery(jpql, QuestionarioBase.class);

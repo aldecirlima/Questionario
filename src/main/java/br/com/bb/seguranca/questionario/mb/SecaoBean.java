@@ -10,6 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
 import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
@@ -87,7 +89,9 @@ public class SecaoBean implements Serializable {
 			try {
 				secaoQuestionario = questionarioService.persisteQuestionario(secaoQuestionario);
 				mapQuestionarios.replace(secaoQuestionario.getIdQuestionario(), secaoQuestionario);
+				PrimeFaces.current().executeScript("PF('manageSecaoDialog').hide()");
 				FacesMessages.info("Seção salva com sucesso!");
+				PrimeFaces.current().ajax().update(":formSecoes");
 
 			} catch (Exception e) {
 				FacesMessages.error("Erro ao salvar seção. " + e.getMessage());
@@ -104,9 +108,7 @@ public class SecaoBean implements Serializable {
 	public void atualizaQuestionario() {
 		try {
 			secaoQuestionario = mapQuestionarios.get(idLong);
-//			if (secaoQuestionario.getSecoes() == null)  {
-//				secaoQuestionario.setSecoes(new ArrayList<SecaoBase>());
-//			}
+			
 		} catch (Exception e) {
 			FacesMessages.error("Erro ao atualizar questionário " + e.getMessage());
 		}

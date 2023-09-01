@@ -1,5 +1,6 @@
 package br.com.bb.seguranca.questionario.modelo.base;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "QUESTIONARIO_BASE")
-public class QuestionarioBase {
+public class QuestionarioBase implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 //	Id
 

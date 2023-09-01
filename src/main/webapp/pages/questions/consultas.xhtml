@@ -32,7 +32,7 @@
 					</p:column>
 					<p:column headerText="Data resposta" width="15%">
 						<h:outputText value="#{avaliacao.dataAvaliacao}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"  />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Cadastro" width="10%">

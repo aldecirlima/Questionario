@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,13 +36,21 @@ public class QuestionarioService implements Serializable {
 
 	@Transactional
 	public List<QuestionarioBase> buscaQuestionariosNaoAtivos() {
-		return questionarioDao.buscaQuestionariosNaoAtivos();
+		List<QuestionarioBase> questionarios = questionarioDao.buscaQuestionariosNaoAtivos();
+		for (QuestionarioBase questionarioBase : questionarios) {
+			if (questionarioBase.getSecoes().size() == 0) {
+				questionarioBase.setSecoes(new ArrayList<>());
+				int index = questionarios.indexOf(questionarioBase);
+				questionarios.set(index, questionarioBase);
+			}
+		}
+		return questionarios;
 	}
-	
+
 	public List<QuestionarioBase> buscaQuestionariosAtivos() {
 		return questionarioDao.buscaQuestionariosAtivos();
 	}
-	
+
 	public QuestionarioBase buscaQuestionarioAtivo() {
 		return questionarioDao.buscaQuestionarioAtivo();
 	}
