@@ -28,7 +28,7 @@ public class SecaoBase {
 
 //	Objetos
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "QST_BS_ID")
 	private QuestionarioBase questionarioBase;
 
