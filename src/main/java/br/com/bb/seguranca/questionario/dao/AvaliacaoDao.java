@@ -6,6 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import br.com.bb.seguranca.questionario.modelo.form.Avaliacao;
 
@@ -25,9 +28,13 @@ public class AvaliacaoDao implements Serializable {
 	}
 
 	public List<Avaliacao> buscaAvaliacoes() {
-		String jpql = "SELECT a FROM Avaliacao a ORDER BY a.idAvaliacao DESC";
-		TypedQuery<Avaliacao> query = manager.createQuery(jpql, Avaliacao.class);
-		query.setMaxResults(50);
+		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+		CriteriaQuery<Avaliacao> criteriaQuery = criteriaBuilder.createQuery(Avaliacao.class);
+		Root<Avaliacao> root = criteriaQuery.from(Avaliacao.class);
+		criteriaQuery.select(root);
+		criteriaQuery.orderBy(criteriaBuilder.asc(root.get("idAvaliacao")));
+		TypedQuery<Avaliacao> query = manager.createQuery(criteriaQuery);
+		query.setMaxResults(200);
 		return query.getResultList();
 	}
 

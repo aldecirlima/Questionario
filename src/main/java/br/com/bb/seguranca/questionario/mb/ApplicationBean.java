@@ -1,6 +1,7 @@
 package br.com.bb.seguranca.questionario.mb;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -9,6 +10,8 @@ import javax.inject.Named;
 
 import br.com.bb.seguranca.questionario.modelo.base.QuestionarioBase;
 import br.com.bb.seguranca.questionario.modelo.base.SecaoBase;
+import br.com.bb.seguranca.questionario.modelo.form.Opcao;
+import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.service.QuestionarioService;
 import br.com.bb.seguranca.questionario.service.SecaoService;
 
@@ -24,15 +27,31 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private SecaoService secaoService;
 
+	@Inject
+	private OpcaoService opcaoService;
+
 	private QuestionarioBase questionarioBase;
 
+	private Map<Long, Opcao> opcoesMap;
+
 	@PostConstruct
-	public void buscaQuestionário() {
+	public void carregarAplicacao() {
+		this.buscaQuestionario();
+		this.buscaOpcoes();
+	}
+
+	public void buscaOpcoes() {
+		if (opcoesMap == null || opcoesMap.size() == 0) {
+			opcoesMap = opcaoService.findAllMap();
+		}
+	}	
+
+	public void buscaQuestionario() {
 		questionarioBase = new QuestionarioBase();
 
 //		Buscando questionário
 		try {
-			questionarioBase = questionarioService.buscaQuestionarioAtivo();			
+			questionarioBase = questionarioService.buscaQuestionarioAtivo();
 		} catch (Exception e) {
 			questionarioBase = null;
 			return;
@@ -41,7 +60,8 @@ public class ApplicationBean implements Serializable {
 		for (int i = 0; i < questionarioBase.getSecoes().size(); i++) {
 
 //			Buscando as perguntas da seção
-			SecaoBase newSecao = secaoService.buscaPerguntasDaSecao(questionarioBase.getSecoes().get(i).getIdSecaoBase());
+			SecaoBase newSecao = secaoService
+					.buscaPerguntasDaSecao(questionarioBase.getSecoes().get(i).getIdSecaoBase());
 			questionarioBase.getSecoes().set(i, newSecao);
 		}
 	}
@@ -52,5 +72,13 @@ public class ApplicationBean implements Serializable {
 
 	public void setQuestionarioBase(QuestionarioBase questionarioBase) {
 		this.questionarioBase = questionarioBase;
+	}
+
+	public Map<Long, Opcao> getOpcoesMap() {
+		return opcoesMap;
+	}
+
+	public void setOpcoesMap(Map<Long, Opcao> opcoesMap) {
+		this.opcoesMap = opcoesMap;
 	}
 }

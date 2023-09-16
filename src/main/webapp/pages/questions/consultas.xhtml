@@ -8,10 +8,15 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	template="../../WEB-INF/templates/LayoutNovo.xhtml">
 
+
 	<ui:define name="titulo">Questinários respondidos - Consultas</ui:define>
 
 	<ui:define name="conteudo">
-
+		<h:form>
+			<p:commandButton value="Atualizar"
+				action="#{consultaAvaliacaoBean.carregarPagina}" update="formResponderAvaliacao"
+				style="margin: 0px 0px 20px 20px; text-decoration: none;" />
+		</h:form>
 		<p:fieldset legend="Consultas"
 			rendered="#{consultaAvaliacaoBean.listAvaliacoes ne null}">
 			<h:form id="formResponderAvaliacao">
@@ -32,17 +37,18 @@
 					</p:column>
 					<p:column headerText="Data resposta" width="15%">
 						<h:outputText value="#{avaliacao.dataAvaliacao}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"  />
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+								timeZone="America/Sao_Paulo" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Cadastro" width="10%">
 						<h:outputText value="#{avaliacao.matriculaAvaliacao}" />
 					</p:column>
 					<p:column headerText="Visualizar" width="7%">
-						<p:commandButton icon="fa fa-search" ajax="false" 
-							title="Visualizar resposta" 
+						<p:commandButton icon="fa fa-search" ajax="false"
+							title="Visualizar resposta"
 							action="#{consultaAvaliacaoBean.carregaAvaliacao}"
-							styleClass="edit-button ui-button-primary" >
+							styleClass="edit-button ui-button-primary">
 							<f:setPropertyActionListener value="#{avaliacao.idAvaliacao}"
 								target="#{consultaAvaliacaoBean.idLong}" />
 						</p:commandButton>

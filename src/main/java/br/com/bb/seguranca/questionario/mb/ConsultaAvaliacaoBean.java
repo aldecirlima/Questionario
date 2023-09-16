@@ -17,7 +17,6 @@ import br.com.bb.seguranca.questionario.modelo.form.Opcao;
 import br.com.bb.seguranca.questionario.modelo.form.Pergunta;
 import br.com.bb.seguranca.questionario.modelo.form.Secao;
 import br.com.bb.seguranca.questionario.service.AvaliacaoService;
-import br.com.bb.seguranca.questionario.service.OpcaoService;
 import br.com.bb.seguranca.questionario.service.PerguntaService;
 import br.com.bb.seguranca.questionario.service.SecaoService;
 import br.com.bb.seguranca.questionario.util.FacesMessages;
@@ -29,6 +28,9 @@ public class ConsultaAvaliacaoBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
+	private ApplicationBean applicationBean;
+
+	@Inject
 	private AvaliacaoService avaliacaoService;
 
 	@Inject
@@ -36,9 +38,6 @@ public class ConsultaAvaliacaoBean implements Serializable {
 
 	@Inject
 	private PerguntaService perguntaService;
-
-	@Inject
-	private OpcaoService opcaoService;
 
 	private Map<Long, Avaliacao> mapAvaliacoes;
 
@@ -55,6 +54,13 @@ public class ConsultaAvaliacaoBean implements Serializable {
 		parametroPassagem = true;
 		objAvaliacao = new Avaliacao();
 		listAvaliacoes = avaliacaoService.buscaAvaliacoes();
+		if (applicationBean.getOpcoesMap() == null) {
+			applicationBean.buscaOpcoes();			
+		}
+	}
+
+	public void carregarPagina() {
+		listAvaliacoes = avaliacaoService.buscaAvaliacoes();
 	}
 
 	public void carregaAvaliacao() {
@@ -62,7 +68,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 		if (idLong == null) {
 			return;
 		}
-		
+
 		if (mapAvaliacoes == null) {
 			mapAvaliacoes = new HashMap<>();
 		}
@@ -81,7 +87,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 					if (pergunta.getPergunta().getOpcoesParaSelecao() != null) {
 						List<Opcao> list01 = new ArrayList<>();
 						for (Opcao opcao : pergunta.getPergunta().getOpcoesParaSelecao()) {
-							opcao = opcaoService.findById(opcao.getIdOpcao());
+							opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 							list01.add(opcao);
 						}
 						pergunta.getPergunta().setOpcoesParaSelecao(list01);
@@ -90,7 +96,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 					if (pergunta.getResposta().getOpcoesSelecionadas() != null) {
 						List<Opcao> list01 = new ArrayList<>();
 						for (Opcao opcao : pergunta.getResposta().getOpcoesSelecionadas()) {
-							opcao = opcaoService.findById(opcao.getIdOpcao());
+							opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 							list01.add(opcao);
 						}
 						pergunta.getResposta().setOpcoesSelecionadas(list01);
@@ -98,7 +104,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 					if (pergunta.getPergunta().getOpcoesParaSelecao() != null) {
 						List<Opcao> list01 = new ArrayList<>();
 						for (Opcao opcao : pergunta.getPergunta().getOpcoesParaSelecao()) {
-							opcao = opcaoService.findById(opcao.getIdOpcao());
+							opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 							list01.add(opcao);
 						}
 						pergunta.getPergunta().setOpcoesParaSelecao(list01);
@@ -110,7 +116,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 						if (perguntaN2.getPergunta().getOpcoesParaSelecao() != null) {
 							List<Opcao> list01 = new ArrayList<>();
 							for (Opcao opcao : perguntaN2.getPergunta().getOpcoesParaSelecao()) {
-								opcao = opcaoService.findById(opcao.getIdOpcao());
+								opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 								list01.add(opcao);
 							}
 							perguntaN2.getPergunta().setOpcoesParaSelecao(list01);
@@ -119,7 +125,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 						if (perguntaN2.getResposta().getOpcoesSelecionadas() != null) {
 							List<Opcao> list01 = new ArrayList<>();
 							for (Opcao opcao : perguntaN2.getResposta().getOpcoesSelecionadas()) {
-								opcao = opcaoService.findById(opcao.getIdOpcao());
+								opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 								list01.add(opcao);
 							}
 							perguntaN2.getResposta().setOpcoesSelecionadas(list01);
@@ -128,7 +134,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 						if (perguntaN2.getPergunta().getOpcoesParaSelecao() != null) {
 							List<Opcao> list01 = new ArrayList<>();
 							for (Opcao opcao : perguntaN2.getPergunta().getOpcoesParaSelecao()) {
-								opcao = opcaoService.findById(opcao.getIdOpcao());
+								opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 								list01.add(opcao);
 							}
 							perguntaN2.getPergunta().setOpcoesParaSelecao(list01);
@@ -139,7 +145,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 							if (perguntaN3.getPergunta().getOpcoesParaSelecao() != null) {
 								List<Opcao> list01 = new ArrayList<>();
 								for (Opcao opcao : perguntaN3.getPergunta().getOpcoesParaSelecao()) {
-									opcao = opcaoService.findById(opcao.getIdOpcao());
+									opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 									list01.add(opcao);
 								}
 								perguntaN3.getPergunta().setOpcoesParaSelecao(list01);
@@ -147,7 +153,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 							if (perguntaN3.getResposta().getOpcoesSelecionadas() != null) {
 								List<Opcao> list01 = new ArrayList<>();
 								for (Opcao opcao : perguntaN3.getResposta().getOpcoesSelecionadas()) {
-									opcao = opcaoService.findById(opcao.getIdOpcao());
+									opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 									list01.add(opcao);
 								}
 								perguntaN3.getResposta().setOpcoesSelecionadas(list01);
@@ -156,7 +162,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 							if (perguntaN3.getPergunta().getOpcoesParaSelecao() != null) {
 								List<Opcao> list01 = new ArrayList<>();
 								for (Opcao opcao : perguntaN3.getPergunta().getOpcoesParaSelecao()) {
-									opcao = opcaoService.findById(opcao.getIdOpcao());
+									opcao = applicationBean.getOpcoesMap().get(opcao.getIdOpcao());
 									list01.add(opcao);
 								}
 								perguntaN3.getPergunta().setOpcoesParaSelecao(list01);
@@ -171,7 +177,7 @@ public class ConsultaAvaliacaoBean implements Serializable {
 		if (mapAvaliacoes.get(objAvaliacao.getIdAvaliacao()) != objAvaliacao) {
 			mapAvaliacoes.put(objAvaliacao.getIdAvaliacao(), objAvaliacao);
 		}
-		
+
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("avaliacao", objAvaliacao);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("passagem", parametroPassagem);

@@ -1,7 +1,9 @@
 package br.com.bb.seguranca.questionario.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -35,6 +37,7 @@ public class OpcaoService implements Serializable {
 	public List<Opcao> buscaTodasOpcoes() {
 		return opcaoDao.buscaTodasOpcoes();
 	}
+
 	public List<Opcao> buscaTodasOpcoesAtivas() {
 		return opcaoDao.buscaTodasOpcoesAtivas();
 	}
@@ -45,6 +48,26 @@ public class OpcaoService implements Serializable {
 
 	public List<Opcao> buscaSimNao() {
 		return opcaoDao.buscaSimNao();
+	}
+
+	public List<Opcao> findAll() {
+		return opcaoDao.findAll();
+	}
+
+	/**
+	 * Método que retorna um Map com chave id da Opcao e como valor a Opcao
+	 * 
+	 * @return {@link Map}<{Long, Opcao}>
+	 * 
+	 * */
+	
+	public Map<Long, Opcao> findAllMap() {
+		List<Opcao> opcoes = this.findAll();
+		Map<Long, Opcao> map = new HashMap<>();
+		for (Opcao opcao : opcoes) {
+			map.put(opcao.getIdOpcao(), opcao);
+		}
+		return map;
 	}
 
 	public List<Opcao> buscaSimNaoNaoSeAplica() {
