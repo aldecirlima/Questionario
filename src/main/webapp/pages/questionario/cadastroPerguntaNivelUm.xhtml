@@ -59,7 +59,8 @@
 							itemValue="#{sc.idSecaoBase}" var="sc"
 							itemLabel="Id: #{sc.idSecaoBase} - rótulo: #{sc.nomeSecao}" />
 					</p:selectOneMenu>
-					<p:inputText rendered="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
+					<p:inputText
+						rendered="#{perguntaBean.objSecaoBase.idSecaoBase ne null}"
 						disabled="true" styleClass="cssColunm-w-100-p"
 						value="Id: #{perguntaBean.objSecaoBase.idSecaoBase} - título: #{perguntaBean.objSecaoBase.nomeSecao}" />
 
@@ -69,7 +70,7 @@
 						style="margin-left: 25px" title="Ver perguntas da seção"
 						ajax="false" icon="fa fa-search"
 						actionListener="#{perguntaBean.atualizaSecao}" />
-						
+
 					<p:commandButton process="@this" styleClass="edit-button"
 						update="@form :formCadastroPeguntas :formPerguntas"
 						rendered="#{perguntaBean.objSecaoBase ne null}"
@@ -101,7 +102,8 @@
 					</p:column>
 					<p:column headerText="Data cadastro" width="13%">
 						<h:outputText value="#{pgt.dataCadastro}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+								timeZone="America/Sao_Paulo" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Cadastro" width="10%">
@@ -155,8 +157,6 @@
 
 			</h:form>
 
-
-
 			<p:dialog header="Editar pergunta" showEffect="fade" modal="true"
 				width="898px" fitViewport="true" closable="true" resizable="true"
 				widgetVar="managePerguntaDialog" responsive="true">
@@ -167,7 +167,8 @@
 
 							<p:outputLabel for="idPerguntaBase" value="ID" />
 							<p:inputNumber id="idPerguntaBase" disabled="true"
-								value="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase}"
+								size="9" />
 
 							<p:outputLabel for="textoPergunta" value="Rótulo" />
 							<p:inputText id="textoPergunta" title="Limite 150 caracteres"
@@ -191,7 +192,9 @@
 									var="tipoPergunta" itemLabel="#{tipoPergunta.descricao}"
 									itemValue="#{tipoPergunta}" />
 							</p:selectOneMenu>
-
+						</p:panelGrid>
+						<p:panelGrid columns="4" id="grid-manage02"
+							columnClasses="cssColumn150-no-border, cssColumn300-no-border, cssColumn150-no-border, cssColumn200-no-border">
 							<p:outputLabel for="ordemPergunta" value="Ordem" />
 							<p:inputNumber id="ordemPergunta" size="9" required="true"
 								title="Ordem da pergunta" requiredMessage="Informe a ordem"
@@ -201,6 +204,13 @@
 							<p:selectOneRadio id="perguntaAtiva" required="true"
 								requiredMessage="Informe se a pergunta está ativa"
 								value="#{perguntaBean.objPerguntaNivelUm.perguntaAtiva}">
+								<f:selectItem itemLabel="Sim" itemValue="1" />
+								<f:selectItem itemLabel="Não" itemValue="0" />
+							</p:selectOneRadio>
+							<p:outputLabel for="perguntaMandatoria" value="Mandatória" />
+							<p:selectOneRadio id="perguntaMandatoria" required="true"
+								requiredMessage="Informe se é obrigatório responder"
+								value="#{perguntaBean.objPerguntaNivelUm.mandatory}">
 								<f:selectItem itemLabel="Sim" itemValue="1" />
 								<f:selectItem itemLabel="Não" itemValue="0" />
 							</p:selectOneRadio>
@@ -224,27 +234,28 @@
 				resizable="false" widgetVar="manageOpcoesDialog" responsive="false">
 				<h:form id="manage-opcoes-form">
 					<p:outputPanel id="manage-opcoes" class="ui-fluid">
-					
+
 						<p:panelGrid columns="4"
 							columnClasses="cssColumn150-no-border, cssColumn150-no-border, cssColumn150-no-border, cssColumn400-no-border">
 							<p:outputLabel value="ID" />
 							<p:inputNumber disabled="true"
-								value="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase}" size="9" />
+								value="#{perguntaBean.objPerguntaNivelUm.idPerguntaBase}"
+								size="9" />
 							<p:outputLabel value="Tipo pergunta" />
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelUm.tipoPergunta.descricao}" />
 						</p:panelGrid>
-						
+
 						<p:panelGrid columns="2"
 							columnClasses="cssColumn150-no-border, cssColumn700-no-border">
 							<p:outputLabel value="Rótulo" />
 							<p:inputText styleClass="cssColunm-w-100-p" disabled="true"
 								value="#{perguntaBean.objPerguntaNivelUm.textoPergunta}" />
 						</p:panelGrid>
-						
+
 					</p:outputPanel>
 				</h:form>
-				
+
 				<h:form id="dialogOpcSel">
 					<p:panelGrid columns="3"
 						columnClasses="cssColumn150-no-border, cssColumn550-no-border, cssColumn150-no-border">

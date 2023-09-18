@@ -23,40 +23,39 @@ import br.com.bb.seguranca.questionario.modelo.base.PerguntaBase;
 public class Pergunta {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long idPergunta;
 
 	@ManyToOne
 	@JoinColumn(name = "SC_FRM_ID")
 	private Secao secao;
-	
+
 	@OneToOne
 	@JoinColumn(name = "PRGT_ID")
 	private PerguntaBase pergunta;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "PRGT_M_ID")
 	private Pergunta perguntaMae;
-	
+
 	@OneToMany(mappedBy = "perguntaMae", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pergunta> subPerguntas;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "RSP_ID")
 	private Resposta resposta;
-	
 
 	public Long getIdPergunta() {
 		return idPergunta;
 	}
 
-	public Secao getSecao() {
-		return secao;
-	}
-
 	public void setIdPergunta(Long idPergunta) {
 		this.idPergunta = idPergunta;
+	}
+
+	public Secao getSecao() {
+		return secao;
 	}
 
 	public void setSecao(Secao secao) {

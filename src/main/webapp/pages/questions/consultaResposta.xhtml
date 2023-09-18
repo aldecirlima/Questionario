@@ -37,13 +37,15 @@
 							style="font-size: 0.9em;" />
 						<h:outputText value="#{flash.avaliacao.dataAvaliacao}"
 							style="font-size: 0.9em;">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
 						</h:outputText>
 						<h:outputText value=" às " style="font-size: 0.9em;">
 						</h:outputText>
 						<h:outputText value="#{flash.avaliacao.dataAvaliacao}"
 							style="font-size: 0.9em;">
-							<f:convertDateTime pattern="HH:mm:ss" timeZone="America/Sao_Paulo" />
+							<f:convertDateTime pattern="HH:mm:ss"
+								timeZone="America/Sao_Paulo" />
 						</h:outputText>
 						<h:outputText value="." style="font-size: 0.9em;">
 						</h:outputText>
@@ -61,8 +63,7 @@
 								<p:outputLabel for="@next"
 									value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}. #{pergN1.pergunta.textoPergunta}" />
 
-								<p:selectOneRadio required="true"
-									disabled="#{true}"
+								<p:selectOneRadio disabled="#{true}"
 									title="#{pergN1.pergunta.title}" converter="opcaoConverter"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'S_N' or pergN1.pergunta.tipoPergunta eq 'S_N_NA'}"
 									value="#{pergN1.resposta.opcaoUnicaSelecionada}">
@@ -77,8 +78,7 @@
 									value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}. #{pergN1.pergunta.textoPergunta}" />
 
 								<p:selectOneMenu style="width: 100% !important;" filter="true"
-									disabled="#{true}"
-									filterMatchMode="contains" required="true"
+									disabled="#{true}" filterMatchMode="contains"
 									converter="opcaoConverter"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'UN_SL'}"
 									value="#{pergN1.resposta.opcaoUnicaSelecionada}">
@@ -89,24 +89,23 @@
 
 								<p:inputText value="#{pergN1.resposta.respostaTextoCurto}"
 									label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}."
-									disabled="#{true}"
-									required="true" styleClass="cssColunm-w-100-p" maxlength="150"
-									pt:data-tooltip="Limite 150 caracteres"
+									disabled="#{true}" styleClass="cssColunm-w-100-p"
+									maxlength="150" pt:data-tooltip="Limite 150 caracteres"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'TXT_CRT'}" />
 
 								<p:inputTextarea value="#{pergN1.resposta.respostaTextoLongo}"
 									label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.}"
-									disabled="#{true}"
-									required="true" styleClass="cssColunm-w-100-p" maxlength="500"
-									cols="150" rows="3" pt:data-tooltip="Limite 500 caracteres"
+									disabled="#{true}" styleClass="cssColunm-w-100-p"
+									maxlength="500" cols="150" rows="3"
+									pt:data-tooltip="Limite 500 caracteres"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'TXT_LNG'}" />
 
 								<p:selectManyMenu value="#{pergN1.resposta.opcoesSelecionadas}"
 									disabled="#{true}"
 									rendered="#{pergN1.pergunta.tipoPergunta eq 'MTPL_SL'}"
 									label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}."
-									required="true" converter="opcaoConverter" var="opcSel"
-									showCheckbox="true" styleClass="cssColunm-w-100-p">
+									converter="opcaoConverter" var="opcSel" showCheckbox="true"
+									styleClass="cssColunm-w-100-p">
 									<f:selectItems value="#{pergN1.pergunta.opcoesParaSelecao}"
 										var="opc" itemLabel="#{opc.nomeOpcao}" itemValue="#{opc}" />
 									<p:column>
@@ -123,8 +122,7 @@
 									<p:outputLabel for="@next" title="#{pergN2.pergunta.title}"
 										value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}. #{pergN2.pergunta.textoPergunta}" />
 
-									<p:selectOneRadio id="radio" required="true"
-										converter="opcaoConverter"
+									<p:selectOneRadio id="radio" converter="opcaoConverter"
 										disabled="#{true}"
 										rendered="#{pergN2.pergunta.tipoPergunta eq 'S_N' or pergN2.pergunta.tipoPergunta eq 'S_N_NA'}"
 										value="#{pergN2.resposta.opcaoUnicaSelecionada}">
@@ -141,8 +139,7 @@
 										value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}. #{pergN2.pergunta.textoPergunta}" />
 
 									<p:selectOneMenu style="width: 100% !important;" filter="true"
-										disabled="#{true}"
-										filterMatchMode="contains" required="true"
+										disabled="#{true}" filterMatchMode="contains"
 										converter="opcaoConverter"
 										rendered="#{pergN2.pergunta.tipoPergunta eq 'UN_SL'}"
 										value="#{pergN2.resposta.opcaoUnicaSelecionada}">
@@ -153,24 +150,23 @@
 
 									<p:inputText value="#{pergN2.resposta.respostaTextoCurto}"
 										label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}."
-										disabled="#{true}"
-										required="true" styleClass="cssColunm-w-100-p" maxlength="150"
-										pt:data-tooltip="Limite 150 caracteres"
+										disabled="#{true}" styleClass="cssColunm-w-100-p"
+										maxlength="150" pt:data-tooltip="Limite 150 caracteres"
 										rendered="#{pergN2.pergunta.tipoPergunta eq 'TXT_CRT'}" />
 
 									<p:inputTextarea value="#{pergN2.resposta.respostaTextoLongo}"
 										label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}."
-										disabled="#{true}"
-										required="true" styleClass="cssColunm-w-100-p" maxlength="500"
-										cols="150" rows="3" pt:data-tooltip="Limite 500 caracteres"
+										disabled="#{true}" styleClass="cssColunm-w-100-p"
+										maxlength="500" cols="150" rows="3"
+										pt:data-tooltip="Limite 500 caracteres"
 										rendered="#{pergN2.pergunta.tipoPergunta eq 'TXT_LNG'}" />
 
 									<p:selectManyMenu value="#{pergN2.resposta.opcoesSelecionadas}"
 										disabled="#{true}"
 										label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}."
 										rendered="#{pergN2.pergunta.tipoPergunta eq 'MTPL_SL'}"
-										required="true" var="opcSel" showCheckbox="true"
-										converter="opcaoConverter" styleClass="cssColunm-w-100-p">
+										var="opcSel" showCheckbox="true" converter="opcaoConverter"
+										styleClass="cssColunm-w-100-p">
 										<f:selectItems value="#{pergN2.pergunta.opcoesParaSelecao}"
 											var="opc" itemLabel="#{opc.nomeOpcao}" itemValue="#{opc}" />
 										<p:column>
@@ -187,7 +183,7 @@
 										<p:outputLabel title="#{pergN3.pergunta.title}" for="@next"
 											value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}. #{pergN3.pergunta.textoPergunta}" />
 
-										<p:selectOneRadio required="true" converter="opcaoConverter"
+										<p:selectOneRadio converter="opcaoConverter"
 											disabled="#{true}"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'S_N' or pergN3.pergunta.tipoPergunta eq 'S_N_NA'}"
 											pt:data-tooltip="#{pergN3.pergunta.title}"
@@ -204,8 +200,7 @@
 											value="#{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}. #{pergN3.pergunta.textoPergunta}" />
 
 										<p:selectOneMenu style="width: 100% !important;" filter="true"
-											disabled="#{true}"
-											filterMatchMode="contains" required="true"
+											disabled="#{true}" filterMatchMode="contains"
 											converter="opcaoConverter"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'UN_SL'}"
 											value="#{pergN3.resposta.opcaoUnicaSelecionada}">
@@ -216,15 +211,13 @@
 
 										<p:inputText value="#{pergN3.resposta.respostaTextoCurto}"
 											label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}."
-											disabled="#{true}"
-											required="true" styleClass="cssColunm-w-100-p"
+											disabled="#{true}" styleClass="cssColunm-w-100-p"
 											maxlength="150" pt:data-tooltip="Limite 150 caracteres"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'TXT_CRT'}" />
 
 										<p:inputTextarea value="#{pergN3.resposta.respostaTextoLongo}"
 											label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}."
-											disabled="#{true}"
-											required="true" styleClass="cssColunm-w-100-p"
+											disabled="#{true}" styleClass="cssColunm-w-100-p"
 											maxlength="500" cols="150" rows="3"
 											pt:data-tooltip="Limite 500 caracteres"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'TXT_LNG'}" />
@@ -234,8 +227,8 @@
 											label="Pergunta #{secao.secaoBase.ordemSecao}.#{pergN1.pergunta.ordem}.#{pergN2.pergunta.ordem}.#{pergN3.pergunta.ordem}."
 											disabled="#{true}"
 											rendered="#{pergN3.pergunta.tipoPergunta eq 'MTPL_SL'}"
-											required="true" var="opcSel" showCheckbox="true"
-											converter="opcaoConverter" styleClass="cssColunm-w-100-p">
+											var="opcSel" showCheckbox="true" converter="opcaoConverter"
+											styleClass="cssColunm-w-100-p">
 											<f:selectItems value="#{pergN3.pergunta.opcoesParaSelecao}"
 												var="opc" itemLabel="#{opc.nomeOpcao}" itemValue="#{opc}" />
 											<p:column>

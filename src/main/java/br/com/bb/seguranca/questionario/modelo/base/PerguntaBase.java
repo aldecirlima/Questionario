@@ -81,6 +81,10 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 	@Column(name = "PRGT_VSVL", length = 1)
 	private Integer perguntaVisivel;
 
+//	Valor 0 indica que não é obrigatória e valor 1 indica que é obrigatória
+	@Column(name = "MNDT", length = 1)
+	private Integer mandatory;
+
 	@OneToOne
 	@JoinColumn(name = "OPC_VSVL_ID")
 	private Opcao opcaoVisivel;
@@ -212,6 +216,21 @@ public class PerguntaBase implements Comparable<PerguntaBase> {
 
 	public void setPerguntaVisivel(Integer perguntaVisivel) {
 		this.perguntaVisivel = perguntaVisivel;
+	}
+
+	/**
+	 * 
+	 * Este campo serve para indicar se a resposta da pergunta é ou não obrigatória.
+	 * Valor 0 indica que não é obrigatória e valor 1 indica que é obrigatória
+	 * 
+	 * @return {@link Integer}
+	 */
+	public Integer getMandatory() {
+		return mandatory;
+	}
+
+	public void setMandatory(Integer mandatory) {
+		this.mandatory = mandatory;
 	}
 
 	public void setOpcaoVisivel(Opcao opcaoVisivel) {
